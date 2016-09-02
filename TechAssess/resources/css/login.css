@@ -1,0 +1,108 @@
+#grid {
+    background-image:url("../img/light-wallpaper-hd-31.jpg");
+    position:fixed;
+    top:0;
+    width:100%;
+    height:4000px;
+    z-index:1;
+}
+
+.content{
+				width:100%;
+				border-radius:900px;
+				text-align:left;
+				padding:25px;
+				position:relative;
+				margin:15px auto;
+				z-index:2;
+				height:100%;
+			}
+			
+.header {
+    font-style:italic;
+    color:BLACK;
+    font-size:20px;
+    font-family: helvatica;
+}
+ .title {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-style: normal;
+    font-size:40px;
+    src: url(google-font-url-here/opensans.eot);
+    src: local('Open Sans'), local('OpenSans'),
+    url(google-font-url-here/opensans.eot?#iefix) format('embedded-opentype'),
+    url(google-font-url-here/opensans.woff2) format('woff2'), 
+    url(google-font-url-here/opensans.woff) format('woff'), 
+    url(google-font-url-here/opensans.ttf) format('truetype'), 
+    url(google-font-url-here/opensans.svg#OpenSans) format('svg');
+    color:black;
+    text-align:center;
+ }
+ 
+  .jssorb05 {
+            position: absolute;
+        }
+        .jssorb05 div, .jssorb05 div:hover, .jssorb05 .av {
+            position: absolute;
+            /* size of bullet elment */
+            width: 16px;
+            height: 16px;
+            background: url('../img/b05.png') no-repeat;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .jssorb05 div { background-position: -7px -7px; }
+        .jssorb05 div:hover, .jssorb05 .av:hover { background-position: -37px -7px; }
+        .jssorb05 .av { background-position: -67px -7px; }
+        .jssorb05 .dn, .jssorb05 .dn:hover { background-position: -97px -7px; }
+
+        /* jssor slider arrow navigator skin 22 css */
+        /*
+        .jssora22l                  (normal)
+        .jssora22r                  (normal)
+        .jssora22l:hover            (normal mouseover)
+        .jssora22r:hover            (normal mouseover)
+        .jssora22l.jssora22ldn      (mousedown)
+        .jssora22r.jssora22rdn      (mousedown)
+        */
+        .jssora22l, .jssora22r {
+            display: block;
+            position: absolute;
+            /* size of arrow element */
+            width: 40px;
+            height: 58px;
+            cursor: pointer;
+            background: url('../img/a22.png') center center no-repeat;
+            overflow: hidden;
+        }
+        .jssora22l { background-position: -10px -31px; }
+        .jssora22r { background-position: -70px -31px; }
+        .jssora22l:hover { background-position: -130px -31px; }
+        .jssora22r:hover { background-position: -190px -31px; }
+        .jssora22l.jssora22ldn { background-position: -250px -31px; }
+        .jssora22r.jssora22rdn { background-position: -310px -31px; }
+  .jsso {
+     position: relative; margin: 0px; top: 0px; left: 0px; width: 1100px; height: 400px; overflow: hidden; visibility: hidden;
+  }
+  
+  .slides {
+  
+  cursor: default; position: relative; top: 0px; left: 0px; width: 1300px; height: 500px; overflow: hidden;
+  }
+  .inputform {
+      height:600px;
+      float:right;
+      margin:0px;
+    }
+   
+   .footer {
+   height:20%;
+   width:100%;
+   text-align:center;
+   background-color:gray;
+   }
+   .center {
+      height:600px;
+      width:1300px;
+    }
+  

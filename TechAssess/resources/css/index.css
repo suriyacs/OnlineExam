@@ -1,0 +1,57 @@
+body {
+    background-image:url("../img/light-wallpaper-hd-31.jpg");
+}
+ 
+.header {
+    height:100px;
+    width:600px;
+    color:white;
+ }
+
+.row-height {
+    height: 70px;
+    text-align: center;
+    border-style:none;
+    border-radius: 15px 15px 15px 15px;
+    color:black;
+    background: #81c5fa;
+    font-style:italic;
+}
+
+.middle {
+    height: 70px;
+    text-align: center;
+    border-style:none;
+    border-radius: 15px 15px 15px 15px;
+    background: #81c5fa;
+    color:black;
+    font-style:italic;
+}
+
+ .title {
+    width:1500px;
+    height:130px;
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    text-align:center;
+    color:black;
+    font-size:40px;
+    
+ }
+
+.logout {
+    float:right;
+    margin:50px;
+}
+ 
+ .logout:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.row-height:hover {
+	background-color:  #a6d5fa;
+	color:black;
+}
+.middle:hover {
+	background-color: #a6d5fa;
+	color:black;
+}
