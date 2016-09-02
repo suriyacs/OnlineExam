@@ -49,22 +49,22 @@ public class ApplicationController {
 			   HttpSession session, ModelMap model) {
 	       try {
 	           User user = userService.getUserByEmailId(emailId);
-	           return "adminpage";
-	           /*if(null == user) {
-	               model.addAttribute("Message", "Entered Details does not Match. Kindly Enter Correct Details");
-	           	   return "gotologin";
-	           } else if(1 == user.getRoleId() && password.equals(user.getPassword())) {
+	           if(null == user) {
+	               model.addAttribute("LogInMessage", "Entered Details does not Match. Kindly Enter Correct Details");
+	           	   return "login";
+	           } else if("Admin".equals(roleService.getRoleNameById(user.getRoleId())) && password.equals(user.getPassword())) {
 	               session.setAttribute("role", "Admin");
-	               return "redirect:initiatepage";
-	           } else if("User".equals(roleService.getRoleName(user.getRoleId())) && password.equals(user.getPassword())) {
+	               return "redirect:adminpage";
+	           } else if("User".equals(roleService.getRoleNameById(user.getRoleId())) && password.equals(user.getPassword())) {
 	           	session.setAttribute("role", "User");
 	               return "redirect:gotouserpage";
 	           } else {
-	           	return "gotologin";
-	           }*/
+	        	   model.addAttribute("Message", roleService.getRoleNameById(user.getRoleId()));
+	           	return "success";
+	           }
 	       } catch (DataException e) {
-	    	   model.addAttribute("Message", e.toString());
-	       	return "success";
+	    	   model.addAttribute("LogInMessage", e.toString());
+	       	   return "login";
 	       }
 	   }
 	
@@ -80,7 +80,7 @@ public class ApplicationController {
 	 
 	 @RequestMapping(value = "/insertadmin")
 	 public String redirctToInsertAdminPage() {
-		 return "addnewadmin";
+		 return "addadmin";
 	 }
 	 
 	 @RequestMapping(value="/insertquestion") 
