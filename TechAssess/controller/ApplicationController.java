@@ -53,10 +53,10 @@ public class ApplicationController {
 	               model.addAttribute("LogInMessage", "Entered Details does not Match. Kindly Enter Correct Details");
 	           	   return "login";
 	           } else if("Admin".equals(roleService.getRoleNameById(user.getRoleId())) && password.equals(user.getPassword())) {
-	               session.setAttribute("role", "Admin");
+	               session.setAttribute("role", user.getRoleId());
 	               return "redirect:adminpage";
 	           } else if("User".equals(roleService.getRoleNameById(user.getRoleId())) && password.equals(user.getPassword())) {
-	           	session.setAttribute("role", "User");
+	           	session.setAttribute("role", user.getRoleId());
 	               return "redirect:gotouserpage";
 	           } else {
 	        	   model.addAttribute("Message", roleService.getRoleNameById(user.getRoleId()));
@@ -79,17 +79,23 @@ public class ApplicationController {
 	 }
 	 
 	 @RequestMapping(value = "/insertadmin")
-	 public String redirctToInsertAdminPage() {
+	 public String redirectToInsertAdminPage() {
 		 return "addadmin";
 	 }
 	 
 	 @RequestMapping(value="/insertquestion") 
-     public String redirctToInsertQuestionPage() {
+     public String redirectToInsertQuestionPage() {
     	 return "addquestion";
      }
 	 
 	 @RequestMapping(value="/inserttest")
-	 public String redirctToInsertTestPage() {
+	 public String redirectToInsertTestPage() {
 		 return "addtest";
+	 }
+	 
+	 @RequestMapping(value="/taketest")
+	 public String redirectToStartTestPage(ModelMap model){
+		 model.addAttribute("ToStartTest", "start");
+		 return "questionpageforuser";
 	 }
 }

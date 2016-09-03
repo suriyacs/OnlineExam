@@ -50,20 +50,11 @@
                      <div class="panel-footer"><a href="">Account</a></div>
                  </div>
              </div>
-             <div class="center-container">
-                <div class="container">
-                    <h2>Scheduled Exam number</h2>
-                    <a href="#demo" class="btn btn-info" data-toggle="collapse">Take Test</a>
-                    <form id="demo" action="taketest" class="collapse" method="post">
-                          Instructions:<br>
-                              1.aswertfeawfasdfasdfasdasdvcasdfasd.<br>
-                              2.sADfAWFRASDFASDVASVASDGFAWRFASDVASDV<br>
-                              3.ASDGAWFZSCBZCVBNDXHGGVNBXBHDGHSDFGDFGADFV<br>
-                             <label><input type="checkbox" id="checkbox">Agreed and im ready to start the test</label><br>
-                             <input id="button" type="submit" value="START" class="btn btn-success"/>
-                    </form>
-                </div>
-             </div>
+             <!-- this div tag  is to diplay the question to user -->
+             <c:if test="${null != ToStartTest}">
+                 <div class="center-container">
+                 </div>
+             </c:if>
          </div>
          </div>
     </body>
