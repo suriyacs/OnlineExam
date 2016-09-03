@@ -38,7 +38,8 @@ public class ApplicationController {
 	public ModelAndView registerUser(@RequestParam("userName") String userName, @RequestParam("emailId") String emailId,
 			@RequestParam("password") String password, @RequestParam("mobileNumber") String mobileNumber) {
 		try {
-	        return new ModelAndView("login", "LogInMessage", userService.addUser(userName, emailId, password, mobileNumber));
+			userService.addUser(userName, emailId, password, mobileNumber);
+	        return new ModelAndView("login", "LogInMessage","Welcome to Tech Assess..!!Please login to proceed..!!");
 		} catch(DataException e) {
 			return new ModelAndView("login", "LogInMessage", (e.getMessage().toString()));
 		}
@@ -53,10 +54,10 @@ public class ApplicationController {
 	               model.addAttribute("LogInMessage", "Entered Details does not Match. Kindly Enter Correct Details");
 	           	   return "login";
 	           } else if("Admin".equals(roleService.getRoleNameById(user.getRoleId())) && password.equals(user.getPassword())) {
-	               session.setAttribute("role", user.getRoleId());
+	               session.setAttribute("role", "Admin");
 	               return "redirect:adminpage";
 	           } else if("User".equals(roleService.getRoleNameById(user.getRoleId())) && password.equals(user.getPassword())) {
-	           	session.setAttribute("role", user.getRoleId());
+	        	   session.setAttribute("role", "User");
 	               return "redirect:gotouserpage";
 	           } else {
 	        	   model.addAttribute("Message", roleService.getRoleNameById(user.getRoleId()));
@@ -67,7 +68,16 @@ public class ApplicationController {
 	       	   return "login";
 	       }
 	   }
-	
+	 @RequestMapping("/adminRegisteration")
+		public ModelAndView createNewAdmin(@RequestParam("userName") String userName, @RequestParam("emailId") String emailId,
+				@RequestParam("password") String password, @RequestParam("mobileNumber") String mobileNumber) {
+			try {
+				userService.addAdmin(userName, emailId, password, mobileNumber);
+		        return new ModelAndView("addadmin", "LogInMessage","New Admin Created Successfully..!!");
+			} catch(DataException e) {
+				return new ModelAndView("addadmin", "LogInMessage", (e.getMessage().toString()));
+			}
+		}
 	 @RequestMapping(value = "/adminpage")
 	 public String goToAdminPage() {
 		 return "adminpage";
@@ -79,23 +89,23 @@ public class ApplicationController {
 	 }
 	 
 	 @RequestMapping(value = "/insertadmin")
-	 public String redirectToInsertAdminPage() {
+	 public String redirctToInsertAdminPage() {
 		 return "addadmin";
 	 }
 	 
 	 @RequestMapping(value="/insertquestion") 
-     public String redirectToInsertQuestionPage() {
+     public String redirctToInsertQuestionPage() {
     	 return "addquestion";
      }
 	 
 	 @RequestMapping(value="/inserttest")
-	 public String redirectToInsertTestPage() {
+	 public String redirctToInsertTestPage() {
 		 return "addtest";
 	 }
 	 
-	 @RequestMapping(value="/taketest")
-	 public String redirectToStartTestPage(ModelMap model){
-		 model.addAttribute("ToStartTest", "start");
-		 return "questionpageforuser";
+	 @RequestMapping(value="/logout")
+	 public String logout(HttpSession session) {
+		 session.invalidate();
+		 return("redirect:loginpage");
 	 }
 }

@@ -27,13 +27,12 @@ public class UserDao {
         }
     } 
 	
-	public boolean insertUser(User user) throws DataException {            
+	public void insertUser(User user) throws DataException {            
         Session session = factory.openSession();
         try {
             Transaction transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
-            return true;
         } catch (HibernateException e) {
             throw new DataException("The provided details could not be inserted, kindly provide proper input");
         } finally {
