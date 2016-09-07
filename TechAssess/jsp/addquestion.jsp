@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,12 +19,15 @@
         });
         });
         </script>
+        <c:if test="${insertQuestionMessage != null }">
+            <script type="text/javascript" language = "javascript">
+                alert("<c:out value='${insertQuestionMessage}'/>");
+                window.location = 'insertquestion';
+            </script>
+        </c:if>
 </head>
 <body>
         <div class="content">
-        <c:if test="${null != QuestionMessage}">
-            <c:out value="${QuestionMessage}"/>
-        </c:if>
         <div class="heading">
             <div class="head">
                  <h1 class="title">TechAssess</h1>
@@ -32,11 +37,10 @@
         <center>
         <div class="select">
               <Select id="colorselector">
-              <option selected="selected">Select Question Type</option>
               <option value="fill">Fill In The Blanks</option>
               <option value="choose">Choose The Best Answer</option>
               <option value="Multiple">Multiple Answer Question</option>
-              </Select>
+              </Select>  
          </div>
          </center>
                   <div id="fill" class="colors" style="display:none">  
@@ -57,7 +61,7 @@
                             <div class="form-row">
                                <label>
                                   <span>IfCorrect</span>
-                                 <input type="checkbox" name="checkbox" value = "1">
+                                 <input type="checkbox" name="checkbox">
                               </label>
                             </div>
                          </div>
@@ -67,141 +71,62 @@
                      </form>
             </div>
               <div id="choose" class="colors" style="display:none"> 
-                 <form class="form-basic" method="post" action="choosethebest" name="choose">   
+                 <form:form method="post" action="choosethebest" modelAttribute="Question">  
                       <div class="form-row">
                               <label>
                                 <span>Question</span>
-                                <textarea name="questionname"></textarea>
+                                <form:textarea path ="question"></form:textarea>
                               </label>
                            </div>
-                        <div class="form-row">
+                         <c:forEach items="${Question.choices}" var="choice" varStatus="status">
+                         <div class="form-row">
                             <div class="answer"> 
                                  <label>
                                      <span>Choice1</span>
-                                     <input type="text" name="choiceone">
+                                     <input name ="choices[${status.index}].choiceName" value="${choice.choiceName}" >
                                  </label>
                             </div> 
                             <div class="form-row">
                                <label>
                                   <span>IfCorrect</span>
-                                 <input type="checkbox" name="checkbox" value="1">
+                                 <input name="choices[${status.index}].isCorrect" value="${choice.isCorrect}">
                               </label>
                             </div>
                          </div>
-                         <div class="form-row">
-                             <div class="answer"> 
-                                 <label>
-                                     <span>Choice2</span>
-                                     <input type="text" name="choicetwo">
-                                 </label>
-                            </div> 
-                            <div class="form-row">
-                               <label>
-                                  <span>IfCorrect</span>
-                                 <input type="checkbox" name="checkbox" value="1">
-                              </label>
-                            </div>
+                         </c:forEach>
+                          <div class="form-row">
+                               <button type="submit" class="btn btn-primary">Add</button>
                          </div>
-                         <div class="form-row">
-                            <div class="answer"> 
-                                 <label>
-                                     <span>Choice3</span>
-                                     <input type="text" name="choicethree" >
-                                 </label>
-                            </div> 
-                            <div class="form-row">
-                               <label>
-                                  <span>IfCorrect</span>
-                                 <input type="checkbox" name="checkbox" value="1">
-                              </label>
-                            </div>
-                         </div>
-                         <div class="form-row">
-                             <div class="answer"> 
-                                 <label>
-                                     <span>Choice4</span>
-                                     <input type="text" name="choicefour">
-                                 </label>
-                            </div> 
-                            <div class="form-row">
-                               <label>
-                                  <span>IfCorrect</span>
-                                 <input type="checkbox" name="checkbox" value="1"/>
-                            </div>
-                         </div>
-                         <div class="form-row">
-                               <button type="submit" class="btn btn-primary" name="button" value="Choose">Add</button>
-                         </div>
-                 </form>
-              </div>
+                    </form:form>
+                 </div>
                <div id="Multiple" class="colors" style="display:none"> 
-              <form class="form-basic" method="post" action="choosethebest" name="multiple">   
-                        <div class="form-row">
+               <form:form method="post" action="multiple" modelAttribute="Question">  
+                    <div class="form-row">
                               <label>
                                 <span>Question</span>
-                                <textarea name="questionname"></textarea>
+                                <form:textarea path ="question"></form:textarea>
                               </label>
                            </div>
-                        <div class="form-row">
+                         <c:forEach items="${Question.choices}" var="choice" varStatus="status">
+                         <div class="form-row">
                             <div class="answer"> 
                                  <label>
                                      <span>Choice1</span>
-                                     <input type="text" name="choiceone">
+                                     <input name ="choices[${status.index}].choiceName" value="${choice.choiceName}" >
                                  </label>
                             </div> 
                             <div class="form-row">
                                <label>
                                   <span>IfCorrect</span>
-                                 <input type="checkbox" name="checkboxone">
+                                 <input name="choices[${status.index}].isCorrect" value="${choice.isCorrect}">
                               </label>
                             </div>
                          </div>
-                         <div class="form-row">
-                             <div class="answer"> 
-                                 <label>
-                                     <span>Choice2</span>
-                                     <input type="text" name="choicetwo">
-                                 </label>
-                            </div> 
-                            <div class="form-row">
-                               <label>
-                                  <span>IfCorrect</span>
-                                 <input type="checkbox" name="checkboxtwo">
-                              </label>
-                            </div>
-                         </div>
-                         <div class="form-row">
-                            <div class="answer"> 
-                                 <label>
-                                     <span>Choice3</span>
-                                     <input type="text" name="choicethree">
-                                 </label>
-                            </div> 
-                            <div class="form-row">
-                               <label>
-                                  <span>IfCorrect</span>
-                                 <input type="checkbox" name="checkboxthree">
-                              </label>
-                            </div>
-                         </div>
-                         <div class="form-row">
-                             <div class="answer"> 
-                                 <label>
-                                     <span>Choice4</span>
-                                     <input type="text" name="choicefour">
-                                 </label>
-                            </div> 
-                            <div class="form-row">
-                               <label>
-                                  <span>IfCorrect</span>
-                                 <input type="checkbox" name="checkboxfour">
-                              </label>
-                            </div>
-                         </div>
+                         </c:forEach>                         
                          <div class="form-row">
                                <button type="submit" class="btn btn-primary">Add</button>
                          </div>
-                     </form>
+                     </form:form>
               </div>
           </div>
      </body>

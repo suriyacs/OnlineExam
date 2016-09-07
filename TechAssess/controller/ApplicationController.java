@@ -1,5 +1,8 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -17,8 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import service.RoleService;
 import service.UserService;
 import service.QuestionTypeService;
+import service.ChoiceService;
 import service.ExamService;
+import service.QuestionService;
 import model.Exam;
+import model.Choice;
 import model.Question;
 @Controller
 public class ApplicationController {	
@@ -26,11 +32,11 @@ public class ApplicationController {
 	RoleService roleService = new RoleService();
 	QuestionTypeService questionTypeService = new QuestionTypeService();
 	ExamService examService = new ExamService();
-	
-	
+	QuestionService questionService = new QuestionService();
+	ChoiceService choiceService = new ChoiceService();
 	 /**
 	  * <p>
-	  * Redirect to admin page
+	  * Redirect to admin pageContact
 	  * </p>
 	  * 
 	  * @return url pattern of jsp page named adminpage
@@ -113,11 +119,12 @@ public class ApplicationController {
 	 
 	 @RequestMapping(value="/insertquestion") 
      public String redirctToInsertQuestionPage(ModelMap model) {
-		 try {
-		     model.addAttribute("questionTypes",questionTypeService.getAllQuestionTypes());
-		 } catch(DataException e) {
-			 model.addAttribute("insertQuestionMessage",(e.getMessage().toString()));
-		 }
+		 Question question = new Question();
+		 question.add(new Choice());
+		 question.add(new Choice());
+		 question.add(new Choice());
+		 question.add(new Choice());
+		 model.addAttribute("Question",question);
     	 return "addquestion";
          }
 	 
@@ -145,16 +152,57 @@ public class ApplicationController {
 	 }
 	 
 	 @RequestMapping(value="/fillintheblanks")
-	 public ModelAndView addQuestionForFillup(@RequestParam("questionname") String questionName,
-			 @RequestParam("answer") String answer, @RequestParam("checkbox") String correctAnswer) {
+	 public String addQuestionForFillup(@RequestParam("questionname") String questionName,
+			 @RequestParam("answer") String answer, @RequestParam("checkbox") String correctAnswer,ModelMap model) {
 		 try {
 		     int questionId = questionService.addQuestion(questionName);
-		     int choiceId = choiceService.addChoice(answer,correctAnswer);
-		     questionService.addQuestionType(1, questionId);
+		     int choiceId = choiceService.addChoice(answer,Integer.parseInt(correctAnswer));
+		     questionService.allocateQuestionType(1, questionId);
 		     choiceService.allocateQuestion(choiceId, questionId);
-		     return new ModelAndView("addquestion", "QuestionMessage", correctAnswer + " " + "InserTion Success");
+		     model.addAttribute("insertQuestionMessage", correctAnswer + " " + "InserTion Success");
 		 } catch(DataException e) {
-			 return new ModelAndView("addquestion", "QuestionMessage", (e.toString()));
+			 model.addAttribute("insertQuestionMessage", (e.toString()));
 		 }
+		 return("addquestion");
+	 }
+	 
+	 @RequestMapping(value="/choosethebest",method = RequestMethod.POST)
+	 public String addQuestionForChooseTheBest(@ModelAttribute("Question") Question question,ModelMap model) {
+		 String questionName = question.getQuestion();
+		 System.out.println(questionName);
+		 List<Choice> choices = question.getChoices();
+		 try {
+		     int questionId = questionService.addQuestion(questionName);
+		     questionService.allocateQuestionType(2, questionId);
+		     for( Choice choice : choices) {
+		    	 int choiceId = choiceService.addChoice(choice.getChoiceName(),(choice.getIsCorrect()));
+		    	 choiceService.allocateQuestion(choiceId, questionId);
+		     }
+		     model.addAttribute("insertQuestionMessage","Addedd Successfully..!!");
+	     } catch(DataException e) {
+	    	 model.addAttribute("insertQuestionMessage",(e.toString()));
+	     }
+		 return("addquestion");
+		     
+	 }
+	 
+	 @RequestMapping(value="/multiple",method = RequestMethod.POST)
+	 public String addQuestionForMultipleAnswer(@ModelAttribute("Question") Question question,ModelMap model) {
+		 String questionName = question.getQuestion();
+		 System.out.println(questionName);
+		 List<Choice> choices = question.getChoices();
+		 try {
+		     int questionId = questionService.addQuestion(questionName);
+		     questionService.allocateQuestionType(3, questionId);
+		     for( Choice choice : choices) {
+		    	 int choiceId = choiceService.addChoice(choice.getChoiceName(),(choice.getIsCorrect()));
+		    	 choiceService.allocateQuestion(choiceId, questionId);
+		     }
+		     model.addAttribute("insertQuestionMessage","Addedd Successfully..!!");
+	     } catch(DataException e) {
+	    	 model.addAttribute("insertQuestionMessage",(e.toString()));
+	     }
+		 return("addquestion");
+		     
 	 }
 }
