@@ -6,8 +6,12 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -16,27 +20,28 @@ import javax.persistence.Table;
 public class Question {
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="question_id")
 	int questionId;
 	@Column(name="question")
 	String question;
-	@Column(name="type_id")
-	int typeId;
-    @Column(name="user_id")
-	int userId;
-    @OneToMany(cascade = CascadeType.PERSIST)
-	@JoinColumn(name="question_id")
-	Set<Choice> choices = new HashSet<Choice>();
+	@ManyToOne(cascade=CascadeType.PERSIST)
+	@JoinColumn(name="type_id")
+	QuestionType typeId;
     
-	public Question() {
-		
+    public Question() {
+    	
+    }
+    
+	public Question(String question) {
+		this.question = question;
 	}
 	
 	public void setQuestionId(int questionId) {
 	    this.questionId = questionId;
 	}
 	
-	public int getQquestionId() {
+	public int getQuestionId() {
 		return this.questionId;
 	}
 	
@@ -48,19 +53,17 @@ public class Question {
 		return this.question;
 	}
 	
-	public void setTypeId(int typeId) {
+	public QuestionType getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(QuestionType typeId) {
 		this.typeId = typeId;
 	}
 	
-	public int getTypeId() {
-		return this.typeId;
-	}
-	
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-	
-	public int getUserId() {
-		return this.userId;
-	} 
+	@Override
+	public String toString() {
+        return questionId + "\t" + question + "\t" + typeId;
+    }
 }
+

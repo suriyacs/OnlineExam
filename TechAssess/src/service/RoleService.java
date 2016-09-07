@@ -15,3 +15,4 @@ public class RoleService {
 		return roleDao.retrieveRoleName(roleId);
 	}
 }
+

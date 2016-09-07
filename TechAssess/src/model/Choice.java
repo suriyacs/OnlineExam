@@ -1,8 +1,13 @@
 package model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -14,17 +19,24 @@ import javax.persistence.Table;
 public class Choice {
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="choice_id")
 	int choiceId;
 	@Column(name="choice_name")
 	String choiceName;
-	@Column(name="question_id")
-	int questionId;
+	@ManyToOne(cascade=CascadeType.PERSIST)
+	@JoinColumn(name="question_id")
+	Question questionId;
 	@Column(name="is_correct")
 	int isCorrect;
 	
 	public Choice() {
 		
+	}
+	
+	public Choice(String answer, int isCorrect) {
+		this.choiceName = answer;
+		this.isCorrect = isCorrect;
 	}
 	
 	public void setChoiceId(int choiceId) {
@@ -43,11 +55,11 @@ public class Choice {
 		return this.choiceName;
 	}
 	
-	public void setQuestionId(int questionId) {
+	public void setQuestionId(Question questionId) {
 		this.questionId =questionId;
 	}
 	
-	public int getQuestionId() {
+	public Question getQuestionId() {
 		return this.questionId;
 	}
 	
@@ -55,3 +67,4 @@ public class Choice {
 		this.isCorrect = isCorrect;
 	}
 }
+

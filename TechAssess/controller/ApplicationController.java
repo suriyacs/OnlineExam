@@ -4,7 +4,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,6 +13,9 @@ import model.User;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
+import service.ChoiceService;
+import service.QuestionService;
+import service.QuestionTypeService;
 import service.RoleService;
 import service.UserService;
 @Controller
@@ -21,6 +23,9 @@ public class ApplicationController {
 	
 	UserService userService = new UserService();
 	RoleService roleService = new RoleService();
+	QuestionService questionService = new QuestionService();
+	QuestionTypeService questionTypeService = new QuestionTypeService();
+	ChoiceService choiceService = new ChoiceService();
 	
 	 /**
 	  * <p>
@@ -107,5 +112,25 @@ public class ApplicationController {
 	 public String logout(HttpSession session) {
 		 session.invalidate();
 		 return("redirect:loginpage");
+	 }
+	 
+	 @RequestMapping(value="/taketest")
+	 public String redirectToStartTestPage(ModelMap model){
+		 model.addAttribute("ToStartTest", "start");
+		 return "questionpageforuser";
+	 }
+	 
+	 @RequestMapping(value="/fillintheblanks")
+	 public ModelAndView addQuestionForFillup(@RequestParam("questionname") String questionName,
+			 @RequestParam("answer") String answer, @RequestParam("checkbox") String correctAnswer) {
+		 try {
+		     int questionId = questionService.addQuestion(questionName);
+		     int choiceId = choiceService.addChoice(answer,correctAnswer);
+		     questionService.addQuestionType(1, questionId);
+		     choiceService.allocateQuestion(choiceId, questionId);
+		     return new ModelAndView("addquestion", "QuestionMessage", correctAnswer + " " + "InserTion Success");
+		 } catch(DataException e) {
+			 return new ModelAndView("addquestion", "QuestionMessage", (e.toString()));
+		 }
 	 }
 }

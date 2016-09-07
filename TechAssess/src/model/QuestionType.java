@@ -6,6 +6,9 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -16,10 +19,11 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name="Question_Type")
+@Table(name="QuestionType")
 public class QuestionType {
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="type_id")
 	int typeId;
 	@Column(name="type_name")
@@ -27,6 +31,10 @@ public class QuestionType {
 	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="type_id")
 	Set<Question> questions = new HashSet<Question>();
+	
+	public QuestionType() {
+		
+	}
 	
 	public void setTypeId(int typeId) {
 		this.typeId = typeId;
@@ -44,7 +52,12 @@ public class QuestionType {
 		return this.typeName;
 	}
 	
-	public void setQuestions(Set<Question> questions) {
-		this.questions = questions;
+	public void setQuestion(Set<Question> questions) {
+		this.questions.addAll(questions);
+	}
+	
+	public Set<Question> getQuestion() {
+		return this.questions;
 	}
 }
+

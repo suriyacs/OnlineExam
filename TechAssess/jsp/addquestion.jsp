@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,20 +20,12 @@
 </head>
 <body>
         <div class="content">
+        <c:if test="${null != QuestionMessage}">
+            <c:out value="${QuestionMessage}"/>
+        </c:if>
         <div class="heading">
             <div class="head">
                  <h1 class="title">TechAssess</h1>
-            </div>
-            <div class="addtype">
-                <form class="form-basic" method="post" action="addquestiontype">  
-                        <div class="form-row">
-                              <label>
-                                <span>NewQuestionType</span>
-                                <textarea name="questionname"></textarea>
-                              </label>
-                           </div>
-                        <button class="btn btn-primary">AddType</button>
-                 </form>
             </div>
         </div>
         <br>
@@ -65,7 +57,7 @@
                             <div class="form-row">
                                <label>
                                   <span>IfCorrect</span>
-                                 <input type="checkbox" name="checkbox">
+                                 <input type="checkbox" name="checkbox" value = "1">
                               </label>
                             </div>
                          </div>
@@ -92,7 +84,7 @@
                             <div class="form-row">
                                <label>
                                   <span>IfCorrect</span>
-                                 <input type="checkbox" name="checkboxone">
+                                 <input type="checkbox" name="checkbox" value="1">
                               </label>
                             </div>
                          </div>
@@ -106,7 +98,7 @@
                             <div class="form-row">
                                <label>
                                   <span>IfCorrect</span>
-                                 <input type="checkbox" name="checkboxtwo">
+                                 <input type="checkbox" name="checkbox" value="1">
                               </label>
                             </div>
                          </div>
@@ -114,13 +106,13 @@
                             <div class="answer"> 
                                  <label>
                                      <span>Choice3</span>
-                                     <input type="text" name="choicethree">
+                                     <input type="text" name="choicethree" >
                                  </label>
                             </div> 
                             <div class="form-row">
                                <label>
                                   <span>IfCorrect</span>
-                                 <input type="checkbox" name="checkboxthree">
+                                 <input type="checkbox" name="checkbox" value="1">
                               </label>
                             </div>
                          </div>
@@ -134,17 +126,16 @@
                             <div class="form-row">
                                <label>
                                   <span>IfCorrect</span>
-                                 <input type="checkbox" name="checkboxfour">
-                              </label>
+                                 <input type="checkbox" name="checkbox" value="1"/>
                             </div>
                          </div>
                          <div class="form-row">
-                               <button type="submit" class="btn btn-primary">Add</button>
+                               <button type="submit" class="btn btn-primary" name="button" value="Choose">Add</button>
                          </div>
                  </form>
               </div>
                <div id="Multiple" class="colors" style="display:none"> 
-              <form class="form-basic" method="post" action="Multipleanswer" name="multiple">   
+              <form class="form-basic" method="post" action="choosethebest" name="multiple">   
                         <div class="form-row">
                               <label>
                                 <span>Question</span>
