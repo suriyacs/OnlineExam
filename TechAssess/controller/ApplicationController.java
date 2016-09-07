@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,19 +14,19 @@ import model.User;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
-import service.ChoiceService;
-import service.QuestionService;
-import service.QuestionTypeService;
 import service.RoleService;
 import service.UserService;
+import service.QuestionTypeService;
+import service.ExamService;
+import model.Exam;
+import model.Question;
 @Controller
-public class ApplicationController {
-	
+public class ApplicationController {	
 	UserService userService = new UserService();
 	RoleService roleService = new RoleService();
-	QuestionService questionService = new QuestionService();
 	QuestionTypeService questionTypeService = new QuestionTypeService();
-	ChoiceService choiceService = new ChoiceService();
+	ExamService examService = new ExamService();
+	
 	
 	 /**
 	  * <p>
@@ -83,11 +84,23 @@ public class ApplicationController {
 				return new ModelAndView("addadmin", "LogInMessage", (e.getMessage().toString()));
 			}
 		}
+	 
+	 @RequestMapping(value="/addingexam",method = RequestMethod.POST)
+	 public String insertExam(@ModelAttribute Exam exam,ModelMap Message) {
+		 try {
+			 examService.addExamDetails(exam);
+			 Message.addAttribute("InsertExamMessage","Added Successfully..!!");
+		 } catch(DataException e) {
+			 Message.addAttribute("InsertExamMessage",(e.getMessage().toString()));
+		 } finally {
+			 return "addexam";
+		 }
+	 }
 	 @RequestMapping(value = "/adminpage")
 	 public String goToAdminPage() {
 		 return "adminpage";
 	 }
-
+	 
 	 @RequestMapping(value = "/gotouserpage")
 	 public String goToUserPage() {
 		 return "userpage";
@@ -99,19 +112,30 @@ public class ApplicationController {
 	 }
 	 
 	 @RequestMapping(value="/insertquestion") 
-     public String redirctToInsertQuestionPage() {
+     public String redirctToInsertQuestionPage(ModelMap model) {
+		 try {
+		     model.addAttribute("questionTypes",questionTypeService.getAllQuestionTypes());
+		 } catch(DataException e) {
+			 model.addAttribute("insertQuestionMessage",(e.getMessage().toString()));
+		 }
     	 return "addquestion";
-     }
+         }
 	 
-	 @RequestMapping(value="/inserttest")
-	 public String redirctToInsertTestPage() {
-		 return "addtest";
+	 @RequestMapping(value="/insertexamdetails")
+	 public String redirctToInsertTestPage(ModelMap model){
+		 model.addAttribute("exam",new Exam());
+		 return "addexam";
 	 }
 	 
 	 @RequestMapping(value="/logout")
 	 public String logout(HttpSession session) {
 		 session.invalidate();
 		 return("redirect:loginpage");
+	 }
+	 
+	 @RequestMapping(value="/reloadinsertQuestion")
+	 public String reloadInsertQuestion() {
+		 return("redirect:addquestion");
 	 }
 	 
 	 @RequestMapping(value="/taketest")

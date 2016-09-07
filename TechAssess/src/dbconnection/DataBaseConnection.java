@@ -49,9 +49,10 @@ public class DataBaseConnection{
             configuration.configure("hibernate.cfg.xml");
             configuration.addAnnotatedClass(model.User.class);
             configuration.addAnnotatedClass(model.Role.class);
+            configuration.addAnnotatedClass(model.Exam.class);
             configuration.addAnnotatedClass(model.Question.class);
-            configuration.addAnnotatedClass(model.QuestionType.class);
             configuration.addAnnotatedClass(model.Choice.class);
+            configuration.addAnnotatedClass(model.QuestionType.class);
          sessionFactory = configuration.buildSessionFactory();
      }
      return sessionFactory;
