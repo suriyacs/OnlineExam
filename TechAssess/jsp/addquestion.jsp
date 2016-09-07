@@ -27,107 +27,96 @@
         </c:if>
 </head>
 <body>
-        <div class="content">
+    <div class="content">
         <div class="heading">
             <div class="head">
                  <h1 class="title">TechAssess</h1>
             </div>
-        </div>
-        <br>
+        </div><br>
         <center>
-        <div class="select">
-              <Select id="colorselector">
-              <option value="fill">Fill In The Blanks</option>
-              <option value="choose">Choose The Best Answer</option>
-              <option value="Multiple">Multiple Answer Question</option>
-              </Select>  
-         </div>
-         </center>
-                  <div id="fill" class="colors" style="display:none">  
-                   <form class="form-basic" method="post" action="fillintheblanks" name="fill">  
-                        <div class="form-row">
-                              <label>
-                                <span>Question</span>
-                                <textarea name="questionname"></textarea>
-                              </label>
-                           </div>
-                         <div class="form-row">
-                            <div class="answer"> 
-                                 <label>
-                                     <span>Answer</span>
-                                     <input type="text" name="answer">
-                                 </label>
-                            </div> 
-                            <div class="form-row">
-                               <label>
-                                  <span>IfCorrect</span>
-                                 <input type="checkbox" name="checkbox">
-                              </label>
-                            </div>
-                         </div>
-                          <div class="form-row">
-                              <button type="submit" class="btn btn-primary">Add</button>
-                          </div>
-                     </form>
+            <div class="select">
+                <Select id="colorselector">
+                    <option value="fill">Fill In The Blanks</option>
+                    <option value="choose">Choose The Best Answer</option>
+                    <option value="Multiple">Multiple Answer Question</option>
+                </Select>  
+           </div>
+        </center>
+        <div id="fill" class="colors" style="display:none">
+            <div class="well">
+                <form method="post" action="fillintheblanks">
+                    <table class="table">
+                        <tr>
+                            <th><span>Question</span></th>
+                            <td><textarea name="questionname"></textarea></td>
+                        </tr>
+                        <tr>
+                            <th><span>Answer</span></th>
+                            <td><input type="text" name="answer"></td>
+                            <th><span>IfCorrect</span></th>
+                            <td><input type="checkbox" name="checkbox" value="1"></td>
+                        </tr>
+                        <tr>
+                            <td><button type="submit" class="btn btn-primary">Add</button></td>
+                        </tr>
+                    </table>
+                </form>
             </div>
-              <div id="choose" class="colors" style="display:none"> 
-                 <form:form method="post" action="choosethebest" modelAttribute="Question">  
-                      <div class="form-row">
-                              <label>
-                                <span>Question</span>
-                                <form:textarea path ="question"></form:textarea>
-                              </label>
-                           </div>
+        </div>
+        <div id="choose" class="colors" style="display:none">
+            <div class="well">
+                <table class="table">
+                    <form:form method="post" action="choosethebest" modelAttribute="Question">
+                         <tr>
+                             <th><span>Question</span></th>
+                             <td><form:textarea path ="questionName"></form:textarea></td>
+                             <td><th><span>Enter NUMERIC ONE if CHOICE is correct. Otherwise mark ZERO.</span></th></td>
+                         </tr>
+                         <c:set var="count" value="1" scope="page" />
                          <c:forEach items="${Question.choices}" var="choice" varStatus="status">
-                         <div class="form-row">
-                            <div class="answer"> 
-                                 <label>
-                                     <span>Choice1</span>
-                                     <input name ="choices[${status.index}].choiceName" value="${choice.choiceName}" >
-                                 </label>
-                            </div> 
-                            <div class="form-row">
-                               <label>
-                                  <span>IfCorrect</span>
-                                 <input name="choices[${status.index}].isCorrect" value="${choice.isCorrect}">
-                              </label>
-                            </div>
-                         </div>
+                             <tr>
+                                 <th><span>Choice</span> <c:out value="${Choice ? '' : count}"/></th>
+                                 <td> <input name ="choices[${status.index}].choiceName" value="${choice.choiceName}" ></td>                             
+                                 <th><span>IfCorrect</span></th>
+                                 <td><input name="choices[${status.index}].isCorrect" value="${choice.isCorrect}"></td>
+                             </tr>
+                             <c:set var="count" value="${count + 1}" scope="page"/>
                          </c:forEach>
-                          <div class="form-row">
-                               <button type="submit" class="btn btn-primary">Add</button>
-                         </div>
-                    </form:form>
-                 </div>
-               <div id="Multiple" class="colors" style="display:none"> 
-               <form:form method="post" action="multiple" modelAttribute="Question">  
-                    <div class="form-row">
-                              <label>
-                                <span>Question</span>
-                                <form:textarea path ="question"></form:textarea>
-                              </label>
-                           </div>
-                         <c:forEach items="${Question.choices}" var="choice" varStatus="status">
-                         <div class="form-row">
-                            <div class="answer"> 
-                                 <label>
-                                     <span>Choice1</span>
-                                     <input name ="choices[${status.index}].choiceName" value="${choice.choiceName}" >
-                                 </label>
-                            </div> 
-                            <div class="form-row">
-                               <label>
-                                  <span>IfCorrect</span>
-                                 <input name="choices[${status.index}].isCorrect" value="${choice.isCorrect}">
-                              </label>
-                            </div>
-                         </div>
-                         </c:forEach>                         
-                         <div class="form-row">
-                               <button type="submit" class="btn btn-primary">Add</button>
-                         </div>
+                         <tr>
+                             <td><button type="submit" class="btn btn-primary">Add</button></td>
+                             <td><input type="hidden" name="questionType" value="2"></td>
+                         </tr>
                      </form:form>
+                 </table>
+               </div>
               </div>
-          </div>
+              <div id="Multiple" class="colors" style="display:none"> 
+              <div class="well">
+              <table class="table">
+               <form:form method="post" action="choosethebest" modelAttribute="Question">  
+                   <tr>
+                       <th><span>Question</span></th>
+                       <td><form:textarea path ="questionName"></form:textarea></td>
+                       <td><th><span>Enter NUMERIC ONE if CHOICE is correct. Otherwise mark ZERO.</span></th></td>
+                   </tr>
+                   <c:set var="count" value="1" scope="page" />
+                   <c:forEach items="${Question.choices}" var="choice" varStatus="status">
+                       <tr>
+                            <th><span>Choice</span> <c:out value="${Choice ? '' : count}"/></th>
+                            <td><input name ="choices[${status.index}].choiceName" value="${choice.choiceName}" ></td>
+                            <th><span>IfCorrect</span></th>
+                            <td><input name="choices[${status.index}].isCorrect" value="${choice.isCorrect}"></td>
+                       </tr> 
+                       <c:set var="count" value="${count + 1}" scope="page"/>
+                   </c:forEach>                         
+                   <tr>
+                       <td><button type="submit" class="btn btn-primary">Add</button></td>
+                       <td><input type="hidden" name="questionType" value="3"></td>
+                   </tr>
+              </form:form>
+              </table>
+              </div>
+              </div>
+              </div>
      </body>
    </html>
