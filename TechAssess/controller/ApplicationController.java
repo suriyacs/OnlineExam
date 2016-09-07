@@ -1,5 +1,8 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -23,7 +26,6 @@ import service.QuestionService;
 import model.Exam;
 import model.Choice;
 import model.Question;
-
 @Controller
 public class ApplicationController {	
 	UserService userService = new UserService();
@@ -89,11 +91,12 @@ public class ApplicationController {
 			}
 		}
 	 
-	 @SuppressWarnings("finally")
-	@RequestMapping(value="/addingexam",method = RequestMethod.POST)
-	 public String insertExam(@ModelAttribute Exam exam,ModelMap Message) {
+	 @RequestMapping(value="/addingexam",method = RequestMethod.POST)
+	 public String insertExam(@ModelAttribute Exam exam,ModelMap Message,@RequestParam("questionid") int questionId) {
 		 try {
-			 examService.addExamDetails(exam);
+			 int examId = examService.addExamDetails(exam);
+			 System.out.println(examId+" "+questionId);
+			 examService.allocateQuestionsToExam(examId, questionId);
 			 Message.addAttribute("InsertExamMessage","Added Successfully..!!");
 		 } catch(DataException e) {
 			 Message.addAttribute("InsertExamMessage",(e.getMessage().toString()));
@@ -152,16 +155,15 @@ public class ApplicationController {
 	 
 	 @RequestMapping(value="/fillintheblanks")
 	 public String addQuestionForFillup(@RequestParam("questionname") String questionName,
-			 @RequestParam("answer") String answer, @RequestParam("checkbox") String correctAnswer, ModelMap model) {
+			 @RequestParam("answer") String answer, @RequestParam("checkbox") String correctAnswer,ModelMap model) {
 		 try {
 		     int questionId = questionService.addQuestion(questionName);
+		     int choiceId = choiceService.addChoice(answer,Integer.parseInt(correctAnswer));
 		     questionService.allocateQuestionType(1, questionId);
-		     choiceService.allocateQuestion(choiceService.addChoice(answer,Integer.parseInt(correctAnswer)), questionId);
+		     choiceService.allocateQuestion(choiceId, questionId);
 		     model.addAttribute("insertQuestionMessage", correctAnswer + " " + "InserTion Success");
 		 } catch(DataException e) {
 			 model.addAttribute("insertQuestionMessage", (e.toString()));
-		 } catch (IllegalStateException e) {
-			 model.addAttribute("insertQuestionMessage", correctAnswer + " " + "InserTion Success");
 		 }
 		 return("redirect:insertquestion");
 	 }
@@ -175,7 +177,7 @@ public class ApplicationController {
 		     for( Choice choice : question.getChoices()) {
 		    	 choiceService.allocateQuestion(choiceService.addChoice(choice.getChoiceName(),(choice.getIsCorrect())), questionId);
 		     }
-		     model.addAttribute("insertQuestionMessage","Addedd Successfully..!!");
+		     model.addAttribute("insertQuestionMessage","Added Successfully..!!");
 	     } catch(DataException e) {
 	    	 model.addAttribute("insertQuestionMessage",(e.toString()));
 	     }

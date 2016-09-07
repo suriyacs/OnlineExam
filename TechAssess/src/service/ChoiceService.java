@@ -15,8 +15,8 @@ public class ChoiceService {
 
 	ChoiceDao choiceDao = new ChoiceDao();
 	
-	public int addChoice(String answer, String correctAnswer) throws DataException {
-		return choiceDao.insertChoice(new Choice(answer,Integer.parseInt(correctAnswer)));
+	public int addChoice(String answer, int correctAnswer) throws DataException {
+		return choiceDao.insertChoice(new Choice(answer,correctAnswer));
 	}
 	
 	public Choice getChoiceDetailsById(int choiceId) throws DataException {

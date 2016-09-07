@@ -67,11 +67,11 @@ public class Exam {
 		return examValidDays;
 	}
 	
-    public Set<Question> getAllQuestions() {
+    public Set<Question> getQuestions() {
     	 return this.questions;
     }
 	
-	public void setAllQuestions(Set<Question> question) {
+	public void setQuestions(Set<Question> question) {
 		this.questions.addAll(question);
 	}
 }

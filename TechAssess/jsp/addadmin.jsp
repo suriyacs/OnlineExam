@@ -1,4 +1,4 @@
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html>
     <head>
@@ -14,8 +14,17 @@
         <script src="js/parallex.js"></script>
     </head>
     <body>
+     <c:if test="${LogInMessage != null}">
+                <script type='text/javascript' language='javascript'>
+                    alert("<c:out value='${LogInMessage}' />");
+                    window.location="adminpage";
+                </script>
+            </c:if>
         <div id="grid"></div>
         <div class="content">
+        <div class="logout" style="float:right">
+            <a href="logout"class="btn btn-danger" title="logout"><span class="glyphicon glyphicon-log-out"></span></a> 
+        </div>
         <center>
         <div class="center">
         <div class="inputform">
@@ -23,7 +32,7 @@
                 <div class="tab-content" style="margin:25px">
                     <div id="signup">
                         <h1 style="color:white">Admin Sign up</h1>
-                        <form action="/" method="post">
+                        <form action="adminRegisteration" method="post">
                             <div class="top-row">
                                 <div class="field-wrap">
                                     <label>
@@ -35,14 +44,14 @@
                                  <label>
                                     MobileNumber<span class="req">*</span>
                                     </label>
-                                    <input type="text" name="mobilenumber"required autocomplete="off"/>
+                                    <input type="text" name="mobileNumber"required autocomplete="off"/>
                                 </div>
                             </div>
                             <div class="field-wrap">
                                 <label>
                                 Email Address<span class="req">*</span>
                                 </label>
-                                <input type="email" name="password"required autocomplete="off"/>
+                                <input type="email" name="emailId"required autocomplete="off"/>
                             </div>
                             <div class="field-wrap">
                                 <label>

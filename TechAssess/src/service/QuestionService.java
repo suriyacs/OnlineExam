@@ -19,7 +19,7 @@ public class QuestionService {
 	    return questionDao.insertQuestion(new Question(questionName));
 	}
 	
-	public void addQuestionType(int typeId, int questionId) throws DataException {
+	public void allocateQuestionType(int typeId, int questionId) throws DataException {
 		questionDao.assignQuestionType(typeId, questionId);
 	}
 	

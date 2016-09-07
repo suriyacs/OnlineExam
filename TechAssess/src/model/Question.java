@@ -1,7 +1,9 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,9 +13,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import model.Exam;
 
 @Entity
 @Table(name="Question")
@@ -24,17 +29,22 @@ public class Question {
 	@Column(name="question_id")
 	int questionId;
 	@Column(name="question")
-	String question;
+	String questionName;
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="type_id")
-	QuestionType typeId;
-    
+	QuestionType typeId;	
+	@OneToMany(cascade = CascadeType.PERSIST)
+	@JoinColumn(name="question_id")
+	List<Choice> choices = new ArrayList<Choice>();
+	@ManyToMany(cascade = CascadeType.ALL,mappedBy="questions") 
+    Set<Exam> exams = new HashSet<Exam>();
+	
     public Question() {
     	
     }
     
-	public Question(String question) {
-		this.question = question;
+	public Question(String questionName) {
+		this.questionName = questionName;
 	}
 	
 	public void setQuestionId(int questionId) {
@@ -45,12 +55,12 @@ public class Question {
 		return this.questionId;
 	}
 	
-	public void setQuestion(String question) {
-		this.question = question;
+	public void setQuestionName(String questionName) {
+		this.questionName = questionName;
 	}
 	
-	public String getQuestion() {
-		return this.question;
+	public String getQuestionName() {
+		return this.questionName;
 	}
 	
 	public QuestionType getTypeId() {
@@ -61,9 +71,30 @@ public class Question {
 		this.typeId = typeId;
 	}
 	
+	public void setChoices(List<Choice> choice) {
+		this.choices = choice;
+	}
+	
+	@ManyToMany(mappedBy="questions") 
+	public void setExams(Set<Exam> exam) {
+		this.exams.addAll(exam);
+    }
+	
+	public Set<Exam> getExams() {
+		return exams;
+	}
+	
+	public List<Choice> getChoices() {
+		return choices;
+	}
+	
+	public void add(Choice choice) {
+		this.choices.add(choice);
+	}
+	
 	@Override
 	public String toString() {
-        return questionId + "\t" + question + "\t" + typeId;
+        return questionId + "\t" + questionName + "\t" + typeId;
     }
 }
 

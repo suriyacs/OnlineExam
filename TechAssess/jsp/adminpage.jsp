@@ -6,6 +6,9 @@
         <link rel="stylesheet" href="css/index.css">
     </head>
     <body>
+     <div class="logout" style="float:right">
+                <a href="logout"class="btn btn-danger" title="logout"><span class="glyphicon glyphicon-log-out"></span></a> 
+            </div>
     <div class="header">
             <h1 class="title" >Tech Assess</h1>
             </div>
@@ -19,14 +22,14 @@
                     </a>
                     <div class="col-xs-1">
                     </div>
-                    <a href="#" class="firstcolumn">
+                    <a href="insertquestion" class="firstcolumn">
                         <div class="col-xs-3 middle">
                             <h3>AddNewQuestion</h3>
                         </div>
                     </a>
                     <div class="col-xs-1">
                     </div>
-                    <a href="inserttest" class="firstcolumn">
+                    <a href="insertexamdetails" class="firstcolumn">
                         <div class="col-xs-3 row-height">
                             <h3>AddNewTest</h3>
                         </div>

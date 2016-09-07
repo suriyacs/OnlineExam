@@ -51,7 +51,7 @@ public class Choice {
 		this.choiceName = choiceName;
 	}
 	
-	public String getchoiceName() {
+	public String getChoiceName() {
 		return this.choiceName;
 	}
 	
@@ -65,6 +65,10 @@ public class Choice {
 	
 	public void setIsCorrect(int isCorrect) {
 		this.isCorrect = isCorrect;
+	}
+	
+	public int getIsCorrect() {
+		return isCorrect;
 	}
 }
 

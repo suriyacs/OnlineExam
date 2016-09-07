@@ -9,11 +9,15 @@ import exception.DataException;
 public class ExamService {
     ExamDao examDao = new ExamDao();
     
-    public void addExamDetails(Exam exam)throws DataException {
+    public int addExamDetails(Exam exam)throws DataException {
     	try {
-    	    examDao.insertExamDetails(exam);  
+    	    return(examDao.insertExamDetails(exam));  
     	} catch(DataException e) {
     		throw new DataException(e.getMessage().toString());
     	}
+    }
+    
+    public void allocateQuestionsToExam(int examId,int questionId ) throws DataException {
+    	    examDao.assignQuestionsToExam(examId,questionId);
     }
 }

@@ -1,5 +1,7 @@
-
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
     <head>
         <title>CreatExam</title>
@@ -13,9 +15,18 @@
         <script type="text/javascript" src="js/jssor.slider-21.1.5.mini.js"></script>
         <script src="js/parallex.js"></script>
     </head>
+    <c:if test="${InsertExamMessage != null }">
+        <script type="text/javascript" name="javascript">
+            alert("<c:out value='${InsertExamMessage}'/>");
+            widow.location="insertexamdetails";
+         </script>
+    </c:if>
     <body>
         <div id="grid"></div>
         <div class="content">
+        <div class="logout" style="float:right">
+                <a href="logout"class="btn btn-danger" title="logout"><span class="glyphicon glyphicon-log-out"></span></a> 
+            </div>
         <center>
         <div class="center">
         <div class="inputform">
@@ -23,29 +34,39 @@
                 <div class="tab-content" style="margin:25px">
                     <div id="signup">
                         <h1 style="color:white">CreateNewExam</h1>
-                        <form action="/" method="post">
+                        <form:form action="addingexam" method="post" role="form" class="form"  modelAttribute="exam">
                             <div class="top-row">
                                 <div class="field-wrap">
                                     <label>
                                     Exam Name<span class="req">*</span>
                                     </label>
-                                    <input type="text" name="examName" required autocomplete="off" />
+                                  <form:input path="examName" name="examname" required="required" class="form-control" pattern='[A-Za-z\\s]*' title="Enter words only" ></form:input>
+                        <br><br>                                 
                                 </div>
                                 <div class="field-wrap">
                                  <label>
                                     Duration<span class="req">*</span>
                                     </label>
-                                    <input type="text" name="duration"required autocomplete="off"/>
+                                    <form:input path="examDuration" name="duration" required="required" class="form-control" ></form:input>
+                        <br><br>
                                 </div>
                             </div>
                             <div class="field-wrap">
                                 <label>
                                 NoOfValidDays<span class="req">*</span>
                                 </label>
-                                <input type="text" name="validDay"required autocomplete="off"/>
+                                <form:input path="examValidDays"  name="examValidDays" required="required" class="form-control"></form:input>
+                               <br><br>
+                            </div>
+                            <div class="field-wrap">
+                                <label>
+                                Enter question id<span class="req">*</span>
+                                </label>
+                                <input type="text" name="questionid" >
+                               <br><br>
                             </div>
                             <button type="submit" class="button button-block"/>CreateExam</button>          
-                        </form>
+                        </form:form>
                     </div>
                     <div id="login">
 
