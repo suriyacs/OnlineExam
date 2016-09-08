@@ -33,7 +33,7 @@ public class Question {
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="type_id")
 	QuestionType typeId;	
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinColumn(name="question_id")
 	List<Choice> choices = new ArrayList<Choice>();
 	@ManyToMany(cascade = CascadeType.ALL,mappedBy="questions") 

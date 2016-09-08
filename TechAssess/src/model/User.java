@@ -1,8 +1,13 @@
 package model;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 
@@ -32,7 +37,9 @@ public class User {
 	String mobileNumber;
 	@Column(name="role_id")
 	int roleId;
-	
+	@ManyToMany(cascade = CascadeType.ALL,mappedBy="users") 
+    Set<Exam> exams = new HashSet<Exam>();
+
 	public User() {
 		
 	}
@@ -93,6 +100,15 @@ public class User {
 	
 	public int getRoleId() {
         return this.roleId;
+	}
+	
+
+	public Set<Exam> getExams() {
+		return exams;
+	}
+
+	public void setExams(Set<Exam> exams) {
+		this.exams.addAll(exams);
 	}
 }
 

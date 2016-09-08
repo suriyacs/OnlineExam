@@ -2,6 +2,11 @@ html{
     background-image:url("../img/light-wallpaper-hd-31.jpg");
 }
 
+.well {
+	width : 600px;
+	margin-left: 350px;
+}
+
 .form-basic{
     width: 640px;
     margin: 0 auto;

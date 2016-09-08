@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -26,6 +27,7 @@ import service.QuestionService;
 import model.Exam;
 import model.Choice;
 import model.Question;
+
 @Controller
 public class ApplicationController {	
 	UserService userService = new UserService();
@@ -70,6 +72,7 @@ public class ApplicationController {
 	               return "redirect:adminpage";
 	           } else if("User".equals(roleService.getRoleNameById(user.getRoleId())) && password.equals(user.getPassword())) {
 	        	   session.setAttribute("role", "User");
+	        	   session.setAttribute("user", user);
 	               return "redirect:gotouserpage";
 	           } else {
 	        	   model.addAttribute("Message", roleService.getRoleNameById(user.getRoleId()));
@@ -91,11 +94,10 @@ public class ApplicationController {
 			}
 		}
 	 
-	 @RequestMapping(value="/addingexam",method = RequestMethod.POST)
+	@RequestMapping(value="/addingexam",method = RequestMethod.POST)
 	 public String insertExam(@ModelAttribute Exam exam,ModelMap Message,@RequestParam("questionid") int questionId) {
 		 try {
 			 int examId = examService.addExamDetails(exam);
-			 System.out.println(examId+" "+questionId);
 			 examService.allocateQuestionsToExam(examId, questionId);
 			 Message.addAttribute("InsertExamMessage","Added Successfully..!!");
 		 } catch(DataException e) {
@@ -110,7 +112,12 @@ public class ApplicationController {
 	 }
 	 
 	 @RequestMapping(value = "/gotouserpage")
-	 public String goToUserPage() {
+	 public String goToUserPage(ModelMap model) {
+		 try {
+		     model.addAttribute("exams", examService. getAllExams());
+		 } catch (DataException e) {
+			 model.addAttribute("ExamMessage", e.toString());
+		 }
 		 return "userpage";
 	 }
 	 
@@ -148,9 +155,36 @@ public class ApplicationController {
 	 }
 	 
 	 @RequestMapping(value="/taketest")
-	 public String redirectToStartTestPage(ModelMap model){
-		 model.addAttribute("ToStartTest", "start");
-		 return "questionpageforuser";
+	 public String redirectToStartTestPage(HttpSession session, @RequestParam("test") String testId, ModelMap model){
+		 try {
+		     User user = (User)session.getAttribute("user");
+		     examService.addUserToExam(testId, user.getUserId());
+		     model.addAttribute("insertQuestionMessage", "Inserted Successfully");
+		     model.addAttribute("value", testId);
+		 } catch(DataException e) {
+			 model.addAttribute("insertQuestionMessage", (e.toString()));
+		 } finally {
+			 //return "questionpageforuser";
+			 return "success";
+		 }
+	 }
+	 /*sample method for displaying question*/
+	 @RequestMapping(value = "/values")
+	 public String redirectToQuestionPage(@RequestParam("test") String testId, ModelMap model) {
+		 int idr = Integer.parseInt(testId);
+		 try {
+			 Set<Question> questions = examService.getExamById(idr).getQuestions();
+		     List questionList = new ArrayList(questions);
+		     Question question = (Question)questionList.get(0);
+		     
+		     model.addAttribute("question",  question);
+		     model.addAttribute("choices", question.getChoices());
+		 } catch (DataException e) {
+			 model.addAttribute("message", e.toString());
+		 }
+		 model.addAttribute("value", testId);
+		 //return "questionpageforuser";
+		 return "success";
 	 }
 	 
 	 @RequestMapping(value="/fillintheblanks")
@@ -164,8 +198,9 @@ public class ApplicationController {
 		     model.addAttribute("insertQuestionMessage", correctAnswer + " " + "InserTion Success");
 		 } catch(DataException e) {
 			 model.addAttribute("insertQuestionMessage", (e.toString()));
+		 } finally {
+		     return("redirect:insertquestion");
 		 }
-		 return("redirect:insertquestion");
 	 }
 	 
 	 @RequestMapping(value="/choosethebest",method = RequestMethod.POST)

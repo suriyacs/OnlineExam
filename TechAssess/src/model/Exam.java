@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,18 +22,22 @@ public class Exam {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="exam_id")
-	int exam_id;
+	int examId;
 	@Column(name="exam_name")
 	String examName;
 	@Column(name="duration")
 	int examDuration;
 	@Column(name="valid_days")
 	int examValidDays;
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name="Examquestion",joinColumns = {@JoinColumn(name="exam_id",nullable = false, updatable = false)},
 	           inverseJoinColumns = {@JoinColumn(name = "question_id",nullable = false, updatable = false)})
     Set<Question> questions = new HashSet<Question>(0);
-
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="Userexam",joinColumns = {@JoinColumn(name="exam_id",nullable = false, updatable = false)},
+	           inverseJoinColumns = {@JoinColumn(name = "user_id",nullable = false, updatable = false)})
+    Set<User> users = new HashSet<User>();
+	
 	public Exam() {
 		
 	}
@@ -43,6 +48,14 @@ public class Exam {
 		this.examValidDays = validDays;
 	}
     
+	public int getExamId() {
+		return examId;
+	}
+
+	public void setExamId(int examId) {
+		this.examId = examId;
+	}
+
 	public void setExamName(String examName) {
 		this.examName = examName;
 	}
@@ -74,4 +87,13 @@ public class Exam {
 	public void setQuestions(Set<Question> question) {
 		this.questions.addAll(question);
 	}
+	
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users.addAll(users);
+	}
+
 }

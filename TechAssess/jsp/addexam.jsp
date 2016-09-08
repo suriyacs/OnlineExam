@@ -26,7 +26,7 @@
         <div class="content">
         <div class="logout" style="float:right">
                 <a href="logout"class="btn btn-danger" title="logout"><span class="glyphicon glyphicon-log-out"></span></a> 
-            </div>
+        </div>
         <center>
         <div class="center">
         <div class="inputform">
