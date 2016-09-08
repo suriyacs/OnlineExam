@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,14 +24,37 @@ public class ExamDao {
     	
     	try {    		
     		Transaction transaction = session.beginTransaction();
-    		int examId = (int)session.save(exam);
     		transaction.commit();
-    		return examId;
+    		return ((int)session.save(exam));
     	} catch(HibernateException e) {
     		throw new DataException("Invalid Inputs Please Check The Inputs and Try Again");
     	} finally {
     		session.close();
     	}    
+    }
+        
+    public Exam getExamById(int examId)throws DataException {
+    	Session session = factory.openSession();
+    	 
+    	Transaction transaction = session.beginTransaction();
+    	Exam exam =(Exam)session.get(Exam.class,examId); 
+    	return exam;
+    }
+    
+    public List<Exam> retrieveAllExamDetails()throws DataException {
+    	Session session = factory.openSession();
+    	List<Exam>allExams = new ArrayList<Exam>();
+    	
+    	try {
+    		Transaction transaction = session.beginTransaction();
+    		allExams = session.createQuery("from Exam").list();
+    		transaction.commit();
+        } catch(HibernateException e) {
+        	throw new DataException(e.toString());
+       	} finally {
+       		session.close();
+       	}
+    	return allExams;
     }
     
     public void assignQuestionsToExam(int examId,int questionId)throws DataException {
@@ -45,6 +69,7 @@ public class ExamDao {
     		exam.setQuestions(questionSet);
     		examSet.add(exam);
     		question.setExams(examSet);
+    		increaseAllocatedQuestionsCount(exam);
     		session.save(exam);
     		session.save(question);
     		transaction.commit();
@@ -53,5 +78,15 @@ public class ExamDao {
     	} finally {
     		session.close();
     	}
+    }
+    
+    public void increaseAllocatedQuestionsCount(Exam exam) {
+    	if (exam.getNoOfAllocatedQuestions() != null) {
+			int count = Integer.parseInt(exam.getNoOfAllocatedQuestions());
+			count++;
+			exam.setNoOfAllocatedQuestions(count+"");
+		} else {
+			exam.setNoOfAllocatedQuestions("1");
+		}
     }
 }

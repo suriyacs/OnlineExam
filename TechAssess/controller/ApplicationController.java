@@ -92,11 +92,13 @@ public class ApplicationController {
 		}
 	 
 	 @RequestMapping(value="/addingexam",method = RequestMethod.POST)
-	 public String insertExam(@ModelAttribute Exam exam,ModelMap Message,@RequestParam("questionid") int questionId) {
+	 public String insertExam(@ModelAttribute Exam exam,ModelMap Message) {
 		 try {
-			 int examId = examService.addExamDetails(exam);
-			 System.out.println(examId+" "+questionId);
-			 examService.allocateQuestionsToExam(examId, questionId);
+			 examService.addExamDetails(exam);
+			/* for (int questionId = fromQuestionId;questionId <= toQuestionId;questionId++) {
+			 * @RequestParam("fromquestionid") int fromQuestionId,@RequestParam("toquestionid") int toQuestionId
+			     examService.allocateQuestionsToExam(examId, questionId);
+			 }*/
 			 Message.addAttribute("InsertExamMessage","Added Successfully..!!");
 		 } catch(DataException e) {
 			 Message.addAttribute("InsertExamMessage",(e.getMessage().toString()));
@@ -107,6 +109,33 @@ public class ApplicationController {
 	 @RequestMapping(value = "/adminpage")
 	 public String goToAdminPage() {
 		 return "adminpage";
+	 }
+	 
+	 @RequestMapping(value="/allocating",method=RequestMethod.POST)
+	 public String allocateQuestionsToExam(ModelMap model,@RequestParam("examId") int examId,@RequestParam("fromQuestionId")int fromQuestionId,@RequestParam("toQuestionId") int toQuestionId) {
+		 try {
+		     examService.checkIfExamExist(examId);
+		     questionService.checkIfQuestionExist(fromQuestionId);
+		     questionService.checkIfQuestionExist(toQuestionId);
+		     for (int questionId = fromQuestionId;questionId <= toQuestionId;questionId++) { 
+		    	 examService.allocateQuestionsToExam(examId, questionId);
+		     }
+		     model.addAttribute("allocateMessage","AllocatedSuccessfully..!!");
+		 } catch(DataException e) {
+			 model.addAttribute("allocateMessage",e.getMessage().toString());
+		 }
+		 return("assignquestions");
+	 }   
+	 
+	 @RequestMapping(value="/allocatequestionpage")
+	 public String redirectToAssignQuestionPage(ModelMap model) {
+		 try {
+		     model.addAttribute("questionList", questionService.getAllQuestions());		    
+		     model.addAttribute("examList",examService.getAllExamDetails());
+		 } catch(DataException e) {
+			 model.addAttribute("ErrorMessage",e.getMessage().toString());
+		 }
+		 return("assignquestions");		 
 	 }
 	 
 	 @RequestMapping(value = "/gotouserpage")
@@ -132,6 +161,12 @@ public class ApplicationController {
 	 
 	 @RequestMapping(value="/insertexamdetails")
 	 public String redirctToInsertTestPage(ModelMap model){
+		 try {
+			 List<Question> questions = questionService.getAllQuestions();
+		     model.addAttribute("questionList", questions);
+		 } catch(DataException e) {
+			 model.addAttribute("InsertExamMessage",e.toString());
+		 }
 		 model.addAttribute("exam",new Exam());
 		 return "addexam";
 	 }

@@ -18,6 +18,25 @@ public class ExamService {
     }
     
     public void allocateQuestionsToExam(int examId,int questionId ) throws DataException {
+    	    Exam exam = examDao.getExamById(examId);
+    	    if (exam.getNoOfAllocatedQuestions() != null) {
+    	        if (Integer.parseInt(exam.getNoOfAllocatedQuestions()) == exam.getNoOfTotalQuestions()) {
+    	    	    throw new DataException("This Exam already allocated with enough questions..!Try again with different Id..!!");
+    	        }
+    	    }
     	    examDao.assignQuestionsToExam(examId,questionId);
+    }
+    
+    public List<Exam> getAllExamDetails() throws DataException {
+    	if (examDao.retrieveAllExamDetails() == null) {
+    		throw new DataException("There is no Exams in Database.Please insert some Exams first..!!");
+    	}
+    	return(examDao.retrieveAllExamDetails());
+    }
+    
+    public void checkIfExamExist(int examId)throws DataException {
+    	if (examDao.getExamById(examId) == null) {
+        		throw new DataException("Exam with this Id Does not Exist..!!Try Again..!!");
+    	}
     }
 }
