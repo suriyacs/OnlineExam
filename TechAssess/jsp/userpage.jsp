@@ -4,6 +4,7 @@
         <title>Employee Details</title>
         <link href="css/userpagestyling.css" rel="stylesheet" type="text/css">
          <link href="css/login.css" rel="stylesheet" type="text/css">
+         <link href="css/row.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" integrity="sha384-  
             BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <script src="js/jquery-1.11.3.min.js"></script>
@@ -13,41 +14,16 @@
     </head>
     <body>
     <c:if test="${ null != ExamMessage}">
-                        <c:out value="${ExamMessage }"/>
-                    </c:if>
+        <script type="text/javascript">
+            alert("<c:out value="${ExamMessage }"/>");
+            window.location = "gotouserpage";
+        </script>
+   </c:if>
          <div id="grid"></div>
          <div class="content">
           <div class="logout" style="float:right">
                 <a href="logout"class="btn btn-danger" title="logout"><span class="glyphicon glyphicon-log-out"></span></a> 
         </div>
-
-             <div class="col-sm-2">
-                    <br><br>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Test Id</th>
-                                <th>Mark</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>30</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>20</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>30</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                  
-             </div>
-		 <div class="row">
              <div class="center-container">
                 <div class="container">
                     <h2>Scheduled Exam number</h2>
@@ -77,6 +53,6 @@
                 </div>
              </div>
          </div>
-         </div>
+
     </body>
 </html>

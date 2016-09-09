@@ -1,9 +1,16 @@
 .row {
 	width: 300%
 }
+.well {
+	width : 450px;
+	margin-left: 100px;
+}
 .col-sm-4 {
 	width: 1000%;
 	font-family:Palatino Linotype;
+}
+.center-container {
+	width:60%;
 }
 .questiondiv {
 	border: 3px solid #ddd;

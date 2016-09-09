@@ -37,7 +37,7 @@ public class User {
 	String mobileNumber;
 	@Column(name="role_id")
 	int roleId;
-	@ManyToMany(cascade = CascadeType.ALL,mappedBy="users") 
+	@ManyToMany(fetch= FetchType.EAGER, cascade = CascadeType.ALL,mappedBy="users") 
     Set<Exam> exams = new HashSet<Exam>();
 	
 	public User() {
