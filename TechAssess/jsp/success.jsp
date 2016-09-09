@@ -12,24 +12,57 @@
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
-    <body>
+  <body onload="updateClock(); setInterval('updateClock()', 1000 )">
         <c:if test="${null != insertQuestionMessage}">
            <c:out value="${insertQuestionMessage}"/>
         </c:if>
          <div id="grid"></div>
          <div class="content">
          <div class="page-header">
-         <center><h1 class="title">TechAssess</h1></center>
+             <center><h1 class="title">TechAssess</h1></center>
          </div>
-          <div class="user">
-              <img src="img/userimage.png" alt="userimage" style="width:18%;height:10%;"><h3><c:out value="${userName}"/></h3>
+         <h5>Time Remaining:</h5><div id="countdown"></div>
+         <div id="notifier"></div>
+<script type="text/javascript">
+
+  function display( notifier, str ) {
+    document.getElementById(notifier).innerHTML = str;
+  }
+  
+  function myFunction() {
+	    if (confirm("Oops!!!Time Up!! your response were submitted.") == true) {
+	       window.location = "gotouserpage";
+	    }
+	}
+ 
+  function toMinuteAndSecond( x ) {
+    return Math.floor(x/60) + ":" + x%60;
+  }
+        
+  function setTimer( remain, actions ) {
+    (function countdown() {
+       display("countdown", toMinuteAndSecond(remain));         
+       actions[remain] && actions[remain]();
+       (remain -= 1) >= 0 && setTimeout(arguments.callee, 1000);
+    })();
+  }
+
+  setTimer(1500, {
+    10: function () { display("notifier", "Just 10 seconds to go"); },
+     5: function () { display("notifier", "5 seconds left");        },
+     0: function () { myFunction();      }
+  });   
+
+</script>
+          <div class="usertab">
+              <img src="img/userimage.png" alt="userimage"><h3><c:out value="${userName}"/></h3>
              </div>
              <div class="logout" style="float:right">
                  <a href="logout"class="btn btn-danger" title="logout"><span class="glyphicon glyphicon-log-out"></span></a> 
              </div>
-<h4><c:out value="${examName}"/></h4>
-                 <div class="center-container">
-                     <form action = "taketest" method = "post">
+              <center><h4><c:out value="${examName}"/></h4></center>
+                 <div class="questiondiv">
+                     <form action = "gotouserpage" method = "post">
                          <c:set var="count" value="1" scope="page" />
                          <c:forEach items="${questions}" var="question">
                              <c:if test="${question.getTypeId().getTypeName() == 'fillup'}">
@@ -61,7 +94,7 @@
                                   </div><br>
                              </c:if>
                          </c:forEach>
-                         <br><br><input id="button" type="submit" value="next" class="btn btn-primary"/>
+                         <br><br><input id="button" type="submit" value="submit answers" class="btn btn-primary"/>
                      </form>
                  </div>
              </div>
