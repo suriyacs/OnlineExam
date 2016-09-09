@@ -39,4 +39,12 @@ public class ExamService {
         		throw new DataException("Exam with this Id Does not Exist..!!Try Again..!!");
     	}
     }
+    
+    public void addUserToExam(String examId, int userId) throws DataException {
+    	examDao.assignUserToExam(Integer.parseInt(examId), userId);
+    }
+    
+    public Exam getExamById(int examId) throws DataException {
+    	return examDao.retrieveExamById(examId);
+    }
 }
