@@ -8,6 +8,12 @@
 }
 .center-container {
 	border: 3px solid #ddd;
+	 background-color: rgba(0, 0, 0, 0);
+	 background: rgba(245, 245, 245, 0.7) url("img/whiteimage.jpg") no-repeat center center;
+            background-size: cover;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
 }
 h2 {
 	font-family:Book Antiqua;
@@ -27,3 +33,7 @@ h4 {
 .radio-inline {
 	padding-right:65px;
 }
+
+      
+
+    }
