@@ -16,22 +16,29 @@
             <div class="container">
                 <div class="row">
                     <a href="insertadmin" class="firstcolumn">
-                        <div class="col-xs-3 row-height">
-                            <h3>AddNewAdministrator</h3>
+                        <div class="col-xs-2 row-height">
+                            <h3>AddAdmin</h3>
                         </div>
                     </a>
                     <div class="col-xs-1">
                     </div>
                     <a href="insertquestion" class="firstcolumn">
-                        <div class="col-xs-3 middle">
-                            <h3>AddNewQuestion</h3>
+                        <div class="col-xs-2 middle">
+                            <h3>AddQuestion</h3>
                         </div>
                     </a>
                     <div class="col-xs-1">
                     </div>
                     <a href="insertexamdetails" class="firstcolumn">
-                        <div class="col-xs-3 row-height">
+                        <div class="col-xs-2 row-height">
                             <h3>AddNewTest</h3>
+                        </div>
+                    </a>
+                    <div class="col-xs-1">
+                    </div>
+                    <a href="allocatequestionpage" class="firstcolumn">
+                        <div class="col-xs-2 row-height">
+                            <h3>AssignQuestions</h3>
                         </div>
                     </a>
                 </div>

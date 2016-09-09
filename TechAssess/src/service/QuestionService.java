@@ -3,6 +3,8 @@
  */
 package service;
 
+import java.util.List;
+
 import dao.QuestionDao;
 import exception.DataException;
 import model.Question;
@@ -25,6 +27,19 @@ public class QuestionService {
 	
 	public Question getQuestionDetailById(int questionId) throws DataException {
 		return questionDao.retrieveQuestionDetailById(questionId);
+	}
+	
+	public List<Question> getAllQuestions() throws DataException {
+		if (questionDao.retrieveAllQuestions() == null) {
+			throw new DataException("There are no questions in database.Please insert some questions first.!!");
+		}
+		return (questionDao.retrieveAllQuestions());
+	}
+	
+	public void checkIfQuestionExist(int questionId)throws DataException {
+		if(questionDao.retrieveQuestionDetailById(questionId) == null) {
+			throw new DataException("Question with this id does not exist.!!Try Again..!!");
+		}
 	}
 }
 

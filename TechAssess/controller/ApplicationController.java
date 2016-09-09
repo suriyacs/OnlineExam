@@ -27,7 +27,7 @@ import service.QuestionService;
 import model.Exam;
 import model.Choice;
 import model.Question;
-
+import model.QuestionType;
 @Controller
 public class ApplicationController {	
 	UserService userService = new UserService();
@@ -95,10 +95,9 @@ public class ApplicationController {
 		}
 	 
 	@RequestMapping(value="/addingexam",method = RequestMethod.POST)
-	 public String insertExam(@ModelAttribute Exam exam,ModelMap Message,@RequestParam("questionid") int questionId) {
+	 public String insertExam(@ModelAttribute Exam exam,ModelMap Message) {
 		 try {
-			 int examId = examService.addExamDetails(exam);
-			 examService.allocateQuestionsToExam(examId, questionId);
+			 examService.addExamDetails(exam);
 			 Message.addAttribute("InsertExamMessage","Added Successfully..!!");
 		 } catch(DataException e) {
 			 Message.addAttribute("InsertExamMessage",(e.getMessage().toString()));
@@ -111,10 +110,37 @@ public class ApplicationController {
 		 return "adminpage";
 	 }
 	 
+	 @RequestMapping(value="/allocating",method=RequestMethod.POST)
+	 public String allocateQuestionsToExam(ModelMap model,@RequestParam("examId") int examId,@RequestParam("fromQuestionId")int fromQuestionId,@RequestParam("toQuestionId") int toQuestionId) {
+		 try {
+		     examService.checkIfExamExist(examId);
+		     questionService.checkIfQuestionExist(fromQuestionId);
+		     questionService.checkIfQuestionExist(toQuestionId);
+		     for (int questionId = fromQuestionId;questionId <= toQuestionId;questionId++) { 
+		    	 examService.allocateQuestionsToExam(examId, questionId);
+		     }
+		     model.addAttribute("allocateMessage","AllocatedSuccessfully..!!");
+		 } catch(DataException e) {
+			 model.addAttribute("allocateMessage",e.getMessage().toString());
+		 }
+		 return("assignquestions");
+	 }   
+	 
+	 @RequestMapping(value="/allocatequestionpage")
+	 public String redirectToAssignQuestionPage(ModelMap model) {
+		 try {
+		     model.addAttribute("questionList", questionService.getAllQuestions());		    
+		     model.addAttribute("examList",examService.getAllExamDetails());
+		 } catch(DataException e) {
+			 model.addAttribute("ErrorMessage",e.getMessage().toString());
+		 }
+		 return("assignquestions");		 
+	 }
+	 
 	 @RequestMapping(value = "/gotouserpage")
 	 public String goToUserPage(ModelMap model) {
 		 try {
-		     model.addAttribute("exams", examService. getAllExams());
+		     model.addAttribute("exams", examService.getAllExamDetails());
 		 } catch (DataException e) {
 			 model.addAttribute("ExamMessage", e.toString());
 		 }
@@ -159,32 +185,18 @@ public class ApplicationController {
 		 try {
 		     User user = (User)session.getAttribute("user");
 		     examService.addUserToExam(testId, user.getUserId());
-		     model.addAttribute("insertQuestionMessage", "Inserted Successfully");
-		     model.addAttribute("value", testId);
+		     Exam exam = examService.getExamById(Integer.parseInt(testId));
+		     Set<Question> questions  = exam.getQuestions();
+		     List questionList = new ArrayList(questions);
+		     model.addAttribute("userName", user.getUserName());
+		     model.addAttribute("examName", exam.getExamName());
+		     model.addAttribute("questions", questionList);
 		 } catch(DataException e) {
 			 model.addAttribute("insertQuestionMessage", (e.toString()));
 		 } finally {
-			 //return "questionpageforuser";
-			 return "success";
+			 return "questionpageforuser";
+			 //return "success";
 		 }
-	 }
-	 /*sample method for displaying question*/
-	 @RequestMapping(value = "/values")
-	 public String redirectToQuestionPage(@RequestParam("test") String testId, ModelMap model) {
-		 int idr = Integer.parseInt(testId);
-		 try {
-			 Set<Question> questions = examService.getExamById(idr).getQuestions();
-		     List questionList = new ArrayList(questions);
-		     Question question = (Question)questionList.get(0);
-		     
-		     model.addAttribute("question",  question);
-		     model.addAttribute("choices", question.getChoices());
-		 } catch (DataException e) {
-			 model.addAttribute("message", e.toString());
-		 }
-		 model.addAttribute("value", testId);
-		 //return "questionpageforuser";
-		 return "success";
 	 }
 	 
 	 @RequestMapping(value="/fillintheblanks")
@@ -220,3 +232,4 @@ public class ApplicationController {
 		     
 	 }
 }
+

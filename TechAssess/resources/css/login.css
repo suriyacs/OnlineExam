@@ -1,15 +1,10 @@
 #grid {
-    background-image:url("../img/whiteimage.jpg");
+    background-image:url("../img/light-wallpaper-hd-31.jpg");
     position:fixed;
     top:0;
     width:100%;
     height:4000px;
     z-index:1;
-}
-
-.well {
-	width : 450px;
-	margin-left: 100px;
 }
 
 .content{

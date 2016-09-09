@@ -33,7 +33,7 @@ public class Question {
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="type_id")
 	QuestionType typeId;	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
 	@JoinColumn(name="question_id")
 	List<Choice> choices = new ArrayList<Choice>();
 	@ManyToMany(cascade = CascadeType.ALL,mappedBy="questions") 
@@ -64,7 +64,7 @@ public class Question {
 	}
 	
 	public QuestionType getTypeId() {
-		return typeId;
+		return this.typeId;
 	}
 
 	public void setTypeId(QuestionType typeId) {
@@ -85,7 +85,7 @@ public class Question {
 	}
 	
 	public List<Choice> getChoices() {
-		return choices;
+		return this.choices;
 	}
 	
 	public void add(Choice choice) {

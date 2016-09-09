@@ -39,7 +39,7 @@ public class User {
 	int roleId;
 	@ManyToMany(cascade = CascadeType.ALL,mappedBy="users") 
     Set<Exam> exams = new HashSet<Exam>();
-
+	
 	public User() {
 		
 	}
@@ -101,7 +101,6 @@ public class User {
 	public int getRoleId() {
         return this.roleId;
 	}
-	
 
 	public Set<Exam> getExams() {
 		return exams;

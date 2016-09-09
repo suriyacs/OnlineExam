@@ -59,5 +59,9 @@ public class QuestionType {
 	public Set<Question> getQuestion() {
 		return this.questions;
 	}
+	
+	public String toString() {
+        return typeId + "";
+    }
 }
 

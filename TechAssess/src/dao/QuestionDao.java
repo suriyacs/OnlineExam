@@ -3,6 +3,9 @@
  */
 package dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -64,5 +67,19 @@ public class QuestionDao {
 			session.close();
 		}
 	}
+	
+	public List<Question> retrieveAllQuestions() throws DataException {
+		List<Question>allQuestions = new ArrayList<Question>();
+		Session session = factory.openSession();
+		try {
+			Transaction transaction = session.beginTransaction();
+			allQuestions = session.createQuery("from Question").list();
+			transaction.commit();
+		} catch(HibernateException e) {
+			throw new DataException(e.toString());		
+	    } finally {
+	    	session.close();
+	    }return allQuestions;
+	} 
 }
 

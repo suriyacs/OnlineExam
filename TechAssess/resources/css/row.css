@@ -1,0 +1,29 @@
+
+.row {
+	width: 300%
+}
+.col-sm-4 {
+	width: 1000%;
+	font-family:Palatino Linotype;
+}
+.center-container {
+	border: 3px solid #ddd;
+}
+h2 {
+	font-family:Book Antiqua;
+}
+h4 {
+	font-family:Book Antiqua;
+	position:obsolute;
+	align:center;
+}
+.checkbox-inline {
+	padding-right:65px;
+
+}
+.user {
+	float:left;
+}
+.radio-inline {
+	padding-right:65px;
+}
