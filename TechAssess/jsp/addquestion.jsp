@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" integrity="sha384-   
             BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
 	      <link rel="stylesheet" href="css/form-basic.css">
+	      <link rel="stylesheet" href="css/login.css">
         <script src="js/jquery-1.11.3.min.js"></script>
         <script>
         $(function() {
@@ -32,14 +33,21 @@
             <div class="head">
                  <h1 class="title">TechAssess</h1>
             </div>
-        </div><br>
+             <div class="logout" style="float:left">
+                <a href="adminpage"class="btn btn-success" title="logout">MainPage</span></a> 
+            </div>
+            <div class="logout" style="float:right">
+                <a href="logout"class="btn btn-danger" title="logout"><span class="glyphicon glyphicon-log-out"></span></a> 
+            </div>
+        </div><br><br><br>
         <center>
-            <div class="select">
-                <Select id="colorselector">
+            <div class="bs-docs-example">
+                <select id="colorselector" class="form-control" data-style="btn-primary"style="width:20%;">
+                    <option selected="selected">Select Question Type</option>
                     <option value="fill">Fill In The Blanks</option>
                     <option value="choose">Choose The Best Answer</option>
                     <option value="Multiple">Multiple Answer Question</option>
-                </Select>  
+                </select>  
            </div>
         </center>
         <div id="fill" class="colors" style="display:none">

@@ -15,6 +15,58 @@
         <script src="js/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="js/jssor.slider-21.1.5.mini.js"></script>
         <script src="js/parallex.js"></script>
+        <script>
+
+    function scrolify(tblAsJQueryObject, height){
+        var oTbl = tblAsJQueryObject;
+
+        // for very large tables you can remove the four lines below
+        // and wrap the table with <div> in the mark-up and assign
+        // height and overflow property  
+        var oTblDiv = $("<div/>");
+        oTblDiv.css('height', height);
+        oTblDiv.css('overflow','scroll');               
+        oTbl.wrap(oTblDiv);
+
+        // save original width
+        oTbl.attr("data-item-original-width", oTbl.width());
+        oTbl.find('thead tr td').each(function(){
+            $(this).attr("data-item-original-width",$(this).width());
+        }); 
+        oTbl.find('tbody tr:eq(0) td').each(function(){
+            $(this).attr("data-item-original-width",$(this).width());
+        });                 
+
+
+        // clone the original table
+        var newTbl = oTbl.clone();
+
+        // remove table header from original table
+        oTbl.find('thead tr').remove();                 
+        // remove table body from new table
+        newTbl.find('tbody tr').remove();   
+
+        oTbl.parent().parent().prepend(newTbl);
+        newTbl.wrap("<div/>");
+
+        // replace ORIGINAL COLUMN width                
+        newTbl.width(newTbl.attr('data-item-original-width'));
+        newTbl.find('thead tr td').each(function(){
+            $(this).width($(this).attr("data-item-original-width"));
+        });     
+        oTbl.width(oTbl.attr('data-item-original-width'));      
+        oTbl.find('tbody tr:eq(0) td').each(function(){
+            $(this).width($(this).attr("data-item-original-width"));
+        });                 
+    }
+
+    $(document).ready(function(){
+        scrolify($('#tblNeedsScrolling'), 260); 
+        scrolify($('#tbl1NeedsScrolling'), 260);// 160 is height
+    });
+
+
+    </script>
     </head>
     <c:if test="${ErrorMessage != null }">
         <script type="text/javascript" name="javascript">
@@ -34,18 +86,22 @@
            <div class="header">
                <h1 class="title">Tech Assess</h1>
            </div>
+            <div class="logout" style="float:left">
+                <a href="adminpage"class="btn btn-success" title="logout">MainPage</span></a> 
+            </div>
             <div class="logout" style="float:right">
                 <a href="logout"class="btn btn-danger" title="logout"><span class="glyphicon glyphicon-log-out"></span></a> 
-            </div><br><br><br><br>
+            </div><br><br>
         <center>
         <div class="center">
-            <div class="allquestions" style="float:left">
-                 <table class="employee" id="employee">
+             <div class="questiontable">
+                 <table border="1" width="100%" id="tblNeedsScrolling" height="20%";>
                      <tr style="text-align:center">
                          <th>QuestionId</th>
                          <th>QuestionName</th>
                          <th>QuestionTypeId</th>
                      </tr>
+                   <tbody>
                      <c:if test="${questionList != null}">
                           <c:forEach items="${questionList}" var="question" >
                                <tr>
@@ -55,10 +111,12 @@
                                </tr>	
                           </c:forEach>
                      </c:if> 
+                     </tbody>
                  </table>
              </div>
              <div class="allexams" style="float:right">
-                 <table class="employee" id="employee">
+                 <table border="1" width="100%" id="tbl1NeedsScrolling" height="20%">
+
                      <tr style="text-align:center">
                          <th>ExamId</th>
                          <th>ExamName</th>
@@ -66,6 +124,8 @@
                          <th>TotalQuestions</th>
                          <th>AllocatedQuestions</th>
                      </tr>
+
+                     <tbody>
                      <c:if test="${examList != null}">
                           <c:forEach items="${examList}" var="exam" >
                                <tr>
@@ -86,12 +146,15 @@
                                </tr>	
                           </c:forEach>
                      </c:if> 
+                     </tbody>
                  </table>
-             </div><br><br><br><br><br><br>
+             </div><br><br><br><br>
+             <br><br><br><br>
+             <br><br><br>
               <div class="form">
                 <div class="tab-content" style="margin:25px">
                     <div id="signup">
-                        <h1 style="color:white">AllocateQuestion</h1>
+                        <h1 style="color:black">AllocateQuestion</h1>
                         <form action="allocating" method="post">
                             <div class="field-wrap">
                                 <label>

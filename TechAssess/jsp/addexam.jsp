@@ -25,35 +25,22 @@
     <body>
         <div id="grid"></div>
         <div class="content">
-        <div class="logout" style="float:right">
+        <div class="header">
+               <h1 class="title">Tech Assess</h1>
+           </div>
+           <div class="logout" style="float:right">
                 <a href="logout"class="btn btn-danger" title="logout"><span class="glyphicon glyphicon-log-out"></span></a> 
+            </div>
+             <div class="logout" style="float:left">
+                <a href="adminpage"class="btn btn-success" title="logout">MainPage</span></a> 
             </div>
         <center>
         <div class="center">
-        <div class="allquestions" style="float:left">
-           <table class="employee" id="employee">
-                <tr style="text-align:center">
-                    <th>QuestionId</th>
-                    <th>QuestionName</th>
-                    <th>QuestionTypeId</th>
-                </tr>
-                <c:if test="${questionList != null}">
-                  <h1>vanthutu</h1>
-                    <c:forEach items="${questionList}" var="question" >
-                        <tr>
-                            <td> <c:out value="${question.getQuestionId()}" /></td>
-                            <td> <c:out value="${question.getQuestionName()}" /></td>
-                            <td> <c:out value="${question.getTypeId()}" /></td>
-                        </tr>	
-                    </c:forEach>
-                </c:if> 
-             </table>
-        </div>
         <div class="inputform">
             <div class="form">
                 <div class="tab-content" style="margin:25px">
                     <div id="signup">
-                        <h1 style="color:white">CreateNewExam</h1>
+                        <h1 style="color:black">CreateNewExam</h1>
                         <form:form action="addingexam" method="post" role="form" class="form"  modelAttribute="exam">
                             <div class="top-row">
                                 <div class="field-wrap">
@@ -92,14 +79,6 @@
         <!--- input-form -->
         </div>
         <!--center-->
-        <section class="footer">
-            <div class="container">
-                <hr>
-                <div class="copyright">
-                    <p>© 2016 TechAssess. All Rights Reserved | Design by <a href="#" target="_blank">Tech Assess</a></p>
-                </div>
-            </div>
-        </section>
     </body>
 </html>
 

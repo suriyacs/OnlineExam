@@ -22,16 +22,20 @@
             </c:if>
         <div id="grid"></div>
         <div class="content">
+        <h1 class="title">Tech Assess</h1>
         <div class="logout" style="float:right">
             <a href="logout"class="btn btn-danger" title="logout"><span class="glyphicon glyphicon-log-out"></span></a> 
         </div>
+         <div class="logout" style="float:left">
+                <a href="adminpage"class="btn btn-success" title="logout">MainPage</span></a> 
+            </div>
         <center>
         <div class="center">
         <div class="inputform">
             <div class="form">
                 <div class="tab-content" style="margin:25px">
                     <div id="signup">
-                        <h1 style="color:white">Admin Sign up</h1>
+                        <h1 style="color:black">Admin Sign up</h1>
                         <form action="adminRegisteration" method="post">
                             <div class="top-row">
                                 <div class="field-wrap">
@@ -75,14 +79,6 @@
         <!--- input-form -->
         </div>
         <!--center-->
-        <section class="footer">
-            <div class="container">
-                <hr>
-                <div class="copyright">
-                    <p>© 2016 TechAssess. All Rights Reserved | Design by <a href="#" target="_blank">Tech Assess</a></p>
-                </div>
-            </div>
-        </section>
     </body>
 </html>
 

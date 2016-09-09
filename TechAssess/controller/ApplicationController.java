@@ -182,21 +182,32 @@ public class ApplicationController {
 	 
 	 @RequestMapping(value="/taketest")
 	 public String redirectToStartTestPage(HttpSession session, @RequestParam("test") String testId, ModelMap model){
+		 User user = null;
 		 try {
-		     User user = (User)session.getAttribute("user");
+             user = (User)session.getAttribute("user");
+             if (user.getExams() != null) {
+            	 for(Exam exam : user.getExams()) {
+            		 if (exam.getExamId() == Integer.parseInt(testId)) {
+            			 model.addAttribute("ExamMessage","Sorry..!!You already attended this exam.!!");
+            			 return("userpage");
+            		 }
+            	 }
+             }
 		     examService.addUserToExam(testId, user.getUserId());
 		     Exam exam = examService.getExamById(Integer.parseInt(testId));
 		     Set<Question> questions  = exam.getQuestions();
-		     List questionList = new ArrayList(questions);
+		     List<Question> questionList = new ArrayList(questions);
+		     System.out.println("after foor");
+		     System.out.println(user.getUserName());
+		     System.out.println(exam.getExamName());
 		     model.addAttribute("userName", user.getUserName());
 		     model.addAttribute("examName", exam.getExamName());
 		     model.addAttribute("questions", questionList);
+		     System.out.println(questionList.get(0).getQuestionName());
 		 } catch(DataException e) {
 			 model.addAttribute("insertQuestionMessage", (e.toString()));
-		 } finally {
+		 } 
 			 return "questionpageforuser";
-			 //return "success";
-		 }
 	 }
 	 
 	 @RequestMapping(value="/fillintheblanks")
