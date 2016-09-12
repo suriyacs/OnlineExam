@@ -73,6 +73,7 @@ public class ApplicationController {
 	           } else if("User".equals(roleService.getRoleNameById(user.getRoleId())) && password.equals(user.getPassword())) {
 	        	   session.setAttribute("role", "User");
 	        	   session.setAttribute("user", user);
+	        	   session.setAttribute("userName", user.getUserName());
 	               return "redirect:gotouserpage";
 	           } else {
 	        	   model.addAttribute("Message", roleService.getRoleNameById(user.getRoleId()));
@@ -227,7 +228,7 @@ public class ApplicationController {
 		 }
 	 }
 	 
-	 @RequestMapping(value="/resultcalulation",method = RequestMethod.POST)
+	 @RequestMapping(value="/resultcalculation",method = RequestMethod.POST)
 	 public String ResultCalculate(@ModelAttribute("exam")Exam exam, BindingResult result,ModelMap model,@RequestParam("examId") int examId,HttpSession session) {
 		 ResultService resultService = new ResultService();
 		 
@@ -236,7 +237,7 @@ public class ApplicationController {
 		 } catch(DataException e) {
 			 model.addAttribute("mark",e.getMessage().toString());
 		 }
-		 return "userpage";
+		 return "login";
 	 }
 	 
 	 @RequestMapping(value="/choosethebest",method = RequestMethod.POST)

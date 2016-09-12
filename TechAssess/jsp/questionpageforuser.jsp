@@ -32,7 +32,7 @@
   
   function myFunction() {
 	       alert("Oops!!!Time Up!! your response were submitted.")
-	       window.location = "gotouserpage";
+	       window.location = "logout";
 	}
  
   function toMinuteAndSecond( x ) {
@@ -47,7 +47,7 @@
     })();
   }
 
-  setTimer(10, {
+  setTimer(1500, {
     10: function () { display("notifier", "Just 10 seconds to go"); },
      5: function () { display("notifier", "5 seconds left");        },
      0: function () { myFunction();      }
@@ -62,13 +62,14 @@
           </div>
               <h4 align="center"><c:out value="${examName}"/></h4>
                  <div class="questiondiv">
-                     <form:form action = "resultcalulation" method = "post" modelAttribute="exam">
+                     <form:form action = "resultcalculation" method = "post" modelAttribute="exam">
+                      <c:set var="count" value="1" scope="page" />
                       <input type="hidden" name="examId" value="${exam.getExamId() }">
                          <c:set var="count" value="1" scope="page" />
                          <c:forEach items="${exam.getAnswers()}" var="answer"  varStatus="status" >
                                  <c:set value="${exam.questions[status.index]}" var="que" />        
                                    <form:input type="hidden" path="answers[${status.index}].questionId" value="${que.getQuestionId()}" /> <br><br>
-                                   <c:out value="${que.getQuestionName()}" /><br><br>
+                                  <c:out value="${count}"/>. <c:out value="${que.getQuestionName()}" /><br><br><c:set var="count" value="${count + 1}" scope="page"/>
                                    <c:set value="${que.getTypeId()}" var="type" />
                                    <c:forEach items="${que.getChoices()}" var="choice" >
                                          <c:if test="${type.getTypeId()==1}" >

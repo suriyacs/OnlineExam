@@ -68,6 +68,12 @@
                 </script>
             </c:if>
     <body>
+     <c:if test="${ null != mark }">
+        <script type="text/javascript">
+            alert("Your Mark:<c:out value="${mark}"/>");
+            window.location = "logout";
+        </script>
+   </c:if>
         <div id="grid"></div>
         <div class="content">
         <div>
