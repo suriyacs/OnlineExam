@@ -23,6 +23,29 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import model.Exam;
 
+/**
+ * <p>
+ *     Question pojo for creating instance of Question type
+ *     and store list of choices along with set of exams.
+ * </p>
+ * @author TechAssess
+ * 
+ * @param questionId
+ *     consist of questionId.
+ * 
+ * @param questionName 
+ *     consist of question given by the user.
+ *     
+ * @param typeId 
+ *     consist of id which refer that the given question is of which QuestionType.
+ *     
+ * @param choices
+ *     consist of list with instance of Choice contains choice(i.e answers) related to the corresponding question.
+ * 
+ * @param exams 
+ *     consist of set with instance of exam to which the particular question is allocated.
+ *
+ */
 @Entity
 @Table(name="Question")
 public class Question {

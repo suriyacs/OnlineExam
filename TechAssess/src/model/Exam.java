@@ -24,9 +24,40 @@ import org.hibernate.annotations.LazyCollectionOption;
 import model.Question;
 import model.Answer;
 
+/**
+ * <p>
+ *     Pojo which used to create a instance of Exam and also
+ *     stores the set of Questions and Set of Users.
+ * </p>
+ * 
+ * @author TechAssess
+ * 
+ * @param examId
+ *     consist of examId which gets created whenever an instance of Exam is inserted into the database.
+ *     
+ * @param examName 
+ *     comprises the name of the Exam
+ * 
+ * @param duration
+ *     comprises exam timing.
+ *     
+ * @param noOfTotalQuestions
+ *     consist total number of questions allocated to the respected exam.
+ * 
+ * @param noOfAllocatedQuestions
+ *     consist total number of allocated questions.
+ * 
+ * @param questions 
+ *     comprise instance of question in the form of set.
+ *     
+ * @param users
+ *     consist instance of user in the form of set.
+ */
+
 @Entity
 @Table(name="Exam")
 public class Exam {
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="exam_id")
@@ -44,13 +75,11 @@ public class Exam {
 	@Column(name="allocated_questions")
 	String noOfAllocatedQuestions;
 	
-	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(name="Examquestion",joinColumns = {@JoinColumn(name="exam_id",nullable = false, updatable = false)},
 	           inverseJoinColumns = {@JoinColumn(name = "question_id",nullable = false, updatable = false)})
     List<Question> questions = new ArrayList<Question>();
-	
 	
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToMany(cascade = CascadeType.ALL)

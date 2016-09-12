@@ -1,24 +1,16 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.LazyCollection;
@@ -26,6 +18,21 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import model.Choice;
 
+/**
+ * <p>
+ * Answer model is to used create an instance of answer type
+ * by using a constructor or by using setter and getter methods.
+ * </p>
+ * 
+ * @author TechAssess
+ * 
+ * @param question 
+ *     instance of Question type to be stored.
+ *     
+ * @param choices
+ *     list consist of instance of choice which needs to be stored in list of choice type.
+ *
+ */
 @Entity
 @Table(name="answer")
 public class Answer {

@@ -6,7 +6,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,8 +14,21 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * @author user
+ * <p>
+ *     Pojo for creating instance of QuestionType which specifies the type of Question can be created.
+ *     It also contains Set of Question which specifies the number of question which are created under the given QuestionType.
+ * </p>
  *
+ * @author TechAssess
+ * 
+ * @param typeId
+ *     consist of id when the new Question type is inserted.
+ *     
+ * @param typeName 
+ *     consist name of the Question type.
+ *     
+ * @param questions
+ *     contain set of question created under that particular quesiton type.
  */
 @Entity
 @Table(name="QuestionType")

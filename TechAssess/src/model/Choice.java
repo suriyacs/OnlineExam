@@ -11,8 +11,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * @author user
- *
+ * <p>
+ *     Pojo which creates instance of Choice type either by using
+ *     constructor or by setters and getters.
+ * </p>
  */
 @Entity
 @Table(name="Choice")

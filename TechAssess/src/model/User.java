@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -16,7 +17,7 @@ import javax.persistence.Table;
  *     Pojo which creates an instance of User type
  *     using setter and getter methods.
  * </p>
- * @author Antony
+ * @author TechAssess
  *
  * @created 2016-08-27
  */
