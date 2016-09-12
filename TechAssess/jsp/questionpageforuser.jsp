@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
     <head>
         <title>Exam</title>
@@ -62,40 +63,27 @@
              </div>
               <center><h4><c:out value="${examName}"/></h4></center>
                  <div class="questiondiv">
-                     <form action = "gotouserpage" method = "post">
+                     <form:form action = "resultcalulation" method = "post" modelAttribute="exam">
                          <c:set var="count" value="1" scope="page" />
-                         <c:forEach items="${questions}" var="question">
-                             <c:if test="${question.getTypeId().getTypeName() == 'fillup'}">
-                             <div class="row">
-                                 <div class="col-sm-4">
-                                     <h4><c:out value="${count}"/>. <c:out value="${ question.getQuestionName()}"/></h4><c:set var="count" value="${count + 1}" scope="page"/>
-                                     <label>Answer:<input type="text" name="answer"/></label></td>
-                                 </div>
-                             </div><br>
-                             </c:if>
-                             <c:if test="${question.getTypeId().getTypeName() == 'Choose the correct answer'}">
-                             <div class="row">
-                                 <div class="col-sm-4">
-                                     <h4><c:out value="${count}"/>. <c:out value="${ question.getQuestionName()}"/></h4><c:set var="count" value="${count + 1}" scope="page"/>
-                                     <c:forEach items="${question.getChoices()}" var="choice">
-                                         <label class="radio-inline"><input type="radio" name="radio"/> <c:out value="${choice.getChoiceName()}"/></label>
+                         <c:forEach items="${exam.answers}" var="answer"  varStatus="status" >
+                                 <c:set value="${exam.questions[status.index]}" var="que" />        
+                                   <c:out value="${que.questionName}" /><br><br>
+                                   <c:set value="${que.typeId}" var="type" />
+                                   <c:forEach items="${que.getChoices()}" var="choice" >
+                                          <c:if test="${type.typeId==1}" >
+                                          <label>Answer:<input type="text" name="answer[${status.index}].choices.choiceId" /></label>
+                                          </c:if>
+                                          <c:if test="${type.typeId==2}" >
+                                          <input type="radio" name="answer[${status.index}].choices.choiceId" /> <c:out value="${choice.getChoiceName()}" /> <br>
+                                          </c:if>
+                                          <c:if test="${type.typeId==3}" >
+                                          <input type="checkBox" name="answer[${status.index}].choices.choiceId" /> <c:out value="${choice.getChoiceName()}" /> <br>
+                                          </c:if>
                                      </c:forEach>
-                                 </div>
-                             </div><br>
-                             </c:if>
-                             <c:if test="${question.getTypeId().getTypeName() == 'Multiple Answers'}">
-                             <div class="row">
-                                  <div class="col-sm-4">
-                                      <h4><c:out value="${count}"/>. <c:out value="${question.getQuestionName()}"/></h4><c:set var="count" value="${count + 1}" scope="page"/>
-                                      <c:forEach items="${question.getChoices()}" var="choice">
-                                          <label class="checkbox-inline"><input type="checkbox" name="check"/> <c:out value="${choice.getChoiceName()}"/></label>
-                                      </c:forEach>
-                                  </div>
-                                  </div><br>
-                             </c:if>
-                         </c:forEach>
+                                     <br>
+                             </c:forEach>
                          <br><br><input id="button" type="submit" value="submit answers" class="btn btn-primary"/>
-                     </form>
+                     </form:form>
                  </div>
              </div>
 

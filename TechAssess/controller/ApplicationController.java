@@ -1,8 +1,6 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -20,22 +18,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import service.RoleService;
 import service.UserService;
-import service.QuestionTypeService;
 import service.ChoiceService;
 import service.ExamService;
 import service.QuestionService;
 import model.Exam;
 import model.Choice;
 import model.Question;
-import model.QuestionType;
+import model.Answer;
+
 @Controller
 public class ApplicationController {	
-	UserService userService = new UserService();
-	RoleService roleService = new RoleService();
-	QuestionTypeService questionTypeService = new QuestionTypeService();
-	ExamService examService = new ExamService();
-	QuestionService questionService = new QuestionService();
-	ChoiceService choiceService = new ChoiceService();
+	private UserService userService = new UserService();
+	private RoleService roleService = new RoleService();
+	private ExamService examService = new ExamService();
+	private QuestionService questionService = new QuestionService();
+	private ChoiceService choiceService = new ChoiceService();
 	 /**
 	  * <p>
 	  * Redirect to admin pageContact
@@ -83,6 +80,7 @@ public class ApplicationController {
 	       	   return "login";
 	       }
 	   }
+	 
 	 @RequestMapping("/adminRegisteration")
 		public ModelAndView createNewAdmin(@RequestParam("userName") String userName, @RequestParam("emailId") String emailId,
 				@RequestParam("password") String password, @RequestParam("mobileNumber") String mobileNumber) {
@@ -105,6 +103,7 @@ public class ApplicationController {
 			 return "addexam";
 		 }
 	 }
+	
 	 @RequestMapping(value = "/adminpage")
 	 public String goToAdminPage() {
 		 return "adminpage";
@@ -195,17 +194,14 @@ public class ApplicationController {
              }
 		     examService.addUserToExam(testId, user.getUserId());
 		     Exam exam = examService.getExamById(Integer.parseInt(testId));
-		     Set<Question> questions  = exam.getQuestions();
-		     List<Question> questionList = new ArrayList(questions);
-		     System.out.println("after foor");
-		     System.out.println(user.getUserName());
-		     System.out.println(exam.getExamName());
+		     for(int answerCount = 0;answerCount<Integer.parseInt(exam.getNoOfAllocatedQuestions());answerCount++) {
+		    	 exam.addAnswer(new Answer());	    	 
+		     }
 		     model.addAttribute("userName", user.getUserName());
 		     model.addAttribute("examName", exam.getExamName());
-		     model.addAttribute("questions", questionList);
-		     System.out.println(questionList.get(0).getQuestionName());
+		     model.addAttribute("exam",exam);		     
 		 } catch(DataException e) {
-			 model.addAttribute("insertQuestionMessage", (e.toString()));
+			 model.addAttribute("insertQuestionMessage", (e.toString())); 
 		 } 
 			 return "questionpageforuser";
 	 }
@@ -226,6 +222,29 @@ public class ApplicationController {
 		 }
 	 }
 	 
+	 @RequestMapping(value="/resultcalulation",method = RequestMethod.POST)
+	 public String ResultCalculate(@ModelAttribute("exam") Exam exam) {
+		 
+		 if(exam.getAnswers() != null) {
+		 System.out.println("notnull");
+		 List<Answer> answers = exam.getAnswers();
+		 System.out.println(answers.size());
+		 for (int i=0;i<answers.size();i++) {
+			 System.out.println("size ="+i);
+		 }
+		 for(Answer answer : answers) {
+			 System.out.println("inside");
+			 System.out.println(answer.getQuestion().getQuestionName());
+			 if (answer.getChoices() != null) {
+				 for (Choice choice : answer.getChoices()) {
+					 System.out.println(choice.getChoiceName());
+				 }
+			 }
+		 }
+		 }
+		 return "userpage";
+	 }
+	 
 	 @RequestMapping(value="/choosethebest",method = RequestMethod.POST)
 	 public String addQuestionForChooseTheBest(@ModelAttribute("Question") Question question,
 			 ModelMap model, @RequestParam("questionType") String questionType) {
@@ -243,3 +262,4 @@ public class ApplicationController {
 		     
 	 }
 }
+
