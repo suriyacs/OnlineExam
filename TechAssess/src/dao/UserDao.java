@@ -25,7 +25,8 @@ public class UserDao {
 
 	private DataBaseConnection connection = DataBaseConnection.getConnection();
     private SessionFactory factory = connection.createSessionFactory();
-    
+
+
     /**
      * <p>
      * retrieve all Users Details from Database in List format and
@@ -37,6 +38,7 @@ public class UserDao {
      * @throws DataException
      *     if inputs are invalid or if any Hibernate Exception arrived
      */
+	@SuppressWarnings("unchecked")
 	public List<User> retrieveAllUser() throws DataException {                                    /*To populate employee*/
         Session session = factory.openSession();
         try {

@@ -32,7 +32,7 @@ public class UserService {
 	 */
 	public void addUser(String userName, String emailId, String password, String mobileNumber)  throws DataException {
 		checkIfUserAlreadyExist(emailId);
-	    userDao.insertUser(new User((getAllUsers().size() + 1), userName, emailId, password,
+	    userDao.insertUser(new User(userName, emailId, password,
 	    		mobileNumber, roleService.getRoleIdByName("User")));
 	}
 	
@@ -78,7 +78,7 @@ public class UserService {
 	 */
 	public void addAdmin(String userName, String emailId, String password, String mobileNumber)  throws DataException {
 		checkIfUserAlreadyExist(emailId);
-	    userDao.insertUser(new User((getAllUsers().size() + 1), userName, emailId, password,
+	    userDao.insertUser(new User(userName, emailId, password,
 	    		mobileNumber, roleService.getRoleIdByName("Admin")));
 	}
 	

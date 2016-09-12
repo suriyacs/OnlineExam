@@ -53,6 +53,8 @@ public class DataBaseConnection{
             configuration.addAnnotatedClass(model.Question.class);
             configuration.addAnnotatedClass(model.Choice.class);
             configuration.addAnnotatedClass(model.QuestionType.class);
+            configuration.addAnnotatedClass(model.Answer.class);
+            configuration.addAnnotatedClass(model.Result.class);
          sessionFactory = configuration.buildSessionFactory();
      }
      return sessionFactory;

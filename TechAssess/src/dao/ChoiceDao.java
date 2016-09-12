@@ -40,15 +40,19 @@ public class ChoiceDao {
      * @throws DataException
      *     if inputs are invalid or if any hibernate Exception occured
      */
+	@SuppressWarnings("finally")
 	public int insertChoice(Choice choice) throws DataException {
 		Session session = factory.openSession();
+		int choiceId = 0;
 		try {
             Transaction transaction = session.beginTransaction();
-            int choiceId = (int)session.save(choice);
+            choiceId = (int)session.save(choice);
             transaction.commit();
-            return choiceId;
 		} catch (HibernateException e) {
 			throw new DataException(e.toString());
+		} finally {
+			session.close();
+			return choiceId;
 		}
 	}
 	
@@ -67,10 +71,11 @@ public class ChoiceDao {
 	public Choice retrieveChoiceDetailById(int choiceId) throws DataException {
 		Session session = factory.openSession();
 		try {
-			Transaction transaction = session.beginTransaction();
 			return (Choice)session.get(Choice.class, choiceId);
 		} catch (HibernateException e) {
 			throw new DataException(e.toString());
+		} finally {
+			session.close();
 		}
 	}
 	
@@ -97,6 +102,8 @@ public class ChoiceDao {
 			transaction.commit();
 		} catch (HibernateException e) {
 			throw new DataException(e.toString());
+		} finally {
+			session.close();
 		}
 	}
 }

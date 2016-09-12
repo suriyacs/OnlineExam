@@ -9,7 +9,6 @@ import org.hibernate.SessionFactory;
 import dbconnection.DataBaseConnection;
 import exception.DataException;
 import model.Role;
-import model.User;
 
 /**
  * <p>
@@ -26,6 +25,7 @@ public class RoleDao {
 	private DataBaseConnection connection = DataBaseConnection.getConnection();
     private SessionFactory factory = connection.createSessionFactory();
     
+
     /**
      * <p>
      *  retrieve all Roles from Database in List format and
@@ -37,6 +37,7 @@ public class RoleDao {
      * @throws DataException
      *     if input is invalid or if any hibernate Exception is arrived
      */
+	@SuppressWarnings("unchecked")
 	public List<Role> getAllRoles() throws DataException {
 		Session session = factory.openSession();
         try {

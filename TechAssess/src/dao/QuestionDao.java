@@ -42,17 +42,19 @@ public class QuestionDao {
      * @throws DataException
      *     if inputs are invalid or if any Hibernate Exception arrived
      */
+	@SuppressWarnings("finally")
 	public int insertQuestion(Question question) throws DataException {
+		int questionId = 0;
 		Session session = factory.openSession();
 		try {
 			Transaction transaction = session.beginTransaction();
-			int questionId = (int)session.save(question);
+			questionId = (int)session.save(question);
 			transaction.commit();
-			return questionId;
-		} catch (HibernateException e) {			
+		} catch (HibernateException e) {
 			throw new DataException(e.toString());
 		} finally {
 			session.close();
+			return questionId;
 		}
 	}
 	
@@ -116,6 +118,7 @@ public class QuestionDao {
 	 * @throws DataException
 	 *     if inputs are invalid or if any Hibernate Exception arrived
 	 */
+	@SuppressWarnings({ "unchecked", "finally" })
 	public List<Question> retrieveAllQuestions() throws DataException {
 		List<Question>allQuestions = new ArrayList<Question>();
 		Session session = factory.openSession();
@@ -127,7 +130,8 @@ public class QuestionDao {
 			throw new DataException(e.toString());		
 	    } finally {
 	    	session.close();
-	    }return allQuestions;
+	    	return allQuestions;
+	    }
 	} 
 }
 

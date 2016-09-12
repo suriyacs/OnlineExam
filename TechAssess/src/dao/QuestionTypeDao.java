@@ -46,11 +46,12 @@ public class QuestionTypeDao {
     public QuestionType retrieveTypeDetailById(int typeId) throws DataException {
     	Session session = factory.openSession();
     	try {
-    		Transaction transaction = session.beginTransaction();
     		 return (QuestionType)session.get(QuestionType.class, typeId);
     	} catch (HibernateException e) {
     		throw new DataException(e.toString());
-    	}
+    	} finally {
+			session.close();
+		}
     }
     
     /**
@@ -67,10 +68,13 @@ public class QuestionTypeDao {
      *      if input is invalid or if any Hibernate Exception is arrived
      */   
     public void allocateQuestionToQuestionType(QuestionType questionType, Question question) throws DataException {
+    @SuppressWarnings("unchecked")
+	public void addQuestionToQuestionType(QuestionType questionType, Question question) throws DataException {
     	Session session = factory.openSession();
     	try {
     		Transaction transaction = session.beginTransaction();
-    		Set questionSet = new HashSet();
+    		@SuppressWarnings("rawtypes")
+			Set questionSet = new HashSet();
     		questionSet.add(question);
     		questionType.setQuestion(questionSet);
     		session.save(questionType);
@@ -79,6 +83,9 @@ public class QuestionTypeDao {
     	} catch (HibernateException e) {
     		throw new DataException(e.toString());
     	}
+    	} finally {
+			session.close();
+		}
     }
 }
 

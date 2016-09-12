@@ -84,7 +84,7 @@
         <div id="grid"></div>
         <div class="content">
            <div class="header">
-               <h1 class="title">Tech Assess</h1>
+               <h1 class="title" style="color:black">Tech Assess</h1>
            </div>
             <div class="logout" style="float:left">
                 <a href="adminpage"class="btn btn-success" title="logout">MainPage</span></a> 
@@ -92,102 +92,96 @@
             <div class="logout" style="float:right">
                 <a href="logout"class="btn btn-danger" title="logout"><span class="glyphicon glyphicon-log-out"></span></a> 
             </div><br><br>
-        <center>
-        <div class="center">
-             <div class="questiontable">
-                 <table border="1" width="100%" id="tblNeedsScrolling" height="20%";>
-                     <tr style="text-align:center">
-                         <th>QuestionId</th>
-                         <th>QuestionName</th>
-                         <th>QuestionTypeId</th>
-                     </tr>
-                   <tbody>
-                     <c:if test="${questionList != null}">
-                          <c:forEach items="${questionList}" var="question" >
-                               <tr>
-                                   <td> <c:out value="${question.getQuestionId()}" /></td>
-                                   <td> <c:out value="${question.getQuestionName()}" /></td>
-                                   <td> <c:out value="${question.getTypeId()}" /></td>
-                               </tr>	
-                          </c:forEach>
-                     </c:if> 
-                     </tbody>
-                 </table>
-             </div>
-             <div class="allexams" style="float:right">
-                 <table border="1" width="100%" id="tbl1NeedsScrolling" height="20%">
 
-                     <tr style="text-align:center">
-                         <th>ExamId</th>
-                         <th>ExamName</th>
-                         <th>Duration</th>
-                         <th>TotalQuestions</th>
-                         <th>AllocatedQuestions</th>
-                     </tr>
+		<div class="center">
+			<div class="questiontable">
+				<table border="1" width="100%" id="tblNeedsScrolling" height="20%";>
+					<tr style="text-align: center">
+						<th>QuestionId</th>
+						<th>QuestionName</th>
+						<th>QuestionTypeId</th>
+					</tr>
+					<tbody>
+						<c:if test="${questionList != null}">
+							<c:forEach items="${questionList}" var="question">
+								<tr>
+									<td><c:out value="${question.getQuestionId()}" /></td>
+									<td><c:out value="${question.getQuestionName()}" /></td>
+									<td><c:out value="${question.getTypeId()}" /></td>
+								</tr>
+							</c:forEach>
+						</c:if>
+					</tbody>
+				</table>
+			</div>
+			<div class="allexams" style="float: right">
+				<table border="1" width="100%" id="tbl1NeedsScrolling" height="20%">
 
-                     <tbody>
-                     <c:if test="${examList != null}">
-                          <c:forEach items="${examList}" var="exam" >
-                               <tr>
-                                   <td> <c:out value="${exam.getExamId()}" /></td>
-                                   <td> <c:out value="${exam.getExamName()}" /></td>
-                                   <td> <c:out value="${exam.getExamDuration()}" /></td>
-                                   <td> <c:out value="${exam.getNoOfTotalQuestions()}" /></td>
-                                   <td>
-                                    <c:choose>
-                                        <c:when test="${exam.getNoOfAllocatedQuestions() != null}">
-                                             <c:out value="${exam.getNoOfAllocatedQuestions()}" />
-                                        </c:when>
-                                        <c:otherwise>
-                                             <c:out value="0" />
-                                        </c:otherwise>
-                                    </c:choose>
-                                  </td>
-                               </tr>	
-                          </c:forEach>
-                     </c:if> 
-                     </tbody>
-                 </table>
-             </div><br><br><br><br>
-             <br><br><br><br>
-             <br><br><br>
-              <div class="form">
-                <div class="tab-content" style="margin:25px">
-                    <div id="signup">
-                        <h1 style="color:black">AllocateQuestion</h1>
-                        <form action="allocating" method="post">
-                            <div class="field-wrap">
-                                <label>
-                                EnterExamId<span class="req">*</span>
-                                </label>
-                                <input type="text" name="examId"required autocomplete="off"/>
-                            </div>
-                            <div class="field-wrap">
-                                <label>
-                                FormQuestionIdToAllocate<span class="req">*</span>
-                                </label>
-                                <input type="text" name="fromQuestionId"required autocomplete="off"/>
-                            </div>
-                             <div class="field-wrap">
-                                <label>
-                                ToQuestionIdToAllocate<span class="req">*</span>
-                                </label>
-                                <input type="text" name="toQuestionId"required autocomplete="off"/>
-                            </div>
-                            <button type="submit" class="button button-block"/>Allocate</button>          
-                        </form>
-                    </div>
-                    <div id="login">
+					<tr style="text-align: center">
+						<th>ExamId</th>
+						<th>ExamName</th>
+						<th>Duration</th>
+						<th>TotalQuestions</th>
+						<th>AllocatedQuestions</th>
+					</tr>
 
-                    </div>
-                </div>
-                <!-- tab-content -->
-            </div>
-            <!-- /form -->
-            <script src='js/form.js'></script>
-            <script src="js/index.js"></script>
-         </div>
-         </center>
-       </div>
+					<tbody>
+						<c:if test="${examList != null}">
+							<c:forEach items="${examList}" var="exam">
+								<tr>
+									<td><c:out value="${exam.getExamId()}" /></td>
+									<td><c:out value="${exam.getExamName()}" /></td>
+									<td><c:out value="${exam.getExamDuration()}" /></td>
+									<td><c:out value="${exam.getNoOfTotalQuestions()}" /></td>
+									<td><c:choose>
+											<c:when test="${exam.getNoOfAllocatedQuestions() != null}">
+												<c:out value="${exam.getNoOfAllocatedQuestions()}" />
+											</c:when>
+											<c:otherwise>
+												<c:out value="0" />
+											</c:otherwise>
+										</c:choose></td>
+								</tr>
+							</c:forEach>
+						</c:if>
+					</tbody>
+				</table>
+			</div>
+			<br> <br> <br> <br> <br> <br> <br>
+			<br> <br> <br> <br>
+			<div class="form">
+				<div class="tab-content" style="margin: 25px">
+					<div id="signup">
+						<h1 style="color: black">AllocateQuestion</h1>
+						<form action="allocating" method="post">
+							<div class="field-wrap">
+								<label> EnterExamId<span class="req">*</span>
+								</label> <input type="text" name="examId" required autocomplete="off" />
+							</div>
+							<div class="field-wrap">
+								<label> FormQuestionIdToAllocate<span class="req">*</span>
+								</label> <input type="text" name="fromQuestionId" required
+									autocomplete="off" />
+							</div>
+							<div class="field-wrap">
+								<label> ToQuestionIdToAllocate<span class="req">*</span>
+								</label> <input type="text" name="toQuestionId" required
+									autocomplete="off" />
+							</div>
+							<button type="submit" class="button button-block" />
+							Allocate
+							</button>
+						</form>
+					</div>
+					<div id="login"></div>
+				</div>
+				<!-- tab-content -->
+			</div>
+			<!-- /form -->
+			<script src='js/form.js'></script>
+			<script src="js/index.js"></script>
+		</div>
+
+	</div>
      </body>
    </html>

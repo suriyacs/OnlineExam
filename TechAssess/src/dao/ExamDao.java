@@ -45,17 +45,19 @@ public class ExamDao {
      * @throws DataException
      *     if inputs are invalid or if any Hibernate Exception arrived
      */
-    public int insertExamDetails(Exam exam)throws DataException {
+    @SuppressWarnings("finally")
+	public int insertExamDetails(Exam exam)throws DataException {
     	Session session = factory.openSession();
-    	
+    	int id = 0;
     	try {    		
     		Transaction transaction = session.beginTransaction();
+    		id = (int)session.save(exam);
     		transaction.commit();
-    		return ((int)session.save(exam));
     	} catch(HibernateException e) {
     		throw new DataException("Invalid Inputs Please Check The Inputs and Try Again");
     	} finally {
     		session.close();
+    		return id;
     	}    
     }
              
@@ -71,6 +73,18 @@ public class ExamDao {
      *    if input is invalid or if any hibernate Exception is arrived
      */
     @SuppressWarnings("unchecked")
+    public Exam getExamById(int examId) throws DataException {
+    	Session session = factory.openSession();
+    	try {
+    	    return (Exam)session.get(Exam.class,examId);
+    	} catch(HibernateException e) {
+        	throw new DataException(e.toString());
+       	} finally {
+       		session.close();
+       	}
+    }
+    
+    @SuppressWarnings({ "unchecked", "finally" })
 	public List<Exam> retrieveAllExamDetails()throws DataException {
     	Session session = factory.openSession();
     	List<Exam>allExams = new ArrayList<Exam>();
@@ -83,8 +97,8 @@ public class ExamDao {
         	throw new DataException(e.toString());
        	} finally {
        		session.close();
+       		return allExams;
        	}
-    	return allExams;
     }
     
     /**
@@ -105,7 +119,8 @@ public class ExamDao {
 	public void assignQuestionsToExam(int examId,int questionId)throws DataException {
     	Session session = factory.openSession();
     	try {
-    		Set examSet = new HashSet();
+			@SuppressWarnings("rawtypes")
+			Set examSet = new HashSet();
     		Transaction transaction = session.beginTransaction();
     		Question  question = (Question)session.get(Question.class, questionId);
     		Exam exam = (Exam)session.get(Exam.class,examId);
@@ -156,13 +171,15 @@ public class ExamDao {
      * @throws DataException
      *     if inputs are invalid or if any Hibernate Exception is arrived
      */
-    @SuppressWarnings("finally")
+    @SuppressWarnings({ "unchecked", "finally" })
 	public Exam assignUserToExam(int examId, int userId) throws DataException {
     	Session session = factory.openSession();
     	Exam exam = null;
     	try {
-    		Set userSet = new HashSet();
-    		Set examSet = new HashSet();
+    		@SuppressWarnings("rawtypes")
+			Set userSet = new HashSet();
+    		@SuppressWarnings("rawtypes")
+			Set examSet = new HashSet();
     		Transaction transaction = session.beginTransaction();
     		exam = (Exam)session.get(Exam.class, examId);
     		User user = (User)session.get(User.class, userId);
