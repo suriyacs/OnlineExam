@@ -28,14 +28,10 @@ img {
 	height:50px;
 }
 
-h4 {
-	font-family:Book Antiqua;
-	position:obsolute;
-	align:center;
-}
 .page-header .countdown {
 	float: left;
 }
+
 .checkbox-inline {
 	padding-right:65px;
 
@@ -43,7 +39,11 @@ h4 {
 .usertab {
 	float:left;
 	width=40%;
-
+	font-family:fantasy;
+	size:20px;
+	weight:bold;
+	style:italic;
+	variant:small caps;
 }
 .radio-inline {
 	padding-right:65px;

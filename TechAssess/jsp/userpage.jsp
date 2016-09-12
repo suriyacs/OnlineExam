@@ -21,14 +21,22 @@
    </c:if>
          <div id="grid"></div>
          <div class="content">
+          <div class="page-header">
+             <center><h1 class="title">TechAssess</h1></center>
+         </div>
+         <div class="usertab">
+              <img src="img/userimage.png" alt="userimage"><h3><c:out value="${userName}"/></h3>
+             </div>
           <div class="logout" style="float:right">
                 <a href="logout"class="btn btn-danger" title="logout"><span class="glyphicon glyphicon-log-out"></span></a> 
         </div>
              <div class="center-container">
                 <div class="container">
-                    <h2>Scheduled Exam number</h2>
+                    <h2> Welcome <c:out value="${userName}"/></h2>
+                   
                     <c:set var="count" value="1" scope="page" />
                     <c:forEach items="${exams}" var="exam">
+                     <div class="btn-group btn-group-lg">
                     <div class="well">
                     <a href="#demo<c:out value="${Choice ? '' : count}"/>" class="btn btn-info btn-lg" data-toggle="collapse"><c:out value="${exam.getExamName()}"/></a>
                     <form id="demo<c:out value="${Choice ? '' : count}"/>" action="taketest" class="collapse" method="post">
@@ -49,10 +57,12 @@
                     </form>
                      <c:set var="count" value="${count + 1}" scope="page"/>
                      </div>
+                      </div>
                      </c:forEach>
+                     </div>
                 </div>
              </div>
-         </div>
+        
 
     </body>
 </html>

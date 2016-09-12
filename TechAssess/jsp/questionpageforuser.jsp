@@ -20,7 +20,7 @@
          <div id="grid"></div>
          <div class="content">
          <div class="page-header">
-             <center><h1 class="title">TechAssess</h1></center>
+             <h1 class="title" align="center">TechAssess</h1>
          </div>
          <h5>Time Remaining:</h5><div id="countdown"></div>
          <div id="notifier"></div>
@@ -31,9 +31,8 @@
   }
   
   function myFunction() {
-	    if (confirm("Oops!!!Time Up!! your response were submitted.") == true) {
+	       alert("Oops!!!Time Up!! your response were submitted.")
 	       window.location = "gotouserpage";
-	    }
 	}
  
   function toMinuteAndSecond( x ) {
@@ -48,7 +47,7 @@
     })();
   }
 
-  setTimer(1500, {
+  setTimer(10, {
     10: function () { display("notifier", "Just 10 seconds to go"); },
      5: function () { display("notifier", "5 seconds left");        },
      0: function () { myFunction();      }
@@ -56,12 +55,12 @@
 
 </script>
           <div class="usertab">
-              <img src="img/userimage.png" alt="userimage"><h3><c:out value="${userName}"/></h3>
-             </div>
-             <div class="logout" style="float:right">
-                 <a href="logout"class="btn btn-danger" title="logout"><span class="glyphicon glyphicon-log-out"></span></a> 
-             </div>
-              <center><h4><c:out value="${examName}"/></h4></center>
+              <img src="img/userimage.png" alt="userimage"><h3> <c:out value="${userName}"/></h3>
+          </div>
+          <div class="logout" style="float:right">
+             <a href="logout"class="btn btn-danger" title="logout"><span class="glyphicon glyphicon-log-out"></span></a> 
+          </div>
+              <h4 align="center"><c:out value="${examName}"/></h4>
                  <div class="questiondiv">
                      <form:form action = "resultcalulation" method = "post" modelAttribute="exam">
                          <c:set var="count" value="1" scope="page" />
