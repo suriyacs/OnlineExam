@@ -43,32 +43,28 @@ public class Answer {
 		this.answerId = answerId;
 	}
 	
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@ManyToOne(cascade = CascadeType.PERSIST )
-	@JoinColumn(name = "question_id")
-	private Question question;
+
+	@Column(name = "question_id")
+	private int questionId;
 	
-	@LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "choice_id")
-    private List<Choice> choices = new ArrayList<Choice>();
+	@Column(name="choice_name")
+    String userAnswer;
     
 	public Answer() {
-		
 	}
     
-	public Question getQuestion() {
-		return question;
+	public int getQuestionId() {
+		return questionId;
 	}
-	public void setQuestion(Question question) {
-		this.question = question;
+	public void setQuestionId(int questionId) {
+		this.questionId = questionId;
 	}
 	
-	public List<Choice> getChoices() {
-		return choices;
+	public String getUserAnswer() {
+		return userAnswer;
 	}
-	public void setChoices(List<Choice> choices) {
-		this.choices = choices;
+	public void setUserAnswer(String userAnswer) {
+		this.userAnswer = userAnswer;
 	}
     
    

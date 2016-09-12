@@ -18,6 +18,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import model.Exam;
 
 @Entity
@@ -30,12 +33,18 @@ public class Question {
 	int questionId;
 	@Column(name="question")
 	String questionName;
+	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="type_id")
 	QuestionType typeId;	
-	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
+	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="question_id")
 	List<Choice> choices = new ArrayList<Choice>();
+	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToMany(cascade = CascadeType.ALL,mappedBy="questions") 
     Set<Exam> exams = new HashSet<Exam>();
 	
@@ -75,6 +84,7 @@ public class Question {
 		this.choices = choice;
 	}
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@ManyToMany(mappedBy="questions") 
 	public void setExams(Set<Exam> exam) {
 		this.exams.addAll(exam);

@@ -1,6 +1,8 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,9 +15,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import model.Question;
+import model.Answer;
+
 @Entity
 @Table(name="Exam")
 public class Exam {
@@ -23,23 +31,37 @@ public class Exam {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="exam_id")
 	int examId;
+	
 	@Column(name="exam_name")
 	String examName;
+	
 	@Column(name="duration")
 	int examDuration;
+	
 	@Column(name="total_questions")
 	int noOfTotalQuestions;
+	
 	@Column(name="allocated_questions")
 	String noOfAllocatedQuestions;
-	@ManyToMany(fetch= FetchType.EAGER, cascade = CascadeType.ALL)
+	
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinTable(name="Examquestion",joinColumns = {@JoinColumn(name="exam_id",nullable = false, updatable = false)},
 	           inverseJoinColumns = {@JoinColumn(name = "question_id",nullable = false, updatable = false)})
-    Set<Question> questions = new HashSet<Question>(0);
-	@ManyToMany(fetch= FetchType.EAGER, cascade = CascadeType.ALL)
+    List<Question> questions = new ArrayList<Question>();
+	
+	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="Userexam",joinColumns = {@JoinColumn(name="exam_id",nullable = false, updatable = false)},
 	           inverseJoinColumns = {@JoinColumn(name = "user_id",nullable = false, updatable = false)})
     Set<User> users = new HashSet<User>();
-
+    
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "answerId")
+	List<Answer> answers = new ArrayList<Answer>();
+	
 	public Exam() {
 		
 	}
@@ -90,15 +112,26 @@ public class Exam {
 		this.noOfAllocatedQuestions = noOfAllocatedQuestions;
 	}
 
-    public Set<Question> getQuestions() {
+    public List<Question> getQuestions() {
     	 return this.questions;
     }
 	
-	public void setQuestions(Set<Question> question) {
-		this.questions.addAll(question);
+	public void setQuestions(Question question) {
+		this.questions.add(question);
 	}
 
+	public List<Answer> getAnswers() {
+		return this.answers;
+	}
 
+	public void setAnswers(List<Answer> answers) {
+		this.answers = answers;
+	}
+    
+	public void addAnswer(Answer answer) {
+		this.answers.add(answer);
+	}
+	
 	public Set<User> getUsers() {
 		return users;
 	}

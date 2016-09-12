@@ -1,11 +1,13 @@
 package controller;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +23,7 @@ import service.UserService;
 import service.ChoiceService;
 import service.ExamService;
 import service.QuestionService;
+import service.ResultService;
 import model.Exam;
 import model.Choice;
 import model.Question;
@@ -195,7 +198,9 @@ public class ApplicationController {
 		     examService.addUserToExam(testId, user.getUserId());
 		     Exam exam = examService.getExamById(Integer.parseInt(testId));
 		     for(int answerCount = 0;answerCount<Integer.parseInt(exam.getNoOfAllocatedQuestions());answerCount++) {
-		    	 exam.addAnswer(new Answer());	    	 
+		    	 exam.addAnswer(new Answer());	    
+		    	 List<Answer> answers = exam.getAnswers();
+				 System.out.println(answers.size());		    	
 		     }
 		     model.addAttribute("userName", user.getUserName());
 		     model.addAttribute("examName", exam.getExamName());
@@ -223,24 +228,13 @@ public class ApplicationController {
 	 }
 	 
 	 @RequestMapping(value="/resultcalulation",method = RequestMethod.POST)
-	 public String ResultCalculate(@ModelAttribute("exam") Exam exam) {
+	 public String ResultCalculate(@ModelAttribute("exam")Exam exam, BindingResult result,ModelMap model,@RequestParam("examId") int examId,HttpSession session) {
+		 ResultService resultService = new ResultService();
 		 
-		 if(exam.getAnswers() != null) {
-		 System.out.println("notnull");
-		 List<Answer> answers = exam.getAnswers();
-		 System.out.println(answers.size());
-		 for (int i=0;i<answers.size();i++) {
-			 System.out.println("size ="+i);
-		 }
-		 for(Answer answer : answers) {
-			 System.out.println("inside");
-			 System.out.println(answer.getQuestion().getQuestionName());
-			 if (answer.getChoices() != null) {
-				 for (Choice choice : answer.getChoices()) {
-					 System.out.println(choice.getChoiceName());
-				 }
-			 }
-		 }
+		 try {
+		      model.addAttribute("mark",resultService.calculateResult(exam, examId, (User)session.getAttribute("user")));
+		 } catch(DataException e) {
+			 model.addAttribute("mark",e.getMessage().toString());
 		 }
 		 return "userpage";
 	 }

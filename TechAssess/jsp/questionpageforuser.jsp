@@ -63,20 +63,22 @@
               <h4 align="center"><c:out value="${examName}"/></h4>
                  <div class="questiondiv">
                      <form:form action = "resultcalulation" method = "post" modelAttribute="exam">
+                      <input type="hidden" name="examId" value="${exam.getExamId() }">
                          <c:set var="count" value="1" scope="page" />
-                         <c:forEach items="${exam.answers}" var="answer"  varStatus="status" >
+                         <c:forEach items="${exam.getAnswers()}" var="answer"  varStatus="status" >
                                  <c:set value="${exam.questions[status.index]}" var="que" />        
-                                   <c:out value="${que.questionName}" /><br><br>
-                                   <c:set value="${que.typeId}" var="type" />
+                                   <form:input type="hidden" path="answers[${status.index}].questionId" value="${que.getQuestionId()}" /> <br><br>
+                                   <c:out value="${que.getQuestionName()}" /><br><br>
+                                   <c:set value="${que.getTypeId()}" var="type" />
                                    <c:forEach items="${que.getChoices()}" var="choice" >
-                                          <c:if test="${type.typeId==1}" >
-                                          <label>Answer:<input type="text" name="answer[${status.index}].choices.choiceId" /></label>
+                                         <c:if test="${type.getTypeId()==1}" >
+                                          <label>Answer:<form:input type="text" path="answers[${status.index}].userAnswer"  /></label>
                                           </c:if>
-                                          <c:if test="${type.typeId==2}" >
-                                          <input type="radio" name="answer[${status.index}].choices.choiceId" /> <c:out value="${choice.getChoiceName()}" /> <br>
+                                          <c:if test="${type.getTypeId()==2}" >
+                                          <form:radiobutton  path="answers[${status.index}].userAnswer"  value="${choice.getChoiceName()}" /> <c:out value="${choice.getChoiceName()}" /> <br>
                                           </c:if>
-                                          <c:if test="${type.typeId==3}" >
-                                          <input type="checkBox" name="answer[${status.index}].choices.choiceId" /> <c:out value="${choice.getChoiceName()}" /> <br>
+                                          <c:if test="${type.getTypeId()==3}" >
+                                          <form:radiobutton path="answers[${status.index}].userAnswer"  value="${choice.getChoiceName()}" /> <c:out value="${choice.getChoiceName()}" /> <br>
                                           </c:if>
                                      </c:forEach>
                                      <br>

@@ -61,13 +61,11 @@ public class ExamDao {
     public void assignQuestionsToExam(int examId,int questionId)throws DataException {
     	Session session = factory.openSession();
     	try {
-    		Set questionSet = new HashSet<>();
     		Set examSet = new HashSet();
     		Transaction transaction = session.beginTransaction();
     		Question question = (Question)session.get(Question.class, questionId);
     		Exam exam = (Exam)session.get(Exam.class,examId);
-    		questionSet.add(question);
-    		exam.setQuestions(questionSet);
+    		exam.setQuestions(question);
     		examSet.add(exam);
     		question.setExams(examSet);
     		increaseAllocatedQuestionsCount(exam);
