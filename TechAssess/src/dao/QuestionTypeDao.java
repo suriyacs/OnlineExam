@@ -17,7 +17,12 @@ import model.Question;
 import model.QuestionType;
 
 /**
- * @author user
+ * <p>
+ * This class provide interface between database and Service class.
+ * insert QuestionType Details from Service class into database and also perform retrieve 
+ * QuestionType information from database and allocate Question operations.
+ * 
+ * @author TechAssess
  *
  */
 public class QuestionTypeDao {
@@ -25,6 +30,19 @@ public class QuestionTypeDao {
 	private DataBaseConnection connection = DataBaseConnection.getConnection();
     private SessionFactory factory = connection.createSessionFactory();
 	
+    /**
+     * <p>
+     * retrieves the QuestionType Details of particular id from database and return this details
+     * to QuestionTypeService class
+     * </p>
+     * 
+     * @param typeId
+     *     contains id of QuestionType to retrieve.
+     * @return
+     *     QuestionType Details in object format.
+     * @throws DataException
+     *     if input is invalid or if any Hibernate Exception is arrived
+     */
     public QuestionType retrieveTypeDetailById(int typeId) throws DataException {
     	Session session = factory.openSession();
     	try {
@@ -35,7 +53,20 @@ public class QuestionTypeDao {
     	}
     }
     
-    public void addQuestionToQuestionType(QuestionType questionType, Question question) throws DataException {
+    /**
+     * <p>
+     * Allocate Question to QuestionType by  Calling setQuestion and 
+     * method of QuestionType model class.
+     * </p>
+     * 
+     * @param questionType
+     *      object which contains the details of particular QuestionType.
+     * @param question
+     *      object which contains the details of particular Question.
+     * @throws DataException  
+     *      if input is invalid or if any Hibernate Exception is arrived
+     */   
+    public void allocateQuestionToQuestionType(QuestionType questionType, Question question) throws DataException {
     	Session session = factory.openSession();
     	try {
     		Transaction transaction = session.beginTransaction();
@@ -46,8 +77,7 @@ public class QuestionTypeDao {
     		session.save(question);
     		transaction.commit();
     	} catch (HibernateException e) {
-    		e.printStackTrace();
-    		//throw new DataException(e.toString());
+    		throw new DataException(e.toString());
     	}
     }
 }

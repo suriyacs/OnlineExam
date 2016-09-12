@@ -11,11 +11,32 @@ import model.User;
 import exception.DataException;
 import dbconnection.DataBaseConnection;
 
+/**
+ * <p>
+ * This class provide interface between database and Service class.
+ * insert User Details from Service class into database and also perform retrieve 
+ * User information from database.
+ * </p>
+ * 
+ * @author suriyakumar
+ *
+ */
 public class UserDao {
 
 	private DataBaseConnection connection = DataBaseConnection.getConnection();
     private SessionFactory factory = connection.createSessionFactory();
     
+    /**
+     * <p>
+     * retrieve all Users Details from Database in List format and
+     * send this list back to Service Class.
+     * </p>
+     * 
+     * @return
+     *    list object contains details of all Users.
+     * @throws DataException
+     *     if inputs are invalid or if any Hibernate Exception arrived
+     */
 	public List<User> retrieveAllUser() throws DataException {                                    /*To populate employee*/
         Session session = factory.openSession();
         try {
@@ -27,6 +48,19 @@ public class UserDao {
         }
     } 
 	
+	/**
+	 * <p>
+	 * gets User model Object from Service class which contains details of Exam and 
+     * create the session then begin the transaction 
+     * persist the user object and close the session
+     * returns id after insertion of user into database.
+	 * </p>
+	 * 
+	 * @param user
+	 *     object contains the details of User like name,id etc.
+	 * @throws DataException
+	 *      if inputs are invalid or if any Hibernate Exception arrived
+	 */
 	public void insertUser(User user) throws DataException {            
         Session session = factory.openSession();
         try {
@@ -40,6 +74,19 @@ public class UserDao {
         }
     }
 	
+	/**
+	 * <p>
+	 * retrieves the User Details of particular emmailId from database and return this details
+     * to Service class
+	 * </p>
+	 * 
+	 * @param emailId
+	 *     contains email id of Particular user.
+	 * @return user
+	 *     object which contains the details of user.
+	 * @throws DataException
+	 *     if inputs are invalid or if any Hibernate Exception arrived
+	 */
 	public User retrieveUserByEmailId(String emailId) throws DataException {
 		 try {
 			 for(User user : retrieveAllUser()) {
