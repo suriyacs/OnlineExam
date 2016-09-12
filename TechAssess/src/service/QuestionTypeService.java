@@ -41,7 +41,7 @@ public class QuestionTypeService {
 	 *     throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public void addQuestion(QuestionType questionType, Question question) throws DataException {
-		questionTypeDao.addQuestionToQuestionType(questionType, question);
+		questionTypeDao.allocateQuestionToQuestionType(questionType, question);
 	}
 }
 

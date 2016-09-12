@@ -67,9 +67,8 @@ public class QuestionTypeDao {
      * @throws DataException  
      *      if input is invalid or if any Hibernate Exception is arrived
      */   
-    public void allocateQuestionToQuestionType(QuestionType questionType, Question question) throws DataException {
-    @SuppressWarnings("unchecked")
-	public void addQuestionToQuestionType(QuestionType questionType, Question question) throws DataException {
+	@SuppressWarnings("unchecked")
+	public void allocateQuestionToQuestionType(QuestionType questionType, Question question) throws DataException {
     	Session session = factory.openSession();
     	try {
     		Transaction transaction = session.beginTransaction();
@@ -82,7 +81,6 @@ public class QuestionTypeDao {
     		transaction.commit();
     	} catch (HibernateException e) {
     		throw new DataException(e.toString());
-    	}
     	} finally {
 			session.close();
 		}
