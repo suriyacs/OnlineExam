@@ -79,7 +79,7 @@ public class ApplicationController {
 			@RequestParam("password") String password, @RequestParam("mobileNumber") String mobileNumber) {
 		try {
 			userService.addUser(userName, emailId, password, mobileNumber);
-	        return new ModelAndView("login", "LogInMessage","Welcome to Tech Assess..!!Please login to proceed..!!");
+	        return new ModelAndView("login", "SuccessMessage","Welcome to Tech Assess..!!Please login to proceed..!!");
 		} catch(DataException e) {
 			return new ModelAndView("login", "LogInMessage", (e.getMessage().toString()));
 		}
@@ -119,8 +119,8 @@ public class ApplicationController {
 	        	   session.setAttribute("userName", user.getUserName());
 	               return "redirect:gotouserpage";
 	           } else {
-	        	   model.addAttribute("Message", roleService.getRoleNameById(user.getRoleId()));
-	           	return "success";
+	        	   model.addAttribute("LogInMessage","InvalidPassword");
+	           	return "login";
 	           }
 	       } catch (DataException e) {
 	    	   model.addAttribute("LogInMessage", e.toString());
@@ -147,7 +147,7 @@ public class ApplicationController {
 				@RequestParam("password") String password, @RequestParam("mobileNumber") String mobileNumber) {
 			try {
 				userService.addAdmin(userName, emailId, password, mobileNumber);
-		        return new ModelAndView("addadmin", "LogInMessage","New Admin Created Successfully..!!");
+		        return new ModelAndView("addadmin", "SuccessMessage"," Admin Created Successfully..!!");
 			} catch(DataException e) {
 				return new ModelAndView("addadmin", "LogInMessage", (e.getMessage().toString()));
 			}
@@ -172,7 +172,7 @@ public class ApplicationController {
 	 public String insertExam(@ModelAttribute Exam exam,ModelMap Message) {
 		 try {
 			 examService.addExamDetails(exam);
-			 Message.addAttribute("InsertExamMessage","Added Successfully..!!");
+			 Message.addAttribute("SuccessMessage","Added Successfully..!!");
 		 } catch(DataException e) {
 			 Message.addAttribute("InsertExamMessage",(e.getMessage().toString()));
 		 } finally {
@@ -219,7 +219,7 @@ public class ApplicationController {
 		     }
 		     model.addAttribute("allocateMessage","AllocatedSuccessfully..!!");
 		 } catch(DataException e) {
-			 model.addAttribute("allocateMessage",e.getMessage().toString());
+			 model.addAttribute("ErrorMessage",e.getMessage().toString());
 		 }
 		 return("assignquestions");
 	 }   
@@ -420,7 +420,7 @@ public class ApplicationController {
 		     int choiceId = choiceService.addChoice(answer,Integer.parseInt(correctAnswer));
 		     questionService.allocateQuestionType(1, questionId);
 		     choiceService.allocateQuestion(choiceId, questionId);
-		     model.addAttribute("insertQuestionMessage", correctAnswer + " " + "InserTion Success");
+		     model.addAttribute("SuccessMessage", correctAnswer + " " + "InserTion Success");
 		 } catch(DataException e) {
 			 model.addAttribute("insertQuestionMessage", (e.toString()));
 		 } finally {
@@ -482,7 +482,7 @@ public class ApplicationController {
 		     for( Choice choice : question.getChoices()) {
 		    	 choiceService.allocateQuestion(choiceService.addChoice(choice.getChoiceName(),(choice.getIsCorrect())), questionId);
 		     }
-		     model.addAttribute("insertQuestionMessage","Added Successfully..!!");
+		     model.addAttribute("SuccessMessage","Added Successfully..!!");
 	     } catch(DataException e) {
 	    	 model.addAttribute("insertQuestionMessage",(e.toString()));
 	     }

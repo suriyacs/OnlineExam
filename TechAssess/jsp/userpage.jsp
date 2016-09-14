@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-<title>User Page</title>
+<title>Employee Details</title>
 <link href="css/userpagestyling.css" rel="stylesheet" type="text/css">
 <link href="css/login.css" rel="stylesheet" type="text/css">
 <link href="css/row.css" rel="stylesheet" type="text/css">
@@ -10,6 +10,10 @@
             BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
 <script src="js/jquery-1.11.3.min.js"></script>
+<script src="js/sweetalert2.min.js"></script>
+  <link rel="stylesheet" href="css/sweetalert2.min.css">
+  <script src="js/sweetalert2.js"></script>
+  <link rel="stylesheet" href="css/sweetalert2.css">
 <script src="js/parallex.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -18,15 +22,25 @@
 </head>
 <body>
 	<c:if test="${ null != ExamMessage}">
-		<script type="text/javascript">
-			alert("<c:out value="${ExamMessage }"/>");
-			window.location = "gotouserpage";
+		<script>
+		 swal({ 
+			  title: "Error",
+			   text: "<c:out value="${ExamMessage}"/>",
+			    type: "error" 
+			  },function(isConfirm){
+	                alert('ok');
+	          });
+	          $('.swal2-confirm').click(function(){
+	                window.location.href = 'gotouserpage';
+	       });
 		</script>
 	</c:if>
 	<div id="grid"></div>
 	<div class="content">
 		<div class="page-header">
-            <h1 align="center" class="title">TechAssess</h1>
+			<center>
+				<h1 class="title">TechAssess</h1>
+			</center>
 		</div>
 		<div class="usertab">
 			<img src="img/userimage.png" alt="userimage">

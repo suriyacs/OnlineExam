@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Admin Page</title>
+<title>Login</title>
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"
 	integrity="sha384-   
             BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"

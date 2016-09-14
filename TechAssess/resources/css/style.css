@@ -6,6 +6,21 @@ html {
   overflow-y: scroll;
 }
 
+.title {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-style: normal;
+    font-size:40px;
+    src: url(google-font-url-here/opensans.eot);
+    src: local('Open Sans'), local('OpenSans'),
+    url(google-font-url-here/opensans.eot?#iefix) format('embedded-opentype'),
+    url(google-font-url-here/opensans.woff2) format('woff2'), 
+    url(google-font-url-here/opensans.woff) format('woff'), 
+    url(google-font-url-here/opensans.ttf) format('truetype'), 
+    url(google-font-url-here/opensans.svg#OpenSans) format('svg');
+    color:black;
+    text-align:center;
+ }
+
 body {
   background: #c1bdba;
   font-family: 'Titillium Web', sans-serif;

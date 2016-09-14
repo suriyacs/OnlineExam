@@ -13,6 +13,10 @@
 <link rel="stylesheet" href="css/style1.css">
 <script src="js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="js/jssor.slider-21.1.5.mini.js"></script>
+ <script src="js/sweetalert2.min.js"></script>
+  <link rel="stylesheet" href="css/sweetalert2.min.css">
+  <script src="js/sweetalert2.js"></script>
+  <link rel="stylesheet" href="css/sweetalert2.css">
 <link rel="stylesheet"
 	href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <script src="js/parallex.js"></script>
@@ -114,60 +118,111 @@
 		var emailId = document.forms["user"]["emailId"].value;
 		var atpos = emailId.indexOf("@");
 	    var dotpos = emailId.lastIndexOf(".");
-	    if(emailId == null || emailId == "" && password == null || password == "" && mobileNumber == null || mobileNumber == "" && userName == null || userName == "") {
-	    	alert("Enter full details about yourself");
+	    if((emailId == null || emailId == "") && (password == null || password == "") && (mobileNumber == null || mobileNumber == "")&& (userName == null || userName == "")) {
+	    	swal({ 
+		  		  title: "Error",
+		  		   text:"Please fillout all the fields",
+		  		    type: "error" 
+		            });
 	    	return false;
-	    } else if (emailId == null || emailId == "") {
-	        alert("EmailId must be filled out");
-	        return false;
-	    } else if (password == null || password == "") {
-	    	alert("Password must be filled out");
-	    	return false;
-	    } else if (mobileNumber == null || mobileNumber == "") {
-	    	alert("MobileNumber must be filled out");
-	    	return false;
-	    } else if (userName == null || userName == "") {
-	    	alert("UserName must be filled out");
-	    	return false;
-	    } else if (atpos < 1 || dotpos < (atpos + 2) || (dotpos + 2) >= emailId.length) {
-	        alert("Not a valid e-mail address");
-	        return false;
-	    } else if (!(mobileNumber.match(phoneno))) {
-	    	alert("Invalid MobileNumber");  
-	        return false;  
 	    }
-	}
+	    else if (emailId == null || emailId == "") {
+		    	swal({ 
+			  		 title: "Error",
+			  		 text: "EmailId must be filled out",
+			  		 type: "error"
+			            });
+		        return false;
+		 } else if (password == null || password == "") {
+		    	swal({ 
+			  		 title: "Error",
+			  		 text: "Password must be filled out",
+			  		 type: "error"
+			            });
+		    	return false;
+		    }
+		 else if (mobileNumber == null || mobileNumber == "") {
+		    	swal({ 
+			  		 title: "Error",
+			  		 text: "MobileNumber must be filled out",
+			  		 type: "error"
+			            });
+		    	return false;
+		    }
+	    } 
 	function validateForm() {
 	    var password = document.forms["myForm"]["password"].value;
 	    var emailId = document.forms["myForm"]["emailId"].value;
 	    var atpos = emailId.indexOf("@");
 	    var dotpos = emailId.lastIndexOf(".");
 	    if(emailId == null || emailId == "" && password == null || password == "") {
-	    	alert("Enter registered EmailId and Password");
+	    	swal({ 
+	  		  title: "Error",
+	  		   text:"Please fillout all the fields",
+	  		    type: "error" 
+	            });
 	        return false;
 	    } else if (emailId == null || emailId == "") {
-	        alert("EmailId must be filled out");
+	    	swal({ 
+		  		 title: "Error",
+		  		 text: "EmailId must be filled out",
+		  		 type: "error"
+		            });
 	        return false;
 	    } else if (password == null || password == "") {
-	    	alert("Password must be filled out");
+	    	swal({ 
+		  		 title: "Error",
+		  		 text: "Password must be filled out",
+		  		 type: "error"
+		            });
 	    	return false;
 	    } else if (atpos < 1 || dotpos < (atpos + 2) || (dotpos + 2) >= emailId.length) {
-	        alert("Not a valid e-mail address");
-	        return false;
+	    	swal({ 
+		  		 title: "Error",
+		  		 text: "Not a valid e-mail address",
+		  		 type: "error"
+		         });
+	        return false;InsertExamMessage
 	    }
 	}
 </script>
-<c:if test="${LogInMessage != null}">
-	<script type='text/javascript' language='javascript'>
-		alert("<c:out value='${LogInMessage}' />");
-		window.location = "loginpage";
-	</script>
-</c:if>
+
 <body>
+ <c:if test="${LogInMessage != null}">
+	 <script>
+	 swal({ 
+		  title: "Error",
+		   text: "<c:out value="${LogInMessage}"/>",
+		    type: "error" 
+		  },function(isConfirm){
+                alert('ok');
+          });
+          $('.swal2-confirm').click(function(){
+                window.location.href = 'loginpage';
+          });
+  </script>
+</c:if>
+<c:if test="${SuccessMessage != null}">
+	 <script>
+	 swal({ 
+		  title: "Good job!",
+		   text: "<c:out value="${SuccessMessage}"/>",
+		    type: "success" 
+		  });
+  </script>
+</c:if>
 	<c:if test="${ null != mark }">
 		<script type="text/javascript">
-			alert("Your Mark:<c:out value="${mark}"/>");
-			window.location = "logout";
+		 swal({ 
+			  title: "Error",
+			   text: "<c:out value="${mark}"/>",
+			    type: "error" 
+			  },function(isConfirm){
+	                alert('ok');
+	          });
+	          $('.swal2-confirm').click(function(){
+	                window.location.href = 'logout';
+	          });
 		</script>
 	</c:if>
 	<div id="grid"></div>

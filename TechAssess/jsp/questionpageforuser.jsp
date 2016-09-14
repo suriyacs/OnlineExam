@@ -12,6 +12,10 @@
 	crossorigin="anonymous">
 <script src="js/jquery-1.11.3.min.js"></script>
 <script src="js/parallex.js"></script>
+<script src="js/sweetalert2.min.js"></script>
+  <link rel="stylesheet" href="css/sweetalert2.min.css">
+  <script src="js/sweetalert2.js"></script>
+  <link rel="stylesheet" href="css/sweetalert2.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script
@@ -48,9 +52,15 @@
     }); 
  </script>
 </head>
-<body onload="updateClock(); setInterval('updateClock()', 1000 )" oncontextmenu="return false" onkeydown="return (event.keyCode != 116)" onload="noBack();" onpageshow="if (event.persisted) noBack();">
+<body onload="updateClock(); setInterval('updateClock()', 1000 )" oncontextmenu="return false" onkeydown="return (event.keyCode != 116)" >
 	<c:if test="${null != insertQuestionMessage}">
-		<c:out value="${insertQuestionMessage}" />
+		<script>
+		 swal({ 
+		  title: "Error",
+		   text: "<c:out value="${insertQuestionMessage}"/>",
+		    type: "error" 
+          });
+    </script>
 	</c:if>
 	<div id="grid"></div>
 	<div class="content">
@@ -61,17 +71,21 @@
 		<div id="countdown"></div>
 		<div id="notifier"></div>
 		<script type="text/javascript">
-		     window.history.forward();
-		    function noBack() {
-		    	window.history.forward(); 
-		    }
 			function display(notifier, str) {
 				document.getElementById(notifier).innerHTML = str;
 			}
 
 			function myFunction() {
-				alert("Oops!!!Time Up!! your response were submitted.")
-				window.location = "logout";
+				 swal({ 
+				  title: "Error",
+				   text: "Oops..Its Time Up..!!",
+				    type: "error" 
+				  },function(isConfirm){
+		                alert('ok');
+		          });
+		          $('.swal2-confirm').click(function(){
+		                window.location.href = 'resultcalculation';
+		          });
 			}
 
 			function toMinuteAndSecond(x) {
@@ -82,7 +96,7 @@
 				(function countdown() {
 					display("countdown", toMinuteAndSecond(remain));
 					actions[remain] && actions[remain]();
-					(remain -= 1) >= 0 && setTimeout(arguments.callee, 1000);
+					(remain -= 1) >= 0 && setTimeout(arguments.callee, 20);
 				})();
 			}
 
@@ -125,8 +139,7 @@
 						value="${que.getQuestionId()}" />
 					<br>
 					<br>
-					<c:out value="${count}" />. <c:out
-						value="${que.getQuestionName()}" />
+					<c:out value="${count}" />. <c:out value="${que.getQuestionName()}" />
 					<br>
 					<br>
 					<c:set var="count" value="${count + 1}" scope="page" />
@@ -152,10 +165,12 @@
 					<br>
 				</c:forEach>
 				<br>
+				<br>
 				<input id="button" type="submit" value="submit answers"
 					class="btn btn-primary" />
 			</form:form>
 		</div>
 	</div>
+
 </body>
 </html>

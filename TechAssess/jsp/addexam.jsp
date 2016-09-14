@@ -4,7 +4,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
 <head>
-<title>Create Exam</title>
+<title>CreatExam</title>
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"
 	integrity="sha384-   
             BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -14,17 +14,38 @@
 <link href='css/fonts.css' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="css/normalize.css">
 <link rel="stylesheet" href="css/style.css">
+<script src="js/sweetalert2.min.js"></script>
+ <link rel="stylesheet" href="css/sweetalert2.min.css">
+ <script src="js/sweetalert2.js"></script>
+ <link rel="stylesheet" href="css/sweetalert2.css">
 <script src="js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="js/jssor.slider-21.1.5.mini.js"></script>
 <script src="js/parallex.js"></script>
 </head>
+<body>
+<c:if test="${SuccessMessage != null }">
+   <script>
+	 swal({ 
+		  title: "GoodJob!",
+		   text: "<c:out value="${SuccessMessage}"/>",
+		    type: "success" 
+		  },function(isConfirm){
+                alert('ok');
+          });
+          $('.swal2-confirm').click(function(){
+                window.location.href = 'allocatequestionpage';
+          });
+  </script>
+</c:if>
 <c:if test="${InsertExamMessage != null }">
-	<script type="text/javascript" name="javascript">
-		alert("<c:out value='${InsertExamMessage}'/>");
-		window.location = "allocatequestionpage";
+	<script>
+	 swal({ 
+		  title: "Error",
+		   text: "<c:out value="${InsertExamMessage}"/>",
+		    type: "error" 
+		  });
 	</script>
 </c:if>
-<body>
 	<div id="grid"></div>
 	<div class="content">
 		<div class="header">

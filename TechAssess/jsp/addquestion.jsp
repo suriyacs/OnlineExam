@@ -6,12 +6,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Allocate Question to Exam</title>
+<title>add question</title>
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"
 	integrity="sha384-   
             BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous" />
 <link rel="stylesheet" href="css/form-basic.css">
+ <script src="js/sweetalert2.min.js"></script>
+  <link rel="stylesheet" href="css/sweetalert2.min.css">
+  <script src="js/sweetalert2.js"></script>
+  <link rel="stylesheet" href="css/sweetalert2.css">
 <link rel="stylesheet" href="css/login.css">
 <script src="js/jquery-1.11.3.min.js"></script>
 <script>
@@ -22,14 +26,26 @@
 		});
 	});
 </script>
-<c:if test="${insertQuestionMessage != null }">
-	<script type="text/javascript" language="javascript">
-		alert("<c:out value='${insertQuestionMessage}'/>");
-		window.location = 'insertquestion';
-	</script>
-</c:if>
 </head>
 <body>
+<c:if test="${SuccessMessage != null }">
+	 <script>
+	 swal({ 
+		  title: "Good job!",
+		   text: "<c:out value="${SuccessMessage}"/>",
+		    type: "success" 
+		  });
+  </script>
+</c:if>
+<c:if test="${insertQuestionMessage != null }">
+	 <script>
+	 swal({ 
+		  title: "Error",
+		  text: "<c:out value="${insertQuestionMessage}"/>",
+		    type: "error" 
+		  });
+  </script>
+</c:if>
 	<div class="content">
 		<div class="heading">
 			<div class="head">

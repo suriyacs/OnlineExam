@@ -11,6 +11,10 @@
 <link href='css/fonts.css' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="css/normalize.css">
 <link rel="stylesheet" href="css/style.css">
+<script src="js/sweetalert2.min.js"></script>
+  <link rel="stylesheet" href="css/sweetalert2.min.css">
+  <script src="js/sweetalert2.js"></script>
+  <link rel="stylesheet" href="css/sweetalert2.css">
 <script src="js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="js/jssor.slider-21.1.5.mini.js"></script>
 <script src="js/parallex.js"></script>
@@ -24,25 +28,53 @@ function validateUserRegisterationForm() {
 	var atpos = emailId.indexOf("@");
     var dotpos = emailId.lastIndexOf(".");
     if(emailId == null || emailId == "" && password == null || password == "" && mobileNumber == null || mobileNumber == "" && userName == null || userName == "") {
-    	alert("Enter full details about Admin");
+    	swal({ 
+	  		  title: "Error",
+	  		   text:"Please fillout all the fields",
+	  		    type: "error" 
+	        });
     	return false;
     } else if (emailId == null || emailId == "") {
-        alert("EmailId must be filled out");
+    	swal({ 
+	  		 title: "Error",
+	  		 text: "EmailId must be filled out",
+	  		 type: "error"
+	        });
         return false;
     } else if (password == null || password == "") {
-    	alert("Password must be filled out");
+    	swal({ 
+	  		 title: "Error",
+	  		 text: "Password must be filled out",
+	  		 type: "error"
+	        });
     	return false;
     } else if (mobileNumber == null || mobileNumber == "") {
-    	alert("MobileNumber must be filled out");
+    	swal({ 
+	  		 title: "Error",
+	  		 text: "Mobile Number must be filled out",
+	  		 type: "error"
+	        });
     	return false;
     } else if (userName == null || userName == "") {
-    	alert("UserName must be filled out");
+    	swal({ 
+	  		 title: "Error",
+	  		 text: "user name must be filled out",
+	  		 type: "error"
+	         });
     	return false;
     } else if (atpos < 1 || dotpos < (atpos + 2) || (dotpos + 2) >= emailId.length) {
-        alert("Not a valid e-mail address");
+    	swal({ 
+	  		 title: "Error",
+	  		 text: "Invalid Email Id..!!Try Again!!",
+	  		 type: "error"
+	         });
         return false;
     } else if (!(mobileNumber.match(phoneno))) {
-    	alert("Invalid MobileNumber");  
+    	swal({ 
+	  		 title: "Error",
+	  		 text: "Invalid Mobile Number..!!Try Again!!",
+	  		 type: "error"
+	       });
         return false;  
     }
 }
@@ -50,9 +82,31 @@ function validateUserRegisterationForm() {
 </head>
 <body>
 	<c:if test="${LogInMessage != null}">
-		<script type='text/javascript' language='javascript'>
-			alert("<c:out value='${LogInMessage}' />");
-			window.location = "adminpage";
+		<script>
+		 swal({ 
+			  title: "Error",
+			   text: "<c:out value="${LogInMessage}"/>",
+			    type: "error" 
+			  },function(isConfirm){
+	                alert('ok');
+	          });
+	          $('.swal2-confirm').click(function(){
+	                window.location.href = 'adminpage';
+	          });
+		</script>
+	</c:if>
+	<c:if test="${SuccessMessage != null}">
+		<script>
+		 swal({ 
+			  title: "GoodJob!",
+			   text: "<c:out value="${SuccessMessage}"/>",
+			    type: "success" 
+			  },function(isConfirm){
+	                alert('ok');
+	          });
+	          $('.swal2-confirm').click(function(){
+	                window.location.href = 'adminpage';
+	          });
 		</script>
 	</c:if>
 	<div id="grid"></div>
@@ -111,6 +165,8 @@ function validateUserRegisterationForm() {
 				<!--- input-form -->
 			</div>
 			<!--center-->
+			</center>
+			</div>
 </body>
 </html>
 

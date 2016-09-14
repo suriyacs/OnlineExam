@@ -11,6 +11,11 @@
         <link rel="stylesheet" href="css/bothtable.css">
         <link href='css/fonts.css' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="css/normalize.css">
+        <script type="text/javascript" src="js/jssor.slider-21.1.5.mini.js"></script>
+        <script src="js/sweetalert2.min.js"></script>
+        <link rel="stylesheet" href="css/sweetalert2.min.css">
+        <script src="js/sweetalert2.js"></script>
+        <link rel="stylesheet" href="css/sweetalert2.css">
         <link rel="stylesheet" href="css/style.css">
         <script src="js/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="js/jssor.slider-21.1.5.mini.js"></script>
@@ -23,23 +28,53 @@
         	var toQuestionId = document.forms["addQuestion"]["toQuestionId"].value;
         	var numbers = /^[0-9]+$/;
         	if(examId == null || examId == "" && fromQuestionId == null || fromQuestionId == "" && toQuestionId == null || toQuestionId == "") {
-        		alert("Enter necessary details");
+        		swal({ 
+  		  		  title: "Error",
+  		  		   text:"Please fillout all the fields",
+  		  		    type: "error" 
+  		        });
         		return false;
         	} else if(examId == null || examId == "") {
-        		alert("ExamId is mandatory");
+        		swal({ 
+    		  		  title: "Error",
+    		  		   text:"ExamId Can't be blank..!!",
+    		  		    type: "error" 
+    		    });
         		return false;
         	} else if(fromQuestionId == null || fromQuestionId == "") {
-        		alert("FromQuestionId is needed to assign questions");
+        		swal({ 
+  		  		  title: "Error",
+  		  		   text:"FromQuestionId Can't be blank..!!",
+  		  		    type: "error" 
+  		    });
+        		return false;
         	} else if(toQuestionId == null || toQuestionId == "") {
-        		alert("ToQuestionId is needed to assign questions");
+        		swal({ 
+  		  		  title: "Error",
+  		  		   text:"ToQuestionId Can't be blank..!!",
+  		  		    type: "error" 
+  		    });
+        		return false;
         	} else if ((!(examId.match(numbers)))) {
-        		alert("ExamId should be number");
+        		swal({ 
+  		  		  title: "Error",
+  		  		   text:"ExamId must be a number..!!",
+  		  		    type: "error" 
+  		    });
         		return false
         	} else if ((!(fromQuestionId.match(numbers)))) {
-        		alert("FromQuestionId should be number");
+        		swal({ 
+    		  		  title: "Error",
+    		  		   text:"FromQuestionId must be a number..!!",
+    		  		    type: "error" 
+    		    });
         		return false
         	} else if ((!(toQuestionId.match(numbers)))) {
-        		alert("ToQuestionId should be number");
+        		swal({ 
+    		  		  title: "Error",
+    		  		   text:"ToQuestionId must be a number..!!",
+    		  		    type: "error" 
+    		    });
         		return false
         	}
         }
@@ -95,19 +130,35 @@
 
     </script>
     </head>
+    <body>
     <c:if test="${ErrorMessage != null }">
-        <script type="text/javascript" name="javascript">
-            alert("<c:out value='${ErrorMessage}'/>");
-            window.location="adminpage";
+        <script>
+        swal({ 
+  		  title: "Error",
+  		   text: "<c:out value="${ErrorMessage}"/>",
+  		    type: "error" 
+  		  },function(isConfirm){
+                  alert('ok');
+            });
+            $('.swal2-confirm').click(function(){
+                  window.location.href = 'adminpage';
+            });
          </script>
     </c:if>
      <c:if test="${allocateMessage != null }">
-        <script type="text/javascript" name="javascript">
-            alert("<c:out value='${allocateMessage}'/>");
-            window.location="allocatequestionpage";
+        <script>
+        swal({ 
+    		  title: "GoodJob!",
+    		   text: "<c:out value="${allocateMessage}"/>",
+    		    type: "success" 
+    		  },function(isConfirm){
+                    alert('ok');
+              });
+              $('.swal2-confirm').click(function(){
+                    window.location.href = 'allocatequestionpage';
+              });
          </script>
     </c:if>
-    <body>
         <div id="grid"></div>
         <div class="content">
            <div class="header">
