@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-<title>Employee Details</title>
+<title>User Page</title>
 <link href="css/userpagestyling.css" rel="stylesheet" type="text/css">
 <link href="css/login.css" rel="stylesheet" type="text/css">
 <link href="css/row.css" rel="stylesheet" type="text/css">
@@ -26,9 +26,7 @@
 	<div id="grid"></div>
 	<div class="content">
 		<div class="page-header">
-			<center>
-				<h1 class="title">TechAssess</h1>
-			</center>
+            <h1 align="center" class="title">TechAssess</h1>
 		</div>
 		<div class="usertab">
 			<img src="img/userimage.png" alt="userimage">

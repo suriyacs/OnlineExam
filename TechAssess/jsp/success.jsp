@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
 <head>
 <title>Exam</title>
@@ -16,29 +17,31 @@
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body onload="updateClock(); setInterval('updateClock()', 1000 )">
+<body onload="updateClock(); setInterval('updateClock()', 1000 )" onload="noBack();" onpageshow="if (event.persisted) noBack();">
+
 	<c:if test="${null != insertQuestionMessage}">
 		<c:out value="${insertQuestionMessage}" />
 	</c:if>
 	<div id="grid"></div>
 	<div class="content">
 		<div class="page-header">
-			<center>
-				<h1 class="title">TechAssess</h1>
-			</center>
+			<h1 class="title" align="center">TechAssess</h1>
 		</div>
 		<h5>Time Remaining:</h5>
 		<div id="countdown"></div>
 		<div id="notifier"></div>
 		<script type="text/javascript">
+		     window.history.forward();
+		    function noBack() {
+		    	window.history.forward(); 
+		    }
 			function display(notifier, str) {
 				document.getElementById(notifier).innerHTML = str;
 			}
 
 			function myFunction() {
-				if (confirm("Oops!!!Time Up!! your response were submitted.") == true) {
-					window.location = "gotouserpage";
-				}
+				alert("Oops!!!Time Up!! your response were submitted.")
+				window.location = "logout";
 			}
 
 			function toMinuteAndSecond(x) {
@@ -75,74 +78,54 @@
 			<a href="logout" class="btn btn-danger" title="logout"><span
 				class="glyphicon glyphicon-log-out"></span></a>
 		</div>
-		<center>
-			<h4>
-				<c:out value="${examName}" />
-			</h4>
-		</center>
+		<h4 align="center">
+			<c:out value="${examName}" />
+		</h4>
 		<div class="questiondiv">
-			<form action="gotouserpage" method="post">
+			<form:form action="resultcalculation" method="post"
+				modelAttribute="exam">
 				<c:set var="count" value="1" scope="page" />
-				<c:forEach items="${questions}" var="question">
-					<c:if test="${question.getTypeId().getTypeName() == 'fillup'}">
-						<div class="row">
-							<div class="col-sm-4">
-								<h4>
-									<c:out value="${count}" />
-									.
-									<c:out value="${ question.getQuestionName()}" />
-								</h4>
-								<c:set var="count" value="${count + 1}" scope="page" />
-								<label>Answer:<input type="text" name="answer" /></label>
-								</td>
-							</div>
-						</div>
-						<br>
-					</c:if>
-					<c:if
-						test="${question.getTypeId().getTypeName() == 'Choose the correct answer'}">
-						<div class="row">
-							<div class="col-sm-4">
-								<h4>
-									<c:out value="${count}" />
-									.
-									<c:out value="${ question.getQuestionName()}" />
-								</h4>
-								<c:set var="count" value="${count + 1}" scope="page" />
-								<c:forEach items="${question.getChoices()}" var="choice">
-									<label class="radio-inline"><input type="radio"
-										name="radio" /> <c:out value="${choice.getChoiceName()}" /></label>
-								</c:forEach>
-							</div>
-						</div>
-						<br>
-					</c:if>
-					<c:if
-						test="${question.getTypeId().getTypeName() == 'Multiple Answers'}">
-						<div class="row">
-							<div class="col-sm-4">
-								<h4>
-									<c:out value="${count}" />
-									.
-									<c:out value="${question.getQuestionName()}" />
-								</h4>
-								<c:set var="count" value="${count + 1}" scope="page" />
-								<c:forEach items="${question.getChoices()}" var="choice">
-									<label class="checkbox-inline"><input type="checkbox"
-										name="check" /> <c:out value="${choice.getChoiceName()}" /></label>
-								</c:forEach>
-							</div>
-						</div>
-						<br>
-					</c:if>
+				<input type="hidden" name="examId" value="${exam.getExamId() }">
+				<c:set var="count" value="1" scope="page" />
+				<c:forEach items="${exam.getAnswers()}" var="answer"
+					varStatus="status">
+					<c:set value="${exam.questions[status.index]}" var="que" />
+					<form:input type="hidden"
+						path="answers[${status.index}].questionId"
+						value="${que.getQuestionId()}" />
+					<br>
+					<br>
+					<c:out value="${count}" />. <c:out
+						value="${que.getQuestionName()}" />
+					<br>
+					<br>
+					<c:set var="count" value="${count + 1}" scope="page" />
+					<c:set value="${que.getTypeId()}" var="type" />
+					<c:forEach items="${que.getChoices()}" var="choice">
+						<c:if test="${type.getTypeId()==1}">
+							<label>Answer:<form:input type="text"
+									path="answers[${status.index}].userAnswer" /></label>
+						</c:if>
+						<c:if test="${type.getTypeId()==2}">
+							<form:radiobutton path="answers[${status.index}].userAnswer"
+								value="${choice.getChoiceName()}" />
+							<c:out value="${choice.getChoiceName()}" />
+							<br>
+						</c:if>
+						<c:if test="${type.getTypeId()==3}">
+							<form:radiobutton path="answers[${status.index}].userAnswer"
+								value="${choice.getChoiceName()}" />
+							<c:out value="${choice.getChoiceName()}" />
+							<br>
+						</c:if>
+					</c:forEach>
+					<br>
 				</c:forEach>
-				<br>
 				<br>
 				<input id="button" type="submit" value="submit answers"
 					class="btn btn-primary" />
-			</form>
+			</form:form>
 		</div>
 	</div>
-
 </body>
 </html>

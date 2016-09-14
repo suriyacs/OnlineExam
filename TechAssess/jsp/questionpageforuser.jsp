@@ -48,7 +48,7 @@
     }); 
  </script>
 </head>
-<body onload="updateClock(); setInterval('updateClock()', 1000 )" oncontextmenu="return false" onkeydown="return (event.keyCode != 116)" >
+<body onload="updateClock(); setInterval('updateClock()', 1000 )" oncontextmenu="return false" onkeydown="return (event.keyCode != 116)" onload="noBack();" onpageshow="if (event.persisted) noBack();">
 	<c:if test="${null != insertQuestionMessage}">
 		<c:out value="${insertQuestionMessage}" />
 	</c:if>
@@ -61,6 +61,10 @@
 		<div id="countdown"></div>
 		<div id="notifier"></div>
 		<script type="text/javascript">
+		     window.history.forward();
+		    function noBack() {
+		    	window.history.forward(); 
+		    }
 			function display(notifier, str) {
 				document.getElementById(notifier).innerHTML = str;
 			}
@@ -121,7 +125,8 @@
 						value="${que.getQuestionId()}" />
 					<br>
 					<br>
-					<c:out value="${count}" />. <c:out value="${que.getQuestionName()}" />
+					<c:out value="${count}" />. <c:out
+						value="${que.getQuestionName()}" />
 					<br>
 					<br>
 					<c:set var="count" value="${count + 1}" scope="page" />
@@ -147,12 +152,10 @@
 					<br>
 				</c:forEach>
 				<br>
-				<br>
 				<input id="button" type="submit" value="submit answers"
 					class="btn btn-primary" />
 			</form:form>
 		</div>
 	</div>
-
 </body>
 </html>
