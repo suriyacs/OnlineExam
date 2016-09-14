@@ -17,6 +17,33 @@
         <script src="js/parallex.js"></script>
         <script>
 
+        function validateAssignQuestionForm() {
+        	var examId = document.forms["addQuestion"]["examId"].value;
+        	var fromQuestionId = document.forms["addQuestion"]["fromQuestionId"].value;
+        	var toQuestionId = document.forms["addQuestion"]["toQuestionId"].value;
+        	var numbers = /^[0-9]+$/;
+        	if(examId == null || examId == "" && fromQuestionId == null || fromQuestionId == "" && toQuestionId == null || toQuestionId == "") {
+        		alert("Enter necessary details");
+        		return false;
+        	} else if(examId == null || examId == "") {
+        		alert("ExamId is mandatory");
+        		return false;
+        	} else if(fromQuestionId == null || fromQuestionId == "") {
+        		alert("FromQuestionId is needed to assign questions");
+        	} else if(toQuestionId == null || toQuestionId == "") {
+        		alert("ToQuestionId is needed to assign questions");
+        	} else if ((!(examId.match(numbers)))) {
+        		alert("ExamId should be number");
+        		return false
+        	} else if ((!(fromQuestionId.match(numbers)))) {
+        		alert("FromQuestionId should be number");
+        		return false
+        	} else if ((!(toQuestionId.match(numbers)))) {
+        		alert("ToQuestionId should be number");
+        		return false
+        	}
+        }
+        
     function scrolify(tblAsJQueryObject, height){
         var oTbl = tblAsJQueryObject;
 
@@ -153,22 +180,22 @@
 				<div class="tab-content" style="margin: 25px">
 					<div id="signup">
 						<h1 style="color: black">AllocateQuestion</h1>
-						<form action="allocating" method="post">
+						<form name="addQuestion" action="allocating" method="post" onsubmit="return validateAssignQuestionForm()">
 							<div class="field-wrap">
 								<label> EnterExamId<span class="req">*</span>
-								</label> <input type="text" name="examId" required autocomplete="off" />
+								</label> <input type="text" name="examId" autocomplete="off" />
 							</div>
 							<div class="field-wrap">
 								<label> FormQuestionIdToAllocate<span class="req">*</span>
-								</label> <input type="text" name="fromQuestionId" required
+								</label> <input type="text" name="fromQuestionId"
 									autocomplete="off" />
 							</div>
 							<div class="field-wrap">
 								<label> ToQuestionIdToAllocate<span class="req">*</span>
-								</label> <input type="text" name="toQuestionId" required
+								</label> <input type="text" name="toQuestionId"
 									autocomplete="off" />
 							</div>
-							<button type="submit" class="button button-block" />
+							<button type="submit" class="button button-block">
 							Allocate
 							</button>
 						</form>

@@ -106,6 +106,56 @@
 		$(window).bind("orientationchange", ScaleSlider);
 		//responsive code end
 	});
+	function validateUserRegisterationForm() {
+		var userName = document.forms["user"]["userName"].value;
+		var mobileNumber = document.forms["user"]["mobileNumber"].value;
+		var phoneno = /^\d{10}$/;  
+		var password = document.forms["user"]["password"].value;
+		var emailId = document.forms["user"]["emailId"].value;
+		var atpos = emailId.indexOf("@");
+	    var dotpos = emailId.lastIndexOf(".");
+	    if(emailId == null || emailId == "" && password == null || password == "" && mobileNumber == null || mobileNumber == "" && userName == null || userName == "") {
+	    	alert("Enter full details about yourself");
+	    	return false;
+	    } else if (emailId == null || emailId == "") {
+	        alert("EmailId must be filled out");
+	        return false;
+	    } else if (password == null || password == "") {
+	    	alert("Password must be filled out");
+	    	return false;
+	    } else if (mobileNumber == null || mobileNumber == "") {
+	    	alert("MobileNumber must be filled out");
+	    	return false;
+	    } else if (userName == null || userName == "") {
+	    	alert("UserName must be filled out");
+	    	return false;
+	    } else if (atpos < 1 || dotpos < (atpos + 2) || (dotpos + 2) >= emailId.length) {
+	        alert("Not a valid e-mail address");
+	        return false;
+	    } else if (!(mobileNumber.match(phoneno))) {
+	    	alert("Invalid MobileNumber");  
+	        return false;  
+	    }
+	}
+	function validateForm() {
+	    var password = document.forms["myForm"]["password"].value;
+	    var emailId = document.forms["myForm"]["emailId"].value;
+	    var atpos = emailId.indexOf("@");
+	    var dotpos = emailId.lastIndexOf(".");
+	    if(emailId == null || emailId == "" && password == null || password == "") {
+	    	alert("Enter registered EmailId and Password");
+	        return false;
+	    } else if (emailId == null || emailId == "") {
+	        alert("EmailId must be filled out");
+	        return false;
+	    } else if (password == null || password == "") {
+	    	alert("Password must be filled out");
+	    	return false;
+	    } else if (atpos < 1 || dotpos < (atpos + 2) || (dotpos + 2) >= emailId.length) {
+	        alert("Not a valid e-mail address");
+	        return false;
+	    }
+	}
 </script>
 <c:if test="${LogInMessage != null}">
 	<script type='text/javascript' language='javascript'>
@@ -164,50 +214,49 @@
 						<div class="tab-content">
 							<div id="signup">
 								<h1>Sign Up for Free</h1>
-								<form name="user" action="userRegisteration" method="post">
+								<form name="user" action="userRegisteration" method="post" onsubmit="return validateUserRegisterationForm()">
 									<div class="top-row">
 										<div class="field-wrap">
 											<label> User Name<span class="req">*</span>
-											</label> <input type="text" name="userName" required
+											</label> <input type="text" name="userName"
 												autocomplete="off" />
 										</div>
 										<div class="field-wrap">
 											<label> MobileNumber<span class="req">*</span>
-											</label> <input type="text" name="mobileNumber" required
+											</label> <input type="text" name="mobileNumber"
 												autocomplete="off" />
 										</div>
 									</div>
 									<div class="field-wrap">
 										<label> Email Address<span class="req">*</span>
-										</label> <input type="email" name="emailId" required
+										</label> <input type="email" name="emailId"
 											autocomplete="off" />
 									</div>
 									<div class="field-wrap">
 										<label> Password<span class="req">*</span>
-										</label> <input type="password" name="password" required
+										</label> <input type="password" name="password"
 											autocomplete="off" />
 									</div>
-									<button type="submit" class="button button-block" />
+									<button type="submit" class="button button-block">
 									CreateAccount
 									</button>
 								</form>
 							</div>
 							<div id="login">
 								<h1>Welcome Back!</h1>
-								<form action="AuthenticateLogin" method="post">
+								<form name="myForm" action="AuthenticateLogin" method="post" onsubmit="return validateForm()">
 									<div class="field-wrap">
 										<label> EmailId<span class="req">*</span>
-										</label> <input type="text" name="emailId" required autocomplete="off" />
+										</label> <input type="text" name="emailId"/>
 									</div>
 									<div class="field-wrap">
 										<label> Password<span class="req">*</span>
-										</label> <input type="password" name="password" required
-											autocomplete="off" />
+										</label> <input type="password" name="password"/>
 									</div>
 									<p class="forgot">
 										<a href="#">Forgot Password?</a>
 									</p>
-									<button class="button button-block" />
+									<button class="button button-block">
 									Log In
 									</button>
 								</form>
