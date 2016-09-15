@@ -4,13 +4,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
 <head>
-<c:if test="${ null == role }">
-	<c:redirect url="loginpage"/>
-</c:if>
-<c:if test="${ role == 'User' }">
-	<c:redirect url="gotouserpage" />
-</c:if>
-<title>Create Exam</title>
+<title>CreatExam</title>
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"
 	integrity="sha384-   
             BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -28,6 +22,12 @@
 <script type="text/javascript" src="js/jssor.slider-21.1.5.mini.js"></script>
 <script src="js/parallex.js"></script>
 </head>
+<c:if test="${sessionScope['role'] == null}">
+            <c:redirect url="loginpage"/>
+ </c:if>
+ <c:if test="${sessionScope['role'] != 'Admin'}">
+            <c:redirect url="loginpage"/>
+ </c:if>
 <body>
 <c:if test="${SuccessMessage != null }">
    <script>
@@ -78,7 +78,7 @@
 											<label> Exam Name<span class="req">*</span>
 											</label>
 											<form:input path="examName" name="examname"
-												class="form-control" required="required"
+												required="required" class="form-control"
 												pattern='[A-Za-z\\s]*' title="Enter words only"></form:input>
 										</div>
 										<div class="field-wrap">
@@ -95,7 +95,7 @@
 											required="required" class="form-control"></form:input>
 
 									</div>
-									<button type="submit" class="button button-block">CreateExam</button>
+									<button type="submit" class="button button-block" />CreateExam</button>
 								</form:form>
 							</div>
 							<div id="login"></div>

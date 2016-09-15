@@ -5,12 +5,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<c:if test="${ null == role }">
-	<c:redirect url="loginpage" />
-</c:if>
-<c:if test="${ role == 'User' }">
-	<c:redirect url="gotouserpage" />
-</c:if>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>add question</title>
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"
@@ -33,6 +27,12 @@
 	});
 </script>
 </head>
+<c:if test="${sessionScope['role'] == null}">
+            <c:redirect url="loginpage"/>
+ </c:if>
+ <c:if test="${sessionScope['role'] != 'Admin'}">
+            <c:redirect url="loginpage"/>
+ </c:if>
 <body>
 <c:if test="${SuccessMessage != null }">
 	 <script>
@@ -65,7 +65,9 @@
 					class="glyphicon glyphicon-log-out"></span></a>
 			</div>
 		</div>
-		<br> <br> <br>
+		<br>
+		<br>
+		<br>
 		<center>
 			<div class="bs-docs-example">
 				<select id="colorselector" class="form-control"

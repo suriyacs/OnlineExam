@@ -20,50 +20,45 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type="text/javascript">
+	<script type="text/javascript">
 	$(window).on('beforeunload', function() {
-		$(window).on('unload', function() {
-			window.location.href = 'logout';
-		});
+		  $(window).on('unload', function() {
+		    window.location.href = 'logout';
+		  });
 
-		return 'if you reload then your result may not be saved';
-	});
-</script>
-<script type="text/javascript">
-	// slight update to account for browsers not supporting e.which
-	function disableF5(e) {
-		if ((e.which || e.keyCode) == 116)
-			e.preventDefault();
-	};
-	// To disable f5
-	/* jQuery < 1.7 */
-	$(document).bind("keydown", disableF5);
-	/* OR jQuery >= 1.7 */
-	$(document).on("keydown", disableF5);
-
-	// To re-enable f5
-	/* jQuery < 1.7 */
-	$(document).unbind("keydown", disableF5);
-	/* OR jQuery >= 1.7 */
-	$(document).off("keydown", disableF5);
-</script>
-<script type="text/javascript">
-	$(function() {
-		$(this).bind("contextmenu", function(e) {
-			e.preventDefault();
+		  return 'Not an empty string';
 		});
-	});
-</script>
+	</script>
+    <script type="text/javascript">
+ // slight update to account for browsers not supporting e.which
+    function disableF5(e) { if ((e.which || e.keyCode) == 116) e.preventDefault(); };
+    // To disable f5
+        /* jQuery < 1.7 */
+    $(document).bind("keydown", disableF5);
+    /* OR jQuery >= 1.7 */
+    $(document).on("keydown", disableF5);
+
+    // To re-enable f5
+        /* jQuery < 1.7 */
+    $(document).unbind("keydown", disableF5);
+    /* OR jQuery >= 1.7 */
+    $(document).off("keydown", disableF5);
+    </script>
+    <script type="text/javascript">
+ $(function() {
+        $(this).bind("contextmenu", function(e) {
+            e.preventDefault();
+        });
+    }); 
+ </script>
 </head>
-<body onload="updateClock(); setInterval('updateClock()', 1000 )"
-	oncontextmenu="return false" onkeydown="return (event.keyCode != 116)"
-	onload="noBack();" onpageshow="if (event.persisted) noBack();">
-	<c:if test="${ null == role }">
-		<c:redirect url="loginpage" />
-	</c:if>
-	<c:if test="${ role == 'Admin' }">
-		<c:redirect url="adminpage" />
-	</c:if>
+<c:if test="${sessionScope['role'] == null}">
+            <c:redirect url="loginpage"/>
+ </c:if>
+ <c:if test="${sessionScope['role'] != 'User'}">
+            <c:redirect url="loginpage"/>
+ </c:if>
+<body onload="updateClock(); setInterval('updateClock()', 1000 )" oncontextmenu="return false" onkeydown="return (event.keyCode != 116)" >
 	<c:if test="${null != insertQuestionMessage}">
 		<script>
 		 swal({ 
@@ -82,24 +77,20 @@
 		<div id="countdown"></div>
 		<div id="notifier"></div>
 		<script type="text/javascript">
-			window.history.forward();
-			function noBack() {
-				window.history.forward();
-			}
 			function display(notifier, str) {
 				document.getElementById(notifier).innerHTML = str;
 			}
 
 			function myFunction() {
 				 swal({ 
-				  title: "Error",
-				   text: "Oops..Its Time Up..!!",
-				    type: "error" 
+				  title: "Sorry!!",
+				   text: "Its Time Up..!!",
+				    type: "warning" 
 				  },function(isConfirm){
 		                alert('ok');
 		          });
 		          $('.swal2-confirm').click(function(){
-		                window.location.href = 'resultcalculation';
+		        	  document.myform.submit();
 		          });
 			}
 
@@ -142,7 +133,7 @@
 		</h4>
 		<div class="questiondiv">
 			<form:form action="resultcalculation" method="post"
-				modelAttribute="exam">
+				modelAttribute="exam" name="myform">
 				<c:set var="count" value="1" scope="page" />
 				<input type="hidden" name="examId" value="${exam.getExamId() }">
 				<c:set var="count" value="1" scope="page" />

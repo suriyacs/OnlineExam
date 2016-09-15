@@ -2,12 +2,6 @@
 
 <html>
 <head>
-<c:if test="${ null == role }">
-	<c:redirect url="loginpage" />
-</c:if>
-<c:if test="${ role == 'User' }">
-	<c:redirect url="gotouserpage" />
-</c:if>
 <title>Create Admin</title>
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"
 	integrity="sha384-   
@@ -86,6 +80,12 @@ function validateUserRegisterationForm() {
 }
 </script>
 </head>
+<c:if test="${sessionScope['role'] == null}">
+            <c:redirect url="loginpage"/>
+ </c:if>
+ <c:if test="${sessionScope['role'] != 'Admin'}">
+            <c:redirect url="loginpage"/>
+ </c:if>
 <body>
 	<c:if test="${LogInMessage != null}">
 		<script>
@@ -123,7 +123,7 @@ function validateUserRegisterationForm() {
 				class="glyphicon glyphicon-log-out"></span></a>
 		</div>
 		<div class="logout" style="float: left">
-			<a href="adminpage" class="btn btn-success" title="logout">MainPage</a>
+			<a href="adminpage" class="btn btn-success" title="logout">MainPage</span></a>
 		</div>
 		<center>
 			<div class="center">
@@ -132,28 +132,32 @@ function validateUserRegisterationForm() {
 						<div class="tab-content" style="margin: 25px">
 							<div id="signup">
 								<h1 style="color: black">Admin Sign up</h1>
-								<form name="user" action="adminRegisteration" method="post"
-									onsubmit="return validateUserRegisterationForm()">
+								<form name="user" action="adminRegisteration" method="post" onsubmit="return validateUserRegisterationForm()">
 									<div class="top-row">
 										<div class="field-wrap">
 											<label> User Name<span class="req">*</span>
-											</label> <input type="text" name="userName" autocomplete="off" />
+											</label> <input type="text" name="userName"
+												autocomplete="off" />
 										</div>
 										<div class="field-wrap">
 											<label> MobileNumber<span class="req">*</span>
-											</label> <input type="text" name="mobileNumber" autocomplete="off" />
+											</label> <input type="text" name="mobileNumber"
+												autocomplete="off" />
 										</div>
 									</div>
 									<div class="field-wrap">
 										<label> Email Address<span class="req">*</span>
-										</label> <input type="email" name="emailId" autocomplete="off" />
+										</label> <input type="email" name="emailId"
+											autocomplete="off" />
 									</div>
 									<div class="field-wrap">
 										<label> Password<span class="req">*</span>
-										</label> <input type="password" name="password" autocomplete="off" />
+										</label> <input type="password" name="password"
+											autocomplete="off" />
 									</div>
 									<button type="submit" class="button button-block">
-										CreateAccount</button>
+									CreateAccount
+									</button>
 								</form>
 							</div>
 							<div id="login"></div>
