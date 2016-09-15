@@ -119,7 +119,7 @@ public class ApplicationController {
 	        	   session.setAttribute("userName", user.getUserName());
 	               return "redirect:gotouserpage";
 	           } else {
-	        	   model.addAttribute("LogInMessage","InvalidPassword");
+	        	   model.addAttribute("LogInMessage", "Invalid Password");
 	           	return "login";
 	           }
 	       } catch (DataException e) {
@@ -389,7 +389,9 @@ public class ApplicationController {
 		     model.addAttribute("exam",exam);		     
 		 } catch(DataException e) {
 			 model.addAttribute("insertQuestionMessage", (e.toString())); 
-		 } 
+		 } catch(NumberFormatException e) {
+			 model.addAttribute("insertQuestionMessage", "Exception occured during conversion of" + " " + testId + " " + "while allocting the exam"); 
+		 }
 			 return "questionpageforuser";
 	 }
 	 
@@ -423,6 +425,8 @@ public class ApplicationController {
 		     model.addAttribute("SuccessMessage", correctAnswer + " " + "InserTion Success");
 		 } catch(DataException e) {
 			 model.addAttribute("insertQuestionMessage", (e.toString()));
+		 } catch(NumberFormatException e) {
+			 model.addAttribute("insertQuestionMessage", "Exception occured during conversion of" + " " + correctAnswer + " " + "in insert fill up page"); 
 		 } finally {
 		     return("redirect:insertquestion");
 		 }
@@ -447,7 +451,8 @@ public class ApplicationController {
 	  *     contains name of the java server page to be loaded.
 	  */
 	 @RequestMapping(value="/resultcalculation",method = RequestMethod.POST)
-	 public String ResultCalculate(@ModelAttribute("exam")Exam exam, BindingResult result,ModelMap model,@RequestParam("examId") int examId,HttpSession session) {
+	 public String ResultCalculate(@ModelAttribute("exam")Exam exam, BindingResult result,ModelMap model,
+			 @RequestParam("examId") int examId,HttpSession session) {
 		 ResultService resultService = new ResultService();
 		 
 		 try {
@@ -485,6 +490,8 @@ public class ApplicationController {
 		     model.addAttribute("SuccessMessage","Added Successfully..!!");
 	     } catch(DataException e) {
 	    	 model.addAttribute("insertQuestionMessage",(e.toString()));
+	     } catch(NumberFormatException e) {
+	    	 model.addAttribute("insertQuestionMessage", "Exception occured during conversion of" + " " + questionType + " " + "in insert choose the correct answer");
 	     }
 		 return("addquestion");
 		     

@@ -113,7 +113,7 @@
 	function validateUserRegisterationForm() {
 		var userName = document.forms["user"]["userName"].value;
 		var mobileNumber = document.forms["user"]["mobileNumber"].value;
-		var phoneno = /^\d{10}$/;  
+		var phoneno = /^\d{10}$/;
 		var password = document.forms["user"]["password"].value;
 		var emailId = document.forms["user"]["emailId"].value;
 		var atpos = emailId.indexOf("@");
@@ -211,7 +211,7 @@
 		  });
   </script>
 </c:if>
-	<c:if test="${ null != mark }">
+	<c:if test="${null != mark}">
 		<script type="text/javascript">
 		 swal({ 
 			  title: "Error",
@@ -269,51 +269,46 @@
 						<div class="tab-content">
 							<div id="signup">
 								<h1>Sign Up for Free</h1>
-								<form name="user" action="userRegisteration" method="post" onsubmit="return validateUserRegisterationForm()">
+								<form name="user" action="userRegisteration" method="post"
+									onsubmit="return validateUserRegisterationForm()">
 									<div class="top-row">
 										<div class="field-wrap">
 											<label> User Name<span class="req">*</span>
-											</label> <input type="text" name="userName"
-												autocomplete="off" />
+											</label> <input type="text" name="userName" autocomplete="off" />
 										</div>
 										<div class="field-wrap">
 											<label> MobileNumber<span class="req">*</span>
-											</label> <input type="text" name="mobileNumber"
-												autocomplete="off" />
+											</label> <input type="text" name="mobileNumber" autocomplete="off" />
 										</div>
 									</div>
 									<div class="field-wrap">
 										<label> Email Address<span class="req">*</span>
-										</label> <input type="email" name="emailId"
-											autocomplete="off" />
+										</label> <input type="email" name="emailId" autocomplete="off" />
 									</div>
 									<div class="field-wrap">
 										<label> Password<span class="req">*</span>
-										</label> <input type="password" name="password"
-											autocomplete="off" />
+										</label> <input type="password" name="password" autocomplete="off" />
 									</div>
 									<button type="submit" class="button button-block">
-									CreateAccount
-									</button>
+										CreateAccount</button>
 								</form>
 							</div>
 							<div id="login">
 								<h1>Welcome Back!</h1>
-								<form name="myForm" action="AuthenticateLogin" method="post" onsubmit="return validateForm()">
+								<form name="myForm" action="AuthenticateLogin" method="post"
+									onsubmit="return validateForm()">
 									<div class="field-wrap">
 										<label> EmailId<span class="req">*</span>
-										</label> <input type="text" name="emailId"/>
+										</label> <input type="text" name="emailId" />
 									</div>
 									<div class="field-wrap">
 										<label> Password<span class="req">*</span>
-										</label> <input type="password" name="password"/>
+										</label> <input type="password" name="password" />
 									</div>
 									<p class="forgot">
 										<a href="#">Forgot Password?</a>
 									</p>
-									<button class="button button-block">
-									Log In
-									</button>
+									<button class="button button-block">Log In</button>
 								</form>
 							</div>
 						</div>
@@ -554,14 +549,10 @@
 						</div>
 
 					</div>
-					<br>
-					<br>
-					<br>
-					<br>
-					<br>
+					<br> <br> <br> <br> <br>
 					<div class="copyright">
 						<p>
-							© 2016 TechAssess. All Rights Reserved | Design by <a href="#"
+							\A9 2016 TechAssess. All Rights Reserved | Design by <a href="#"
 								target="_blank">Tech Assess</a>
 						</p>
 					</div>

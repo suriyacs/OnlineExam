@@ -21,6 +21,12 @@
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+	<c:if test="${ null == role }">
+		<c:redirect url="loginpage" />
+	</c:if>
+	<c:if test="${ role == 'Admin' }">
+		<c:redirect url="adminpage" />
+	</c:if>
 	<c:if test="${ null != ExamMessage}">
 		<script>
 		 swal({ 
@@ -38,9 +44,7 @@
 	<div id="grid"></div>
 	<div class="content">
 		<div class="page-header">
-			<center>
-				<h1 class="title">TechAssess</h1>
-			</center>
+			<h1 align="center" class="title">TechAssess</h1>
 		</div>
 		<div class="usertab">
 			<img src="img/userimage.png" alt="userimage">
@@ -58,20 +62,20 @@
 					Welcome
 					<c:out value="${userName}" />
 				</h2>
-
+				<div id="content"></div>
 				<c:set var="count" value="1" scope="page" />
 				<c:forEach items="${exams}" var="exam">
-
 					<div class="well">
-						<a href="#demo<c:out value="${Choice ? '' : count}"/>"
+						<a id="load_home"
+							href="#demo<c:out value="${Choice ? '' : count}"/>"
 							class="btn btn-info btn-lg" data-toggle="collapse"><c:out
 								value="${exam.getExamName()}" /></a>
-						<form id="demo<c:out value="${Choice ? '' : count}"/>"
+						<form name="form" id="demo<c:out value="${Choice ? '' : count}"/>"
 							action="taketest" class="collapse" method="post">
 							Instructions:<br> 1.Examinations will be conducted during
 							the allocated times shown in the examination timetable.<br>
-							<block>2.Handphones brought into the examination hall
-							must be switched off at ALL times.</block>
+							<blockquote>2.Handphones brought into the examination hall
+							must be switched off at ALL times.</blockquote>
 							<br> 3.Photography is NOT allowed in the examination hall at
 							ALL times. <br> 4.All materials and/or devices which are
 							found in violation of any examination regulations will be
@@ -100,7 +104,5 @@
 			</div>
 		</div>
 	</div>
-
-
 </body>
 </html>

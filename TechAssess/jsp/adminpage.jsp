@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
 <title>Login</title>
@@ -8,6 +9,12 @@
 <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
+	<c:if test="${ null == role }">
+		<c:redirect url="loginpage" />
+	</c:if>
+	<c:if test="${ role == 'User' }">
+		<c:redirect url="gotouserpage" />
+	</c:if>
 	<div class="logout" style="float: right">
 		<a href="logout" class="btn btn-danger" title="logout"><span
 			class="glyphicon glyphicon-log-out"></span></a>
