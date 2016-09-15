@@ -4,7 +4,7 @@
 <title>Exam Details</title>
 <link href="css/userpagestyling.css" rel="stylesheet" type="text/css">
 <link href="css/login.css" rel="stylesheet" type="text/css">
-<link href="css/row.css" rel="stylesheet" type="text/css">
+<link href="css/userpage.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"
 	integrity="sha384-  
             BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -50,7 +50,7 @@
 		</div>
 		<div class="usertab">
 			<img src="img/userimage.png" alt="userimage">
-			<h3>
+			<h3 align="center">
 				<c:out value="${userName}" />
 			</h3>
 		</div>
@@ -58,26 +58,36 @@
 			<a href="logout" class="btn btn-danger" title="logout"><span
 				class="glyphicon glyphicon-log-out"></span></a>
 		</div>
-		<div class="center-container">
-			<div class="container">
-				<h2>
+		<div id="header">
+		    <h2 align="center">
 					Welcome
 					<c:out value="${userName}" />
-				</h2>
-
-				<c:set var="count" value="1" scope="page" />
-				<c:forEach items="${exams}" var="exam">
-
-					<div class="well">
-						<a href="#demo<c:out value="${Choice ? '' : count}"/>"
+		    </h2><br><br>
+		</div>
+		<h3 align="center">Exam to be Attended</h3> <br><br>
+		<div class="content-container">
+				<div id="content"></div>
+				<c:set var="count" value="1"/>
+				<div class="well">
+				<table class="buttontable">
+				    <c:forEach items="${exams}" var="exam">
+						<tr><td><a id="load_home"
+							href="#demo<c:out value="${Choice ? '' : count}"/>"
 							class="btn btn-info btn-lg" data-toggle="collapse"><c:out
-								value="${exam.getExamName()}" /></a>
+								value="${exam.getExamName()}" /></a></td></tr>
+						<c:set var="count" value="${count + 1}"/>
+				    </c:forEach>
+				</table>
+			    </div>
+			    <c:set var="count" value="1"/>
+			    <div id="form">
+			        <c:forEach items="${exams}" var="exam">
 						<form id="demo<c:out value="${Choice ? '' : count}"/>"
 							action="taketest" class="collapse" method="post">
-							Instructions:<br> 1.Examinations will be conducted during
+							<b>Instructions:</b><br> <p class="text-left">1.Examinations will be conducted during
 							the allocated times shown in the examination timetable.<br>
-							<block>2.Handphones brought into the examination hall
-							must be switched off at ALL times.</block>
+							2.Handphones brought into the examination hall
+							must be switched off at ALL times.
 							<br> 3.Photography is NOT allowed in the examination hall at
 							ALL times. <br> 4.All materials and/or devices which are
 							found in violation of any examination regulations will be
@@ -93,17 +103,16 @@
 							Invigilator has given the permission to leave. Do NOT talk until
 							you are outside of the examination hall.<br> 10. You may
 							bring into the examination hall only those calculators that have
-							been approved by the School.<br> <label><input
+							been approved by the School.<br></p> <input
 								type="checkbox" id="checkbox">Agreed and im ready to
-								start the test</label><br> <label><input type="hidden"
+								start the test<br> <label><input type="hidden"
 								name="test" value="<c:out value="${exam.getExamId()}"/>" /></label><br>
 							<input id="button" type="submit" value="START"
-								class="btn btn-primary" />
+								class="btn btn-primary"/>
 						</form>
-						<c:set var="count" value="${count + 1}" scope="page" />
-					</div>
+						<c:set var="count" value="${count + 1}"/>
 				</c:forEach>
-			</div>
+			    </div>
 		</div>
 	</div>
 

@@ -1,0 +1,51 @@
+.well {
+	width : 450px;
+	margin-left: 100px;
+}
+.center-container {
+	width:60%;
+}
+.content-container {
+    width: 80%;
+    height: 200px;
+    margin: auto;
+    padding: 10px;
+}
+div.well {
+    width: 20%;
+    float: left;
+}
+#form {
+	float:right;
+	width:40%;
+	margin-right:10%;
+	margin-left: 10%;
+	background-color: rgba(0, 0, 0, 0.1);
+}
+h2 {
+	font-family:Book Antiqua;
+}
+img {
+	width:50px;
+	height:50px;
+}
+table.buttontable {
+    border-collapse:separate;
+    border-spacing:0 20px;
+}
+.usertab {
+	float:left;
+	width=40%;
+	font-family:fantasy;
+	size:20px;
+	weight:bold;
+	style:italic;
+	variant:small caps;
+}
+input[type=submit] {
+  display:none;
+}
+
+input[type=checkbox]:checked ~ input[type=submit] {
+  display:block;
+}
