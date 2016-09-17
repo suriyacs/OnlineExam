@@ -20,15 +20,6 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script type="text/javascript">
-	$(window).on('beforeunload', function() {
-		  $(window).on('unload', function() {
-		    window.location.href = 'logout';
-		  });
-
-		  return 'Not an empty string';
-		});
-	</script>
     <script type="text/javascript">
  // slight update to account for browsers not supporting e.which
     function disableF5(e) { if ((e.which || e.keyCode) == 116) e.preventDefault(); };
@@ -68,6 +59,14 @@
           });
     </script>
 	</c:if>
+	<!-- <script type="text/javascript">
+	$(window).on('beforeunload', function() {
+		  $(window).on('unload', function() {
+			window.location.href="logout";
+		  });
+		  return "submitted";
+		});
+	</script> -->
 	<div id="grid"></div>
 	<div class="content">
 		<div class="page-header">
@@ -102,7 +101,7 @@
 				(function countdown() {
 					display("countdown", toMinuteAndSecond(remain));
 					actions[remain] && actions[remain]();
-					(remain -= 1) >= 0 && setTimeout(arguments.callee, 20);
+					(remain -= 1) >= 0 && setTimeout(arguments.callee, 1000);
 				})();
 			}
 
@@ -145,9 +144,11 @@
 						value="${que.getQuestionId()}" />
 					<br>
 					<br>
-					<c:out value="${count}" />. <c:out value="${que.getQuestionName()}" />
+					<div style="width:50%;">
+					<div style="width:80%;"><c:out value="${count}" />.<c:out value="${que.getQuestionName()}" /></div></div>
 					<br>
 					<br>
+					<div>
 					<c:set var="count" value="${count + 1}" scope="page" />
 					<c:set value="${que.getTypeId()}" var="type" />
 					<c:forEach items="${que.getChoices()}" var="choice">
@@ -168,6 +169,7 @@
 							<br>
 						</c:if>
 					</c:forEach>
+				    </div>
 					<br>
 				</c:forEach>
 				<br>

@@ -67,7 +67,7 @@ public class QuestionTypeDao {
      * @throws DataException  
      *      if input is invalid or if any Hibernate Exception is arrived
      */   
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
 	public void allocateQuestionToQuestionType(QuestionType questionType, Question question) throws DataException {
     	Session session = factory.openSession();
     	try {

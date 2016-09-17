@@ -97,6 +97,7 @@ public class ChoiceDao {
 		try {
 			Transaction transaction = session.beginTransaction();
 			Choice choice = (Choice)session.get(Choice.class, choiceId);
+			System.out.println(questionId);
 			Question question = (Question)session.get(Question.class, questionId);
 			choice.setQuestionId(question);
 			transaction.commit();

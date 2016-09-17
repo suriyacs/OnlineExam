@@ -35,8 +35,10 @@ public class ChoiceService {
 	}
 	
 	/**
+	 * <p>
 	 * Method which accept the request from controller and
 	 * process the request by forwarding the same request to ChocieDao.
+	 * </p>
 	 * 
 	 * @param choiceId
 	 *     consist of ChoiceId for retrieving the choice details of given id.

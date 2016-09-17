@@ -10,7 +10,7 @@ import exception.DataException;
  */
 public class RoleService {
 
-	RoleDao roleDao = new RoleDao();
+	private RoleDao roleDao = new RoleDao();
 	
 	/**
 	 * Method which request Role DataAccess to retrieve role id for given role name.

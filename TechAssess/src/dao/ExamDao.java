@@ -124,13 +124,15 @@ public class ExamDao {
     		Transaction transaction = session.beginTransaction();
     		Question  question = (Question)session.get(Question.class, questionId);
     		Exam exam = (Exam)session.get(Exam.class,examId);
-    		exam.setQuestions(question);
-    		examSet.add(exam);
-    		question.setExams(examSet);
-    		increaseAllocatedQuestionsCount(exam);
-    		session.save(exam);
-    		session.save(question);
-    		transaction.commit();
+    		if(question != null) {
+    		    exam.setQuestions(question);
+    		    examSet.add(exam);
+    		    question.setExams(examSet);
+    		    increaseAllocatedQuestionsCount(exam);
+        	    session.save(exam);
+        		session.save(question);
+        	    transaction.commit();
+    		}
     	} catch(HibernateException e) {
     		throw new DataException("Can't assign questions to this exam..!!Please Try again.!!");
     	} finally {

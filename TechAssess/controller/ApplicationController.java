@@ -214,9 +214,7 @@ public class ApplicationController {
 		     examService.checkIfExamExist(examId);
 		     questionService.checkIfQuestionExist(fromQuestionId);
 		     questionService.checkIfQuestionExist(toQuestionId);
-		     for (int questionId = fromQuestionId;questionId <= toQuestionId;questionId++) { 
-		    	 examService.allocateQuestionsToExam(examId, questionId);
-		     }
+		     examService.allocateQuestionsToExam(examId, fromQuestionId,toQuestionId);
 		     model.addAttribute("allocateMessage","AllocatedSuccessfully..!!");
 		 } catch(DataException e) {
 			 model.addAttribute("ErrorMessage",e.getMessage().toString());
@@ -346,7 +344,7 @@ public class ApplicationController {
 	  */
 	 @RequestMapping(value="/reloadinsertQuestion")
 	 public String reloadInsertQuestionPage() {
-		 return("redirect:addquestion");
+		 return("redirect:insertquestion");
 	 }
 	 
 	 /**
@@ -390,7 +388,7 @@ public class ApplicationController {
 		 } catch(DataException e) {
 			 model.addAttribute("insertQuestionMessage", (e.toString())); 
 		 } catch(NumberFormatException e) {
-			 model.addAttribute("insertQuestionMessage", "Exception occured during conversion of" + " " + testId + " " + "while allocting the exam"); 
+			 model.addAttribute("insertQuestionMessage", "Error occured during conversion of" + " " + testId + " " + "while allocting the exam"); 
 		 }
 			 return "questionpageforuser";
 	 }
@@ -426,7 +424,7 @@ public class ApplicationController {
 		 } catch(DataException e) {
 			 model.addAttribute("insertQuestionMessage", (e.toString()));
 		 } catch(NumberFormatException e) {
-			 model.addAttribute("insertQuestionMessage", "Exception occured during conversion of" + " " + correctAnswer + " " + "in insert fill up page"); 
+			 model.addAttribute("insertQuestionMessage", "Error occured during conversion of" + " " + correctAnswer + " " + "in insert fill up page"); 
 		 } finally {
 		     return("redirect:insertquestion");
 		 }
@@ -491,7 +489,7 @@ public class ApplicationController {
 	     } catch(DataException e) {
 	    	 model.addAttribute("insertQuestionMessage",(e.toString()));
 	     } catch(NumberFormatException e) {
-	    	 model.addAttribute("insertQuestionMessage", "Exception occured during conversion of" + " " + questionType + " " + "in insert choose the correct answer");
+	    	 model.addAttribute("insertQuestionMessage", "Error occured during conversion of" + " " + questionType + " " + "in insert choose the correct answer");
 	     }
 		 return("addquestion");
 		     

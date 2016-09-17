@@ -46,14 +46,16 @@ public class ExamService {
      * @throws DataException
      *     throws an exception to controller which gets generated at the time of database connection.
      */
-    public void allocateQuestionsToExam(int examId,int questionId ) throws DataException {
+    public void allocateQuestionsToExam(int examId,int fromQuestionId,int toQuestionId) throws DataException {
     	    Exam exam = getExamById(examId);
     	    if (exam.getNoOfAllocatedQuestions() != null) {
     	        if (Integer.parseInt(exam.getNoOfAllocatedQuestions()) == exam.getNoOfTotalQuestions()) {
     	    	    throw new DataException("This Exam already allocated with enough questions..!Try again with different Id..!!");
     	        }
     	    }
-    	    examDao.assignQuestionsToExam(examId,questionId);
+    	    for (int questionId = fromQuestionId;questionId <= toQuestionId;questionId++) { 
+    	        examDao.assignQuestionsToExam(examId,questionId);
+    	    }
     }
     
     /**
@@ -79,7 +81,7 @@ public class ExamService {
      *     throws an exception to controller which gets generated at the time of database connection.
      */
     public void checkIfExamExist(int examId)throws DataException {
-    	if (examDao.getExamById(examId) == null) {
+    	if (getExamById(examId) == null) {
         		throw new DataException("Exam with this Id Does not Exist..!!Try Again..!!");
     	}
     }
