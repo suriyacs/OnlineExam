@@ -26,6 +26,81 @@
 		});
 	});
 </script>
+<script>
+function validatefillupform() {
+	var question = document.forms["fillup"]["questionname"].value;
+	var answer = document.forms["fillup"]["answer"].value;
+	var check = document.getElementById("checkbox").checked;
+	var checkedValue = $('.checkbox:checked').val();
+	if(question == null || question  == "" && answer == null || answer =="") {
+		swal({ 
+			  title: "Error",
+			   text: "Please fillout all the fields",
+			    type: "error" 
+			});
+		return false;
+	} else if (question == null || question == "") {
+		swal({ 
+			  title: "Error",
+			   text: "Please Provide Question",
+			    type: "error" 
+			});
+		return false;
+	} else if(!($("#checkbox").is(':checked'))){
+		swal({ 
+			  title: "Error",
+			   text: "Please confirm the correct answer by clicking checkbox",
+			    type: "error" 
+			});
+		return false;
+	} else if(answer == null || answer =="") {
+		swal({ 
+			  title: "Error",
+			   text: "Please provide answer",
+			    type: "error" 
+			});
+	}
+}
+
+function checkChooseCheckBoxes() {
+	var checkboxes = document.getElementsByName('checkboxofchoose');
+	var vals = new Array();
+	for (var i=0, n=checkboxes.length;i<n;i++) 
+	{
+	    if (checkboxes[i].checked) 
+	    {
+	        vals[i] = checkboxes[i].value;
+	    }
+	}
+	if(vals.length <= 0 || vals.length == 1) {
+		swal({ 
+			  title: "Error",
+			   text: "Please Choose One Correct Answer",
+			    type: "error" 
+	   });
+		return false;
+	}
+ }
+function checkMultipleCheckBoxes() {
+	var checkboxes = document.getElementsByName('multipleCheckBox');
+	var vals = new Array();
+	for (var i=0, n=checkboxes.length;i<n;i++) 
+	{
+	    if (checkboxes[i].checked) 
+	    {
+	        vals[i] = checkboxes[i].value;
+	    }
+	}
+	if(vals.length <= 0) {
+		swal({ 
+			  title: "Error",
+			   text: "Please Choose Atleast One Correct Answer",
+			    type: "error" 
+	   });
+		return false;
+	}
+}
+</script>
 </head>
 <c:if test="${sessionScope['role'] == null}">
             <c:redirect url="loginpage"/>
@@ -81,7 +156,7 @@
 		</center>
 		<div id="fill" class="colors" style="display: none">
 			<div class="well">
-				<form method="post" action="fillintheblanks">
+				<form name="fillup" method="post" action="fillintheblanks" onsubmit="return validatefillupform()">
 					<table class="table">
 						<tr>
 							<th><span>Question</span></th>
@@ -95,7 +170,7 @@
 							<th><span>Answer</span></th>
 							<td><input type="text" name="answer"></td>
 							<th><span>IfCorrect</span></th>
-							<td><input type="checkbox" name="checkbox" value="1"></td>
+							<td><input id="checkbox" type="checkbox" name="checkbox" value="1"></td>
 						</tr>
 						<tr>
 							<td><button type="submit" class="btn btn-primary">Add</button></td>
@@ -111,7 +186,7 @@
 						modelAttribute="Question">
 						<tr>
 							<th><span>Question</span></th>
-							<td><form:textarea path="questionName"></form:textarea></td>
+							<td><form:textarea path="questionName" required="required"></form:textarea></td>
 							<td>
 							<th><span>Click The Check Box If Corresponding Choice
 									is Correct Answer.</span></th>
@@ -124,9 +199,9 @@
 								<th><span>Choice</span> <c:out
 										value="${Choice ? '' : count}" /></th>
 								<td><input name="choices[${status.index}].choiceName"
-									value="${choice.choiceName}"></td>
+									value="${choice.choiceName}" required="required"></td>
 								<th><span>IfCorrect</span></th>
-								<td><input type="checkbox" id="<c:out value='${count}'/>"
+								<td><input name="checkboxofchoose" type="checkbox" id="<c:out value='${count}'/>"
 									onchange="correct()"></td>
 								<td><input type="hidden"
 									name="choices[${status.index}].isCorrect"
@@ -136,7 +211,7 @@
 							<c:set var="count" value="${count + 1}" scope="page" />
 						</c:forEach>
 						<tr>
-							<td><button type="submit" class="btn btn-primary">Add</button></td>
+							<td><button type="submit" class="btn btn-primary" onclick="return checkChooseCheckBoxes()">Add</button></td>
 							<td><input type="hidden" name="questionType" value="2"></td>
 						</tr>
 					</form:form>
@@ -150,7 +225,7 @@
 						modelAttribute="Question">
 						<tr>
 							<th><span>Question</span></th>
-							<td><form:textarea path="questionName"></form:textarea></td>
+							<td><form:textarea path="questionName" required="required"></form:textarea></td>
 							<td>
 							<th><span>Click The Check Box If Corresponding Choice
 									is Correct Answer.</span></th>
@@ -163,9 +238,9 @@
 								<th><span>Choice</span> <c:out
 										value="${Choice ? '' : count}" /></th>
 								<td><input name="choices[${status.index}].choiceName"
-									value="${choice.choiceName}"></td>
+									value="${choice.choiceName}" required="required"></td>
 								<th><span>IfCorrect</span></th>
-								<td><input type="checkbox" id="<c:out value='${count}'/>"
+								<td><input name="multipleCheckBox" type="checkbox" id="<c:out value='${count}'/>"
 									onchange="correct()">
 								<td><input type="hidden"
 									name="choices[${status.index}].isCorrect"
@@ -175,7 +250,7 @@
 							<c:set var="count" value="${count + 1}" scope="page" />
 						</c:forEach>
 						<tr>
-							<td><button type="submit" class="btn btn-primary">Add</button></td>
+							<td><button type="submit" class="btn btn-primary" onclick="return checkMultipleCheckBoxes()">Add</button></td>
 							<td><input type="hidden" name="questionType" value="3"></td>
 						</tr>
 					</form:form>
