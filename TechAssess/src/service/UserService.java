@@ -30,15 +30,15 @@ public class UserService {
 	 *     to insertUser method in User data access object.
 	 *  <p>
 	 * @param userName
-	 *     consist of name of the user.
+	 *     Consist of name of the user.
 	 * @param emailId
-	 *     consist of mail id of the user.
+	 *     Consist of mail id of the user.
 	 * @param password
-	 *     consist of password given by the user.
+	 *     Consist of password given by the user.
 	 * @param mobileNumber
-	 *     consist of user mobile number
+	 *     Consist of user mobile number
 	 * @throws DataException
-	 *     throws an exception to controller which gets generated at the time of database connection.
+	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public void addUser(String userName, String emailId, String password, String mobileNumber)  throws DataException {
 		checkIfUserAlreadyExist(emailId);
@@ -53,9 +53,9 @@ public class UserService {
 	 * </p>
 	 * 
 	 * @return list
-	 *     returns details of all user in the form of List.
+	 *     Returns details of all user in the form of List.
 	 * @throws DataException
-	 *     throws an exception to controller which gets generated at the time of database connection.
+	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public List<User> getAllUsers() throws DataException {                                           /*Get User Detail*/
         return userDao.retrieveAllUser();
@@ -67,11 +67,11 @@ public class UserService {
 	 *     User repository to retrieve the details of given emailId.
 	 * </p>
 	 * @param emailId
-	 *     consist of emailId for retrieving the detail of that user.
+	 *     Consist of emailId for retrieving the detail of that user.
 	 * @return object
-	 *     returns instance of user for given emailId.
+	 *     Returns instance of user for given emailId.
 	 * @throws DataException
-	 *     throws an exception to controller which gets generated at the time of database connection.
+	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public User getUserByEmailId(String emailId) throws DataException {
 		return userDao.retrieveUserByEmailId(emailId);
@@ -84,15 +84,15 @@ public class UserService {
 	 *     to insertUser method in User data access object.
 	 * </p>
 	 * @param userName
-	 *     consist of name of the user
+	 *     Consist of name of the user
 	 * @param emailId
-	 *     consist of emailId provided by the user.
+	 *     Consist of emailId provided by the user.
 	 * @param password
-	 *     consist of password created by the user.
+	 *     Consist of password created by the user.
 	 * @param mobileNumber
-	 *     consist of user mobile number.
+	 *     Consist of user mobile number.
 	 * @throws DataException
-	 *     throws an exception to controller which gets generated at the time of database connection.
+	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public void addAdmin(String userName, String emailId, String password, String mobileNumber)  throws DataException {
 		checkIfUserAlreadyExist(emailId);
@@ -107,9 +107,9 @@ public class UserService {
 	 * </p>
 	 * 
 	 * @param emailId
-	 *     consist of email Id which represent the user.
+	 *     Consist of email Id which represent the user.
 	 * @throws DataException
-	 *     throws an exception to controller which gets generated at the time of database connection.
+	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public void checkIfUserAlreadyExist(String emailId) throws DataException {
 		if(null != getUserByEmailId(emailId)) {

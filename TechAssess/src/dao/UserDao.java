@@ -6,10 +6,12 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import exception.DataException;
 import dbconnection.DataBaseConnection;
 import model.User;
+import util.FileUtil;
 
 /**
  * <p>
@@ -21,6 +23,7 @@ import model.User;
  * @author suriyakumar
  *
  */
+@Repository
 public class UserDao {
 
 	private DataBaseConnection connection = DataBaseConnection.getConnection();
@@ -29,14 +32,14 @@ public class UserDao {
 
     /**
      * <p>
-     * retrieve all Users Details from Database in List format and
+     * Retrieve all Users Details from Database in List format and
      * send this list back to Service Class.
      * </p>
      * 
      * @return
-     *    list object contains details of all Users.
+     *    List object contains details of all Users.
      * @throws DataException
-     *     if inputs are invalid or if any Hibernate Exception arrived
+     *     If inputs are invalid or if any Hibernate Exception arrived
      */
 	@SuppressWarnings("unchecked")
 	public List<User> retrieveAllUser() throws DataException {                                    /*To populate employee*/
@@ -44,7 +47,8 @@ public class UserDao {
         try {
             return session.createQuery("from User").list();
         } catch (HibernateException e) {
-            throw new DataException(e.toString());
+        	FileUtil.logError("Exception occured in retrieveAllUser method in UserDao" + e);
+            throw new DataException("Error occured while retrieving details of all user");
         } finally {
             session.close();
         }
@@ -52,16 +56,16 @@ public class UserDao {
 	
 	/**
 	 * <p>
-	 * gets User model Object from Service class which contains details of Exam and 
+	 * Gets User model Object from Service class which contains details of Exam and 
      * create the session then begin the transaction 
      * persist the user object and close the session
      * returns id after insertion of user into database.
 	 * </p>
 	 * 
 	 * @param user
-	 *     object contains the details of User like name,id etc.
+	 *     Object contains the details of User like name,id etc.
 	 * @throws DataException
-	 *      if inputs are invalid or if any Hibernate Exception arrived
+	 *      If inputs are invalid or if any Hibernate Exception arrived
 	 */
 	public void insertUser(User user) throws DataException {            
         Session session = factory.openSession();
@@ -70,7 +74,8 @@ public class UserDao {
             session.save(user);
             transaction.commit();
         } catch (HibernateException e) {
-            throw new DataException("The provided details could not be inserted, kindly provide proper input");
+        	FileUtil.logError("Exception occured in inserUser method in UserDao" + e);
+            throw new DataException("Error occured while adding your details. Kindly provide proper details or try again sometime");
         } finally {
             session.close(); 
         }
@@ -78,16 +83,16 @@ public class UserDao {
 	
 	/**
 	 * <p>
-	 * retrieves the User Details of particular emmailId from database and return this details
+	 * Retrieves the User Details of particular emmailId from database and return this details
      * to Service class
 	 * </p>
 	 * 
 	 * @param emailId
-	 *     contains email id of Particular user.
+	 *     Contains email id of Particular user.
 	 * @return user
-	 *     object which contains the details of user.
+	 *     Object which contains the details of user.
 	 * @throws DataException
-	 *     if inputs are invalid or if any Hibernate Exception arrived
+	 *     If inputs are invalid or if any Hibernate Exception arrived
 	 */
 	public User retrieveUserByEmailId(String emailId) throws DataException {
 		 try {
@@ -97,7 +102,8 @@ public class UserDao {
 				 }
 			 }
 		 } catch (HibernateException e) {
-			 throw new DataException("Error occured while processing" + " " + emailId);
+			 FileUtil.logError("Exception occured in retrieveUserByEmailId method in UserDao" + " " + e );
+			 throw new DataException("Error occured while retrieving details for given emailId" + " " + emailId);
 		 }
 		 return null;
 	}

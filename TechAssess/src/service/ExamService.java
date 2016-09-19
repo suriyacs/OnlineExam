@@ -27,11 +27,11 @@ public class ExamService {
      *  Method which pass the given exam details to insert exam details 
      *  method present in data access object to insert into database.
      * @param exam
-     *     consist instance of exam to be forwarded to Data Access Object.
+     *     Consist instance of exam to be forwarded to Data Access Object.
      * @return int
-     *     returns id of the given exam when the instance of exam is inserted successfully.
+     *     Returns id of the given exam when the instance of exam is inserted successfully.
      * @throws DataException
-     *    throws an exception to controller which gets generated at the time of database connection.
+     *     Throws an exception to controller which gets generated at the time of database connection.
      */
     public int addExamDetails(Exam exam)throws DataException {
     	try {
@@ -46,11 +46,11 @@ public class ExamService {
      * Questions to an Exam.
      * 
      * @param examId
-     *     contains id of exam for which the question needs to be allocated.
+     *     Contains id of exam for which the question needs to be allocated.
      * @param questionId
-     *     contains id of question needs to be traced for allocating to the exam.
+     *     Contains id of question needs to be traced for allocating to the exam.
      * @throws DataException
-     *     throws an exception to controller which gets generated at the time of database connection.
+     *     Throws an exception to controller which gets generated at the time of database connection.
      */
     public void allocateQuestionsToExam(int examId,int fromQuestionId,int toQuestionId) throws DataException {
     	    Exam exam = getExamById(examId);
@@ -68,9 +68,9 @@ public class ExamService {
      * Method which send request to DataAccessObject for 
      * retrieving details of entire exam in the form of List.
      * @return list<Exam>
-     *     return entire exam details in the form of list.
+     *     Return entire exam details in the form of list.
      * @throws DataException
-     *     throws an exception to controller which gets generated at the time of database connection.
+     *     Throws an exception to controller which gets generated at the time of database connection.
      */
     public List<Exam> getAllExamDetails() throws DataException {
     	if (null == examDao.retrieveAllExamDetails()) {
@@ -82,9 +82,9 @@ public class ExamService {
     /**
      * Method which send request to DataAccessObject to check if the given exam id exist.
      * @param examId
-     *     consist of exam id which needs to be check if the given id exists.
+     *     Consist of exam id which needs to be check if the given id exists.
      * @throws DataException
-     *     throws an exception to controller which gets generated at the time of database connection.
+     *     Throws an exception to controller which gets generated at the time of database connection.
      */
     public void checkIfExamExist(int examId)throws DataException {
     	if (null == getExamById(examId)) {
@@ -95,11 +95,11 @@ public class ExamService {
     /**
      * Method which send request to Exam DataAccessObject  for allocating user to exam.
      * @param examId
-     *     consist of examId to which the user has to be allocated.
+     *     Consist of examId to which the user has to be allocated.
      * @param userId
-     *     consist of userId who have selected the exam.
+     *     Consist of userId who have selected the exam.
      * @throws DataException
-     *     throws an exception to controller which gets generated at the time of database connection.
+     *     Throws an exception to controller which gets generated at the time of database connection.
      */
     public void addUserToExam(String examId, int userId) throws DataException {
     	examDao.assignUserToExam(Integer.parseInt(examId), userId);
@@ -110,11 +110,11 @@ public class ExamService {
      * of given exam id by passing the examId to DataAccessObject.
      * 
      * @param examId
-     *     consist of id for retrieving the exam details of given id.
+     *     Consist of id for retrieving the exam details of given id.
      * @return object
-     *     returns exam object of given exam id.
+     *     Returns exam object of given exam id.
      * @throws DataException
-     *     throws an exception to controller which gets generated at the time of database connection.
+     *     Throws an exception to controller which gets generated at the time of database connection.
      */
     public Exam getExamById(int examId) throws DataException {
     	return examDao.retrieveExamById(examId);

@@ -30,11 +30,11 @@ public class QuestionService {
 	 * </p>
 	 * 
 	 * @param questionName
-	 *     consist of question to be inserted.
+	 *     Consist of question to be inserted.
 	 * @return int
-	 *     returns id of inserted question as questionId.
+	 *     Returns id of inserted question as questionId.
 	 * @throws DataException
-	 *     throws an exception to controller which gets generated at the time of database connection.
+	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public int addQuestion(String questionName) throws DataException {
 	    return questionDao.insertQuestion(new Question(questionName));
@@ -46,11 +46,11 @@ public class QuestionService {
 	 *     in data access object to allocate the question with the corresponding question type.
 	 * </p>
 	 * @param typeId
-	 *     consist of question type id for track and allocate it to the question.
+	 *     Consist of question type id for track and allocate it to the question.
 	 * @param questionId
-	 *     consist of question id which needs to be tracked for existence.
+	 *     Consist of question id which needs to be tracked for existence.
 	 * @throws DataException
-	 *     throws an exception to controller which gets generated at the time of database connection.
+	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public void allocateQuestionType(int typeId, int questionId) throws DataException {
 		questionDao.assignQuestionType(typeId, questionId);
@@ -63,11 +63,11 @@ public class QuestionService {
 	 * </p>
 	 * 
 	 * @param questionId
-	 *     consist of question id which needs to be tracked for retrieving the details.
+	 *     Consist of question id which needs to be tracked for retrieving the details.
 	 * @return object
-	 *     returns instance of Question type for given questionId.
+	 *     Returns instance of Question type for given questionId.
 	 * @throws DataException
-	 *     throws an exception to controller which gets generated at the time of database connection.
+	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public Question getQuestionDetailById(int questionId) throws DataException {
 		return questionDao.retrieveQuestionDetailById(questionId);
@@ -80,9 +80,9 @@ public class QuestionService {
 	 * </p>
 	 * 
 	 * @return list
-	 *     contains details of all Question in the form of List.
+	 *     Contains details of all Question in the form of List.
 	 * @throws DataException
-	 *     throws an exception to controller which gets generated at the time of database connection.
+	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public List<Question> getAllQuestions() throws DataException {
 		if (null == questionDao.retrieveAllQuestions()) {
@@ -97,9 +97,9 @@ public class QuestionService {
 	 * </p>
 	 * 
 	 * @param questionId
-	 *     consist of id of question which needs to be tracked for existence.
+	 *     Consist of id of question which needs to be tracked for existence.
 	 * @throws DataException
-	 *     throws an exception to controller which gets generated at the time of database connection.
+	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public void checkIfQuestionExist(int questionId)throws DataException {
 		if(null == getQuestionDetailById(questionId)) {
@@ -107,4 +107,3 @@ public class QuestionService {
 		}
 	}
 }
-

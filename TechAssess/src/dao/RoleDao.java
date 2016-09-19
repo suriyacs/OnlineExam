@@ -5,10 +5,12 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 
 import dbconnection.DataBaseConnection;
 import exception.DataException;
 import model.Role;
+import util.FileUtil;
 
 /**
  * <p>
@@ -20,6 +22,7 @@ import model.Role;
  * @author suriyakumar
  *
  */
+@Repository
 public class RoleDao {
 
 	private DataBaseConnection connection = DataBaseConnection.getConnection();
@@ -28,14 +31,14 @@ public class RoleDao {
 
     /**
      * <p>
-     *  retrieve all Roles from Database in List format and
+     *  Retrieve all Roles from Database in List format and
      * send this list back to Service Class.
      * </p>
      * 
      * @return list object
-     *     which contains all Roles.
+     *     Which contains all Roles.
      * @throws DataException
-     *     if input is invalid or if any hibernate Exception is arrived
+     *     If input is invalid or if any hibernate Exception is arrived
      */
 	@SuppressWarnings("unchecked")
 	public List<Role> getAllRoles() throws DataException {
@@ -51,37 +54,38 @@ public class RoleDao {
 	
 	/**
 	 * <p>
-	 * retrieves the Role id of particular Name from database and return this details
+	 * Retrieves the Role id of particular Name from database and return this details
      * to RoleService class
 	 * </p>
 	 * @param roleName
-	 *     contains name of particular Role.
+	 *     Contains name of particular Role.
 	 * @return
-	 *     returns of particular role.
+	 *     Returns of particular role.
 	 * @throws DataException
-	 *     if input is invalid or if any hibernate Exception is arrived
+	 *     If input is invalid or if any hibernate Exception is arrived
 	 */
 	public int retrieveRoleId(String roleName) throws DataException {
+		int id = 0;
 		for(Role role : getAllRoles()) {
 			if(role.getRoleName().equals(roleName)) {
-				return role.getRoleId();
+				id =  role.getRoleId();
 			}
 		}
-		return 0;
+		return id;
 	}
 	
 	/**
 	 * <p>
-	 *  retrieves Role Name of Particular Id from Database and return this details to
+	 *  Retrieves Role Name of Particular Id from Database and return this details to
 	 *  Service class.
 	 *  </p>
 	 *  
 	 * @param roleId
-	 *     contains id of particular id.
+	 *     Contains id of particular id.
 	 * @return
-	 *     name of Particular role.
+	 *     Name of Particular role.
 	 * @throws DataException
-	 *     if input is invalid or if any hibernate Exception is arrived
+	 *     If input is invalid or if any hibernate Exception is arrived
 	 */
 	public String retrieveRoleName(int roleId) throws DataException {
 		try {
@@ -91,6 +95,7 @@ public class RoleDao {
 				}
 			}
 		} catch (HibernateException e) {
+			FileUtil.logError("Exception occured in retrieveRoleName method in RoleDao" + e);
 			throw new DataException("No details found for" + " " + roleId);
 		}
 		return null;

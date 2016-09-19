@@ -27,11 +27,11 @@ public class RoleService {
 	 * </p>
 	 * 
 	 * @param roleName
-	 *     consist of name of the role to be tracked.
+	 *     Consist of name of the role to be tracked.
 	 * @return int
-	 *     return id of the given role name.
+	 *     Return id of the given role name.
 	 * @throws DataException
-	 *     throws an exception to controller which gets generated at the time of database connection.
+	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public int getRoleIdByName(String roleName) throws DataException {
 		return roleDao.retrieveRoleId(roleName);
@@ -44,11 +44,11 @@ public class RoleService {
 	 * </p>
 	 * 
 	 * @param roleId
-	 *     contains id of the role to be fetched.
+	 *     Contains id of the role to be fetched.
 	 * @return string
-	 *     consist of role name for the given role id.
+	 *     Consist of role name for the given role id.
 	 * @throws DataException
-	 *     throws an exception to controller which gets generated at the time of database connection.
+	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public String getRoleNameById(int roleId) throws DataException {
 		return roleDao.retrieveRoleName(roleId);

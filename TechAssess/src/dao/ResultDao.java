@@ -4,10 +4,12 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import dbconnection.DataBaseConnection;
 import exception.DataException;
 import model.Result;
+import util.FileUtil;
 
 /**
  * <p>
@@ -18,6 +20,7 @@ import model.Result;
  * @author TechAssess
  *
  */
+@Repository
 public class ResultDao {
 	private DataBaseConnection connection = DataBaseConnection.getConnection();
     private SessionFactory factory = connection.createSessionFactory();
@@ -28,9 +31,9 @@ public class ResultDao {
      * </p>
      * 
      * @param result
-     *     object contains the details of result like examName,userName,mark etc.
+     *     Object contains the details of result like examName,userName,mark etc.
      * @throws DataException
-     *     if inputs are invalid or if any Hibernate Exception arrived
+     *     If inputs are invalid or if any Hibernate Exception arrived
      */
     public void storeResult(Result result)throws DataException {
     	Session session = factory.openSession();
@@ -39,7 +42,8 @@ public class ResultDao {
 			session.save(result);
 			transaction.commit();
 		} catch (HibernateException e) {
-			throw new DataException(e.toString());
+			FileUtil.logError("Exception occured in storeResult method in ResultDao" + e);
+			throw new DataException("Cannot able to store result.");
 		} finally {
 			session.close();
 		}

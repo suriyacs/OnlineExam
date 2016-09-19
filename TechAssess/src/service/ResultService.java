@@ -36,13 +36,13 @@ public class ResultService {
 	 * @param exam
 	 *      It contains the instance of user written exam.
 	 * @param examId
-	 *      contains id of the exam which the user selected.
+	 *      Contains id of the exam which the user selected.
 	 * @param user
-	 *     contains instance of user who selected the exam.
+	 *      Contains instance of user who selected the exam.
 	 * @return mark
-	 *     contains calculated mark taken by the user.
+	 *      Contains calculated mark taken by the user.
 	 * @throws DataException
-	 *     throws an exception to controller which gets generated at the time of database connection.
+	 *      Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public int calculateResult(Exam exam,int examId,User user) throws DataException {
 		int mark =0;

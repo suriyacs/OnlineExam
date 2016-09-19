@@ -10,11 +10,13 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import dbconnection.DataBaseConnection;
 import exception.DataException;
 import model.Question;
 import model.QuestionType;
+import util.FileUtil;
 
 /**
  * <p>
@@ -25,6 +27,7 @@ import model.QuestionType;
  * @author TechAssess
  *
  */
+@Repository
 public class QuestionTypeDao {
 
 	private DataBaseConnection connection = DataBaseConnection.getConnection();
@@ -32,23 +35,24 @@ public class QuestionTypeDao {
 	
     /**
      * <p>
-     * retrieves the QuestionType Details of particular id from database and return this details
+     * Retrieves the QuestionType Details of particular id from database and return this details
      * to QuestionTypeService class
      * </p>
      * 
      * @param typeId
-     *     contains id of QuestionType to retrieve.
+     *     Contains id of QuestionType to retrieve.
      * @return
      *     QuestionType Details in object format.
      * @throws DataException
-     *     if input is invalid or if any Hibernate Exception is arrived
+     *     If input is invalid or if any Hibernate Exception is arrived
      */
     public QuestionType retrieveTypeDetailById(int typeId) throws DataException {
     	Session session = factory.openSession();
     	try {
     		 return (QuestionType)session.get(QuestionType.class, typeId);
     	} catch (HibernateException e) {
-    		throw new DataException(e.toString());
+    		FileUtil.logError("Exception occured in retrieveTypeDetailById method in QuestionTypeDao" + e);
+    		throw new DataException("Cannot able retrieve details for given typeId" + " " + typeId);
     	} finally {
 			session.close();
 		}
@@ -61,26 +65,26 @@ public class QuestionTypeDao {
      * </p>
      * 
      * @param questionType
-     *      object which contains the details of particular QuestionType.
+     *      Object which contains the details of particular QuestionType.
      * @param question
-     *      object which contains the details of particular Question.
+     *      Object which contains the details of particular Question.
      * @throws DataException  
-     *      if input is invalid or if any Hibernate Exception is arrived
+     *      If input is invalid or if any Hibernate Exception is arrived
      */   
-    @SuppressWarnings("unchecked")
 	public void allocateQuestionToQuestionType(QuestionType questionType, Question question) throws DataException {
     	Session session = factory.openSession();
     	try {
     		Transaction transaction = session.beginTransaction();
-    		@SuppressWarnings("rawtypes")
-			Set questionSet = new HashSet();
+			Set<Question> questionSet = new HashSet<Question>();
     		questionSet.add(question);
     		questionType.setQuestion(questionSet);
     		session.save(questionType);
     		session.save(question);
     		transaction.commit();
     	} catch (HibernateException e) {
-    		throw new DataException(e.toString());
+    		FileUtil.logError("Exception occured in allocateQuestionToQuestionType method in QuestionTypeDao" + e);
+    		throw new DataException("Cannot able to allocate questionId" + " "
+    	        + question.getQuestionId() + "to questionType" + " " + questionType.getTypeId());
     	} finally {
 			session.close();
 		}

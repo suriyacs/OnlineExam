@@ -1,6 +1,5 @@
 package dao;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -9,12 +8,14 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import dbconnection.DataBaseConnection;
 import exception.DataException;
 import model.Exam;
 import model.Question;
 import model.User;
+import util.FileUtil;
 
 /**
  * <p>
@@ -26,26 +27,27 @@ import model.User;
  * @author TechAssess
  *
  */
+@Repository
 public class ExamDao {
 	private DataBaseConnection connection = DataBaseConnection.getConnection();
     private SessionFactory factory = connection.createSessionFactory();
     
     /**
      * <p>
-     * gets Exam model Object from Service class which contains details of Exam and 
+     * Gets Exam model Object from Service class which contains details of Exam and 
      * create the session then begin the transaction 
      * persist the exam object and close the session
      * returns id after insertion of exam into database.
      * </p>
      * 
      * @param exam
-     *     object contains details of Exam like exam name,Duration etc.
+     *     Object contains details of Exam like exam name,Duration etc.
      * @return id
-     *     id of exam which is added to the database.
+     *     Id of exam which is added to the database.
      * @throws DataException
-     *     if inputs are invalid or if any Hibernate Exception arrived
+     *     If inputs are invalid or if any Hibernate Exception arrived
      */
-    @SuppressWarnings("finally")
+	@SuppressWarnings("finally")
 	public int insertExamDetails(Exam exam)throws DataException {
     	Session session = factory.openSession();
     	int id = 0;
@@ -54,7 +56,8 @@ public class ExamDao {
     		id = (int)session.save(exam);
     		transaction.commit();
     	} catch(HibernateException e) {
-    		throw new DataException("Invalid Inputs Please Check The Inputs and Try Again");
+    		FileUtil.logError("Exception occured in insertExamDetails method in ExamDao" + e);
+    		throw new DataException("Error occured while adding exam details");
     	} finally {
     		session.close();
     		return id;
@@ -63,41 +66,37 @@ public class ExamDao {
              
     /**
      * <p>
-     * retrieve all Exams from Database in List format and
+     * Retrieve all Exams from Database in List format and
      * send this list back to Service Class.
      * </p>
      * 
      * @return allExams
-     *    contains list of all exams
+     *    Contains list of all exams
      * @throws DataException
-     *    if input is invalid or if any hibernate Exception is arrived
+     *    If input is invalid or if any hibernate Exception is arrived
      */
-    @SuppressWarnings("unchecked")
     public Exam getExamById(int examId) throws DataException {
     	Session session = factory.openSession();
     	try {
     	    return (Exam)session.get(Exam.class,examId);
     	} catch(HibernateException e) {
-        	throw new DataException(e.toString());
+    		FileUtil.logError("Exception occured in getExamById method in ExamDao" + e);
+        	throw new DataException("Error occured while retrieving examId" + " " + examId);
        	} finally {
        		session.close();
        	}
     }
     
-    @SuppressWarnings({ "unchecked", "finally" })
+	@SuppressWarnings("unchecked")
 	public List<Exam> retrieveAllExamDetails()throws DataException {
     	Session session = factory.openSession();
-    	List<Exam>allExams = new ArrayList<Exam>();
-    	
     	try {
-    		Transaction transaction = session.beginTransaction();
-    		allExams = session.createQuery("from Exam").list();
-    		transaction.commit();
+            return session.createQuery("from Exam").list();
         } catch(HibernateException e) {
-        	throw new DataException(e.toString());
+        	FileUtil.logError("Exception occured in retrieveAllExamDetails method in ExamDao" + e);
+        	throw new DataException("Error occured while retrieving all exam details. Kindly try again");
        	} finally {
        		session.close();
-       		return allExams;
        	}
     }
     
@@ -109,22 +108,20 @@ public class ExamDao {
      * </p>
      * 
      * @param examId
-     *     contains id of Exam to allocate
+     *     Contains id of Exam to allocate
      * @param questionId
-     *     contains id of Question to allocate
+     *     Contains id of Question to allocate
      * @throws DataException
-     *     if inputs are invalid or if any Hibernate Exception is arrived
+     *     If inputs are invalid or if any Hibernate Exception is arrived
      */
-    @SuppressWarnings("unchecked")
 	public void assignQuestionsToExam(int examId,int questionId)throws DataException {
     	Session session = factory.openSession();
     	try {
-			@SuppressWarnings("rawtypes")
-			Set examSet = new HashSet();
     		Transaction transaction = session.beginTransaction();
     		Question  question = (Question)session.get(Question.class, questionId);
     		Exam exam = (Exam)session.get(Exam.class,examId);
     		if(question != null) {
+    			Set<Exam> examSet = new HashSet<Exam>();
     		    exam.setQuestions(question);
     		    examSet.add(exam);
     		    question.setExams(examSet);
@@ -134,7 +131,8 @@ public class ExamDao {
         	    transaction.commit();
     		}
     	} catch(HibernateException e) {
-    		throw new DataException("Can't assign questions to this exam..!!Please Try again.!!");
+    		FileUtil.logError("Exception occured in assignQuestionsToExam method in ExamDao" + e);
+    		throw new DataException("Cannot able to assign questionId" + " " + questionId + " " + "to examId" + " " + examId);
     	} finally {
     		session.close();
     	}
@@ -142,14 +140,14 @@ public class ExamDao {
     
     /**
      * <p>
-     * increase the AllocatedQuestionscount of Exam after allocation of Question is
+     * Increase the AllocatedQuestionscount of Exam after allocation of Question is
      * performed successfully by calling setNoOfAllocatedQuestions method of Exam model classes.
      * </p>
      * 
      * @param exam
-     *     objects contains details of exam.
+     *     Objects contains details of exam.
      */
-    public void increaseAllocatedQuestionsCount(Exam exam) {
+    private void increaseAllocatedQuestionsCount(Exam exam) {
     	if (exam.getNoOfAllocatedQuestions() != null) {
 			int count = Integer.parseInt(exam.getNoOfAllocatedQuestions());
 			count++;
@@ -167,21 +165,19 @@ public class ExamDao {
      * </p>
      * 
      * @param examId
-     *     contains id of Exam.
+     *     Contains id of Exam.
      * @param userId
-     *     contains id of user.
+     *     Contains id of user.
      * @throws DataException
-     *     if inputs are invalid or if any Hibernate Exception is arrived
+     *     If inputs are invalid or if any Hibernate Exception is arrived
      */
-    @SuppressWarnings({ "unchecked", "finally" })
+	@SuppressWarnings("finally")
 	public Exam assignUserToExam(int examId, int userId) throws DataException {
     	Session session = factory.openSession();
     	Exam exam = null;
     	try {
-    		@SuppressWarnings("rawtypes")
-			Set userSet = new HashSet();
-    		@SuppressWarnings("rawtypes")
-			Set examSet = new HashSet();
+			Set<User> userSet = new HashSet<User>();
+			Set<Exam> examSet = new HashSet<Exam>();
     		Transaction transaction = session.beginTransaction();
     		exam = (Exam)session.get(Exam.class, examId);
     		User user = (User)session.get(User.class, userId);
@@ -192,8 +188,9 @@ public class ExamDao {
     		session.save(user);
     		session.save(exam);
     		transaction.commit();
-    	} catch(HibernateException e) {
-    		throw new DataException("Can't assign questions to this exam..!!Please Try again.!!");
+        } catch(HibernateException e) {
+    		FileUtil.logError("Exception occured in assignUserToExam method in ExamDao" + e);
+    		throw new DataException("Error occured while allocation userId" + " " + userId + " " + "to examId" + " " +examId);
     	} finally {
     		session.close();
     		return exam;
@@ -202,16 +199,16 @@ public class ExamDao {
     
     /**
      * <p>
-     * retrieves the Exam Details of particular id from database and return this details
+     * Retrieves the Exam Details of particular id from database and return this details
      * to ExamService class
      * </p>
      * 
      * @param examId
-     *     contains id of Exam to retrieve.
+     *     Contains id of Exam to retrieve.
      * @return exam
-     *     object which contains details of exam like name,duration etc.      
+     *     Object which contains details of exam like name,duration etc.      
      * @throws DataException
-     *     if input is invalid or if any Hibernate Exception is arrived
+     *     If input is invalid or if any Hibernate Exception is arrived
      */
     
     public Exam retrieveExamById(int examId) throws DataException {
@@ -219,7 +216,8 @@ public class ExamDao {
     	try {
     		return (Exam)session.get(Exam.class, examId);
     	} catch(HibernateException e) {
-    		throw new DataException("Can't assign questions to this exam..!!Please Try again.!!");
+    		FileUtil.logError("Exception occured in retrieveExamById method in ExamDao" + e);
+    		throw new DataException("Error occured while retreieving exam details for given examId" + " " + examId);
     	} finally {
     		session.close();
     	}

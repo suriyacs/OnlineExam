@@ -30,11 +30,11 @@ public class QuestionTypeService {
 	 * </p>
 	 * 
 	 * @param typeId
-	 *     consist of type id for retrieving the details.
+	 *     Consist of type id for retrieving the details.
 	 * @return object
-	 *     returns QuestionType object of given typeId.
+	 *     Returns QuestionType object of given typeId.
 	 * @throws DataException
-	 *     throws an exception to controller which gets generated at the time of database connection.
+	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public QuestionType getTypeDetailById(int typeId) throws DataException {
 		return questionTypeDao.retrieveTypeDetailById(typeId);
@@ -47,14 +47,13 @@ public class QuestionTypeService {
 	 * </p>
 	 * 
 	 * @param questionType
-	 *     consist of questionType in which the question is created.
+	 *     Consist of questionType in which the question is created.
 	 * @param question
-	 *     it consist of question object to which the question type needs to be allocated.
+	 *     It consist of question object to which the question type needs to be allocated.
 	 * @throws DataException
-	 *     throws an exception to controller which gets generated at the time of database connection.
+	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public void addQuestion(QuestionType questionType, Question question) throws DataException {
 		questionTypeDao.allocateQuestionToQuestionType(questionType, question);
 	}
 }
-
