@@ -18,9 +18,10 @@ public class ChoiceService {
 	ChoiceDao choiceDao = new ChoiceDao();
 	
 	/**
-	 * Method which accept the request and reads the URL parameters and
-	 * pass the same parameter to ChoiceDao to complete the given process.
-	 * 
+	 * <p>
+	 *  method which gets choice details from controller and pass this details 
+	 *  back to insertChoice method of choiceDao class.
+	 *  </p> 
 	 * @param answer
 	 *     contains given answer for the question.
 	 * @param correctAnswer
@@ -36,8 +37,8 @@ public class ChoiceService {
 	
 	/**
 	 * <p>
-	 * Method which accept the request from controller and
-	 * process the request by forwarding the same request to ChocieDao.
+	 * Method which gets details of particular choice by passing id of that choice
+	 * into retrieveChoiceDetailsById method of ChoiceDao class.
 	 * </p>
 	 * 
 	 * @param choiceId
@@ -52,13 +53,14 @@ public class ChoiceService {
 	}
 	
 	/**
-	 * Method which accept the request from controller and process
-	 * the requested URL by passing it to the Data Access Object. 
-	 * 
+	 * <p>
+	 *  method which allocateQuestion to particular choice by passing id of both 
+	 *  question and chioce into assignQuestion method of ChoiceDao class
+	 * </p>
 	 * @param choiceId
-	 *     consist of id for which the instance of choice needs to be tracked.
+	 *     consist id of choice to allocate.
 	 * @param questionId
-	 *     consist of id for which the instance of question to be traced.
+	 *     consist id of question to allocate.
 	 * @throws DataException
 	 *     throws an exception to controller which gets generated at the time of database connection.
 	 */

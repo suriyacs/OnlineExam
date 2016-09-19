@@ -43,15 +43,14 @@ public class ApplicationController {
 	 
 	/**
 	  * <p>
-	  *   Method which get invoked by logout mapping and redirects
-	  *   to the login page when the user click logout button.
+	  *   Method which redirect to loginpage.
 	  * </p>
 	  * 
 	  * @return string
 	  *     consist of name of the java server page to be loaded.
 	  */
 	@RequestMapping("loginpage")
-	public String goToRegisterationPage() {
+	public String goToLoginPage() {
 	    return "login";
 	}
 	
@@ -119,7 +118,7 @@ public class ApplicationController {
 	               return "redirect:gotouserpage";
 	           } else {
 	        	   model.addAttribute("LogInMessage", "Invalid Password");
-	           	return "login";
+	               return "login";
 	           }
 	       } catch (DataException e) {
 	    	   model.addAttribute("LogInMessage", e.toString());
@@ -128,7 +127,9 @@ public class ApplicationController {
 	   }
 	 
 	 /**
-	  * Method gets invoked when the admin wants to add another admin to the database.
+	  * <p>
+	  * method which add admin details by calling addAdmin method of userService class.
+	  * </p>
 	  * @param userName
 	  *     contains name of the admin.
 	  * @param emailId
@@ -180,7 +181,9 @@ public class ApplicationController {
 	 }
 	
 	/**
-	 * Method which get invoked when the user the credentials of the admin.
+	 * <p>
+	 * method which redirect to jsp page named adminpage.jsp.
+	 * </p>
 	 * @return string
 	 *     contains name of the Java Server page to be redirected.
 	 */
@@ -274,7 +277,7 @@ public class ApplicationController {
 	  *     contains name of the java server page to be loaded.
 	  */
 	 @RequestMapping(value = "/insertadmin")
-	 public String redirctToInsertAdminPage() {
+	 public String redirectToInsertAdminPage() {
 		 return "addadmin";
 	 }
 	 
@@ -290,7 +293,7 @@ public class ApplicationController {
 	  *     contains name of the java server page which need's to be loaded.
 	  */
 	 @RequestMapping(value="/insertquestion") 
-     public String redirctToInsertQuestionPage(ModelMap model) {
+     public String redirectToInsertQuestionPage(ModelMap model) {
 		 Question question = new Question();
 		 question.add(new Choice());
 		 question.add(new Choice());
@@ -311,7 +314,7 @@ public class ApplicationController {
 	  *     contains name of the java server page which needs to be loaded.
 	  */
 	 @RequestMapping(value="/insertexamdetails")
-	 public String redirctToInsertTestPage(ModelMap model){
+	 public String redirectToInsertTestPage(ModelMap model){
 		 model.addAttribute("exam",new Exam());
 		 return "addexam";
 	 }
@@ -350,6 +353,8 @@ public class ApplicationController {
 	 /**
 	  * <p>
 	  *     Method which gets invoked when the user click the take start test button on the user page.
+	  *     checks if user already attended this exam.if not then gets the particular exam detials from examService class
+	  *     and pass it to jsp page named questionpageforuser.jsp.
 	  * </p>
 	  * 
 	  * @param session
@@ -363,7 +368,7 @@ public class ApplicationController {
 	  *     contains name of the java server page which needs to be loaded.
 	  */
 	 @RequestMapping(value="/taketest")
-	 public String redirectToStartTestPage(HttpSession session, @RequestParam("test") String testId, ModelMap model){
+	 public String redirectToQuestionPage(HttpSession session, @RequestParam("test") String testId, ModelMap model){
 		 User user = null;
 		 try {
              user = (User)session.getAttribute("user");
@@ -395,7 +400,7 @@ public class ApplicationController {
 	 
 	 /**
 	  * <p>
-	  *     Method which gets invoked when the request from add question page isreceived it
+	  *     Method which gets invoked when the request from add question page is received it
 	  *     stores the question and answer of the type fill in the blanks into the database.
 	  * </p>
 	  * 
@@ -432,7 +437,9 @@ public class ApplicationController {
 	 
 	 /**
 	  * <p>
-	  *     Method which redirect to login page when the user click the submit answer button in the question page.
+	  *     Method which calculates the result by calling the calculateResult method of resultService
+	  *     class.return the mark back to login page.
+	  *     
 	  * </p>
 	  * 
 	  * @param exam
@@ -449,12 +456,12 @@ public class ApplicationController {
 	  *     contains name of the java server page to be loaded.
 	  */
 	 @RequestMapping(value="/resultcalculation",method = RequestMethod.POST)
-	 public String ResultCalculate(@ModelAttribute("exam")Exam exam, BindingResult result,ModelMap model,
+	 public String calculateResult(@ModelAttribute("exam")Exam exam, BindingResult result,ModelMap model,
 			 @RequestParam("examId") int examId,HttpSession session) {
 		 ResultService resultService = new ResultService();
 		 
 		 try {
-		      model.addAttribute("mark",resultService.calculateResult(exam, examId, (User)session.getAttribute("user")));
+		     model.addAttribute("mark",resultService.calculateResult(exam, examId, (User)session.getAttribute("user")));
 		 } catch(DataException e) {
 			 model.addAttribute("mark",e.getMessage().toString());
 		 }
@@ -463,8 +470,11 @@ public class ApplicationController {
 	 
 	 /**
 	  * <p>
-	  *     Method which invoked by the insert question page when
-	  *     the user wants to insert question of multiple answer or choose the correct answer.
+	  *     Method which add the multiple answer and choose the correct answer question.which gets question and 
+	  *     its choices in object format named question.first add the question and map the added question into its questiontype
+	  *     by calling allocateQuestionType method of questionService class.
+	  *     then add the choices of this question one by one then map the choice to this question by calling allocateQuestion
+	  *     method of choiceService class.
 	  * </p>
 	  * 
 	  * @param question
