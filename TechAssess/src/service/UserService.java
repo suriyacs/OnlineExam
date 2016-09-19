@@ -2,8 +2,8 @@ package service;
 
 import java.util.List;
 
-import model.User;
 import dao.UserDao;
+import model.User;
 import exception.DataException;
 import service.RoleService;
 

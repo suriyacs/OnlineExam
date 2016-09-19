@@ -1,7 +1,5 @@
 package service;
 
-
-
 import service.ExamService;
 import model.Answer;
 import model.Choice;

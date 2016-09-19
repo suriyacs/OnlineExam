@@ -11,22 +11,21 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import exception.DataException;
 import model.User;
-
-import org.springframework.web.bind.annotation.RequestParam;
-
+import model.Exam;
+import model.Choice;
+import model.Question;
+import model.Answer;
 import service.RoleService;
 import service.UserService;
 import service.ChoiceService;
 import service.ExamService;
 import service.QuestionService;
 import service.ResultService;
-import model.Exam;
-import model.Choice;
-import model.Question;
-import model.Answer;
+
 
 /**
  * Controller which accept the request from Java server page and
@@ -247,7 +246,8 @@ public class ApplicationController {
 	 
 	 /**
 	  * <p>
-	  *     Method which gets invoked when the user click login from the login page.
+	  *     Method which gets invoked when the user click login from the login page.gets details of allexams from examService class
+	  *     and pass it to jsp page named userpage.jsp.
 	  * </p>
 	  * 
 	  * @param model
@@ -267,7 +267,7 @@ public class ApplicationController {
 	 
 	 /**
 	  * <p>
-	  *     Method which redirects to add admin page when the admin clicks the add admin button on admin page.
+	  *     Method which redirects to add admin page when the admin clicks the addadmin button on admin page.
 	  * </p>
 	  * 
 	  * @return string

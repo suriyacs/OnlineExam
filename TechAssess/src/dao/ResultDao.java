@@ -7,7 +7,6 @@ import org.hibernate.Transaction;
 
 import dbconnection.DataBaseConnection;
 import exception.DataException;
-
 import model.Result;
 
 /**

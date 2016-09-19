@@ -7,9 +7,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import model.User;
 import exception.DataException;
 import dbconnection.DataBaseConnection;
+import model.User;
 
 /**
  * <p>

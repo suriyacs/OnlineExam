@@ -10,11 +10,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import dbconnection.DataBaseConnection;
+import exception.DataException;
 import model.Exam;
 import model.Question;
 import model.User;
-import exception.DataException;
-import dbconnection.DataBaseConnection;
 
 /**
  * <p>
