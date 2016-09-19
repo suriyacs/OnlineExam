@@ -21,14 +21,14 @@ import service.RoleService;
  */
 @Service
 public class UserService {
-	UserDao userDao = new UserDao();
-	RoleService roleService = new RoleService();
+    UserDao userDao = new UserDao();
+    RoleService roleService = new RoleService();
 	
-	/** <p>
+	/**<p>
 	 *     Method which receive request from controller and insert the
 	 *     user details as user role  by passing an instance of user type 
 	 *     to insertUser method in User data access object.
-	 *  <p>
+	 * <p>
 	 * @param userName
 	 *     Consist of name of the user.
 	 * @param emailId
@@ -41,7 +41,7 @@ public class UserService {
 	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public void addUser(String userName, String emailId, String password, String mobileNumber)  throws DataException {
-		checkIfUserAlreadyExist(emailId);
+	    checkIfUserAlreadyExist(emailId);
 	    userDao.insertUser(new User(userName, emailId, password,
 	    		mobileNumber, roleService.getRoleIdByName("User")));
 	}
@@ -74,7 +74,7 @@ public class UserService {
 	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public User getUserByEmailId(String emailId) throws DataException {
-		return userDao.retrieveUserByEmailId(emailId);
+	    return userDao.retrieveUserByEmailId(emailId);
 	}
 	
 	/**
@@ -95,8 +95,8 @@ public class UserService {
 	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public void addAdmin(String userName, String emailId, String password, String mobileNumber)  throws DataException {
-		checkIfUserAlreadyExist(emailId);
-	    userDao.insertUser(new User(userName, emailId, password,
+	    checkIfUserAlreadyExist(emailId);
+        userDao.insertUser(new User(userName, emailId, password,
 	    		mobileNumber, roleService.getRoleIdByName("Admin")));
 	}
 	
@@ -112,8 +112,8 @@ public class UserService {
 	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public void checkIfUserAlreadyExist(String emailId) throws DataException {
-		if(null != getUserByEmailId(emailId)) {
-			throw new DataException("Person With This Mail Id Already Exist..!!Try Again With Different Id..!!");
+        if(null != getUserByEmailId(emailId)) {
+		    throw new DataException("Person With This Mail Id Already Exist..!!Try Again With Different Id..!!");
 		}
 	}
 }

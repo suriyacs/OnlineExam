@@ -16,6 +16,7 @@ import model.User;
  *     It resolve the request by forwarding the incoming request to their
  *     corresponding methods in Exam Data Access Object. 
  * </p>
+ * 
  * @author TechAssess
  *
  */
@@ -24,8 +25,11 @@ public class ExamService {
     ExamDao examDao = new ExamDao();
     
     /**
-     *  Method which pass the given exam details to insert exam details 
-     *  method present in data access object to insert into database.
+     * <p>
+     *     Method which pass the given exam details to insert exam details 
+     *     method present in data access object to insert into database.
+     * </p>
+     * 
      * @param exam
      *     Consist instance of exam to be forwarded to Data Access Object.
      * @return int
@@ -42,8 +46,11 @@ public class ExamService {
     }
     
     /**
-     * Method which send request to Data Access Object for allocating
-     * Questions to an Exam.
+     * 
+     * <p>
+     *     Method which send request to Data Access Object for allocating
+     *     Questions to an Exam.
+     * </p>
      * 
      * @param examId
      *     Contains id of exam for which the question needs to be allocated.
@@ -65,22 +72,29 @@ public class ExamService {
     }
     
     /**
-     * Method which send request to DataAccessObject for 
-     * retrieving details of entire exam in the form of List.
+     * <p>
+     *     Method which send request to DataAccessObject for 
+     *     retrieving details of entire exam in the form of List.
+     * </p>
+     * 
      * @return list<Exam>
      *     Return entire exam details in the form of list.
      * @throws DataException
      *     Throws an exception to controller which gets generated at the time of database connection.
      */
     public List<Exam> getAllExamDetails() throws DataException {
-    	if (null == examDao.retrieveAllExamDetails()) {
+    	List<Exam> allExams = examDao.retrieveAllExamDetails();
+    	if (null == allExams ) {
     		throw new DataException("There is no Exams in Database.Please insert some Exams first..!!");
     	}
-    	return(examDao.retrieveAllExamDetails());
+    	return(allExams);
     }
     
     /**
-     * Method which send request to DataAccessObject to check if the given exam id exist.
+     * <p>
+     *     Method which send request to DataAccessObject to check if the given exam id exist.
+     * </p>
+     * 
      * @param examId
      *     Consist of exam id which needs to be check if the given id exists.
      * @throws DataException

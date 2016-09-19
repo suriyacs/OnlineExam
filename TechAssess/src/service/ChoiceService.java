@@ -1,10 +1,9 @@
 package service;
 
-import exception.DataException;
-
 import org.springframework.stereotype.Service;
 
 import dao.ChoiceDao;
+import exception.DataException;
 import model.Choice;
 
 /**
@@ -18,14 +17,14 @@ import model.Choice;
  */
 @Service
 public class ChoiceService {
-
-	ChoiceDao choiceDao = new ChoiceDao();
+    ChoiceDao choiceDao = new ChoiceDao();
 	
 	/**
 	 * <p>
-	 *  Method which gets choice details from controller and pass this details 
-	 *  back to insertChoice method of choiceDao class.
-	 *  </p> 
+	 *     Method which gets choice details from controller and pass this details 
+	 *     back to insertChoice method of choiceDao class.
+	 * </p> 
+	 * 
 	 * @param answer
 	 *     Contains given answer for the question.
 	 * @param correctAnswer
@@ -41,8 +40,8 @@ public class ChoiceService {
 	
 	/**
 	 * <p>
-	 * Method which gets details of particular choice by passing id of that choice
-	 * into retrieveChoiceDetailsById method of ChoiceDao class.
+	 *     Method which gets details of particular choice by passing id of that choice
+	 *     into retrieveChoiceDetailsById method of ChoiceDao class.
 	 * </p>
 	 * 
 	 * @param choiceId
@@ -58,9 +57,10 @@ public class ChoiceService {
 	
 	/**
 	 * <p>
-	 *  Method which allocateQuestion to particular choice by passing id of both 
-	 *  question and choice into assignQuestion method of ChoiceDao class
+	 *     Method which allocateQuestion to particular choice by passing id of both 
+	 *     question and choice into assignQuestion method of ChoiceDao class
 	 * </p>
+	 * 
 	 * @param choiceId
 	 *     Consist id of choice to allocate.
 	 * @param questionId

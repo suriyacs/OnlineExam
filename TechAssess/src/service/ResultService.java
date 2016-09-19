@@ -23,8 +23,8 @@ import service.ExamService;
  */
 @Service
 public class ResultService {
-	ExamService examService = new ExamService();
-	ResultDao resultDao = new ResultDao();
+    ExamService examService = new ExamService();
+    ResultDao resultDao = new ResultDao();
 	/**
 	 *  <p>
 	 *      Method which calculates the result by comparing the question present in question page
@@ -33,6 +33,7 @@ public class ResultService {
 	 *      the mark gets incremented. Atlast when all the answers were evaluated it pass the
 	 *      resultant mark, examName, userName to storeResult method in data access object.   
 	 *  </p>
+	 *  
 	 * @param exam
 	 *      It contains the instance of user written exam.
 	 * @param examId
@@ -45,26 +46,26 @@ public class ResultService {
 	 *      Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public int calculateResult(Exam exam,int examId,User user) throws DataException {
-		int mark =0;
+	    int mark =0;
 		
-		try {
-		     Exam originalExamObject = examService.getExamById(examId);
-	         for(Answer answer : exam.getAnswers()) {
-		         for (Question originalQuestion : originalExamObject.getQuestions()) {
-			         if (answer.getQuestionId() == originalQuestion.getQuestionId()) {
-				         for (Choice choice : originalQuestion.getChoices()) {
-				    	     if (choice.getIsCorrect() == 1) {
-				    	         if (choice.getChoiceName().equalsIgnoreCase(answer.getUserAnswer())) {
-				    		         mark = mark + 1;		
-				    	         }
-				    	     }
-				         }				    
-			         }
-		         }
-	         }
-	         resultDao.storeResult(new Result(originalExamObject.getExamName(),user.getUserName(),mark));
+	    try {
+		    Exam originalExamObject = examService.getExamById(examId);
+	        for(Answer answer : exam.getAnswers()) {
+		        for (Question originalQuestion : originalExamObject.getQuestions()) {
+			        if (answer.getQuestionId() == originalQuestion.getQuestionId()) {
+				        for (Choice choice : originalQuestion.getChoices()) {
+				    	    if (choice.getIsCorrect() == 1) {
+				    	        if (choice.getChoiceName().equalsIgnoreCase(answer.getUserAnswer())) {
+				    		        mark = mark + 1;		
+				    	        }
+				    	    }
+				        }				    
+			        }
+		        }
+	        }
+	        resultDao.storeResult(new Result(originalExamObject.getExamName(),user.getUserName(),mark));
 		} catch(DataException e) {
-			 throw new DataException(e.getMessage().toString());
+			throw new DataException(e.getMessage().toString());
 		} 
 		return mark;
 	}

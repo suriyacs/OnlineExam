@@ -17,8 +17,7 @@ import exception.DataException;
  */
 @Service
 public class RoleService {
-
-	private RoleDao roleDao = new RoleDao();
+    private RoleDao roleDao = new RoleDao();
 	
 	/**
 	 * <p>
@@ -34,7 +33,7 @@ public class RoleService {
 	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public int getRoleIdByName(String roleName) throws DataException {
-		return roleDao.retrieveRoleId(roleName);
+	    return roleDao.retrieveRoleId(roleName);
 	}
 	
 	/**
@@ -51,7 +50,7 @@ public class RoleService {
 	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public String getRoleNameById(int roleId) throws DataException {
-		return roleDao.retrieveRoleName(roleId);
+	    return roleDao.retrieveRoleName(roleId);
 	}
 }
 

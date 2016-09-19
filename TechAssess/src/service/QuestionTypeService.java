@@ -11,17 +11,19 @@ import model.Question;
 import model.QuestionType;
 
 /**
+ * <P>
  *     Service which accepts request from controller to perform operations like
  *     insert question type and retrieve question type and
  *     it resolve the request by forwarding the incoming request to their
  *     corresponding methods in Question Data Access Object. 
+ * </P>
+ * 
  * @author TechAssess
  *
  */
 @Service
 public class QuestionTypeService {
-
-	QuestionTypeDao questionTypeDao = new QuestionTypeDao();
+    QuestionTypeDao questionTypeDao = new QuestionTypeDao();
 
 	/**
 	 * <p>
@@ -37,7 +39,7 @@ public class QuestionTypeService {
 	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public QuestionType getTypeDetailById(int typeId) throws DataException {
-		return questionTypeDao.retrieveTypeDetailById(typeId);
+	    return questionTypeDao.retrieveTypeDetailById(typeId);
 	}
 	
 	/**
@@ -54,6 +56,6 @@ public class QuestionTypeService {
 	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public void addQuestion(QuestionType questionType, Question question) throws DataException {
-		questionTypeDao.allocateQuestionToQuestionType(questionType, question);
+	    questionTypeDao.allocateQuestionToQuestionType(questionType, question);
 	}
 }

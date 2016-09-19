@@ -9,19 +9,20 @@ import exception.DataException;
 import model.Question;
 
 /**
+ * <p>
  *     Service which accepts request from controller to perform operations like
  *     insert question, retrieve question details, allocate QuestionType to question,
  *     and finally to check the given question is present.
  *     It resolve the request by forwarding the incoming request to their
  *     corresponding methods in Question Data Access Object. 
+ * <p>
  * 
  * @author TechAssess
  *
  */
 @Service
 public class QuestionService {
-
-	QuestionDao questionDao = new QuestionDao();
+    QuestionDao questionDao = new QuestionDao();
 	
 	/**
 	 * <p>
@@ -45,6 +46,7 @@ public class QuestionService {
 	 *     Method which pass id of the question and question type to assign question type method present
 	 *     in data access object to allocate the question with the corresponding question type.
 	 * </p>
+	 * 
 	 * @param typeId
 	 *     Consist of question type id for track and allocate it to the question.
 	 * @param questionId
@@ -53,7 +55,7 @@ public class QuestionService {
 	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public void allocateQuestionType(int typeId, int questionId) throws DataException {
-		questionDao.assignQuestionType(typeId, questionId);
+	    questionDao.assignQuestionType(typeId, questionId);
 	}
 	
 	/**
@@ -70,7 +72,7 @@ public class QuestionService {
 	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public Question getQuestionDetailById(int questionId) throws DataException {
-		return questionDao.retrieveQuestionDetailById(questionId);
+	    return questionDao.retrieveQuestionDetailById(questionId);
 	}
 	
 	/**
@@ -85,10 +87,10 @@ public class QuestionService {
 	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public List<Question> getAllQuestions() throws DataException {
-		if (null == questionDao.retrieveAllQuestions()) {
-			throw new DataException("There are no questions in database.Please insert some questions first.!!");
-		}
-		return (questionDao.retrieveAllQuestions());
+	    if (null == questionDao.retrieveAllQuestions()) {
+		    throw new DataException("There are no questions in database.Please insert some questions first.!!");
+	    }
+	    return (questionDao.retrieveAllQuestions());
 	}
 	
 	/**
@@ -102,8 +104,8 @@ public class QuestionService {
 	 *     Throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public void checkIfQuestionExist(int questionId)throws DataException {
-		if(null == getQuestionDetailById(questionId)) {
-			throw new DataException("Question with this id does not exist.!!Try Again..!!");
-		}
+	    if(null == getQuestionDetailById(questionId)) {
+		    throw new DataException("Question with this id does not exist.!!Try Again..!!");
+	    }
 	}
 }
