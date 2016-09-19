@@ -5,10 +5,16 @@ import java.util.List;
 import dao.UserDao;
 import model.User;
 import exception.DataException;
+import model.User;
 import service.RoleService;
 
 /**
- * Service which request the User DataAccessObject to process the request sent by the controller.
+ * <p>
+ *     Service which accepts request from controller to perform operations like
+ *     insert user, retrieve user, insert admin and to check the given user is present. 
+ *     by forwarding the request to their corresponding methods in Question Data Access Object.
+ * </p>
+ * 
  * @author TechAssess.
  *
  */
@@ -16,9 +22,11 @@ public class UserService {
 	UserDao userDao = new UserDao();
 	RoleService roleService = new RoleService();
 	
-	/**
-	 * Method which receives userName, emailId, password, mobileNumber as request parameter from controller 
-	 * which converts the incoming parameter to instance of user and insert the user instance to database.
+	/** <p>
+	 *     Method which receive request from controller and insert the
+	 *     user details as user role  by passing an instance of user type 
+	 *     to insertUser method in User data access object.
+	 *  <p>
 	 * @param userName
 	 *     consist of name of the user.
 	 * @param emailId
@@ -37,8 +45,11 @@ public class UserService {
 	}
 	
 	/**
-	 * Method which receive the request and send the request to User
-	 * Repository for retrieving the entire details of user in the form of List.
+	 * <p>
+	 *     Method which receive the request and send the request to User
+	 *     Repository for retrieving the entire details of user in the form of List.
+	 * </p>
+	 * 
 	 * @return list
 	 *     returns details of all user in the form of List.
 	 * @throws DataException
@@ -49,8 +60,10 @@ public class UserService {
     }
 	
 	/**
-	 * Method which accept emailId as parameter and request the
-	 * User repository for retrieving the user details of that emailId.
+	 * <p>
+	 *     Method which pass emailId as parameter and request the
+	 *     User repository to retrieve the details of given emailId.
+	 * </p>
 	 * @param emailId
 	 *     consist of emailId for retrieving the detail of that user.
 	 * @return object
@@ -63,8 +76,11 @@ public class UserService {
 	}
 	
 	/**
-	 * Method which receive request from controller and insert the
-	 * user details as admin by passing request to User data access object.
+	 * <p>
+	 *     Method which receive request from controller and insert the
+	 *     user details as admin role  by passing an instance of user type 
+	 *     to insertUser method in User data access object.
+	 * </p>
 	 * @param userName
 	 *     consist of name of the user
 	 * @param emailId
@@ -83,14 +99,18 @@ public class UserService {
 	}
 	
 	/**
-	 * Method which accepts request and emailId as parameter and check the user with given emailId exists.
+	 * <p>
+	 *     Method which pass emailId as parameter to getUserByEmailId 
+	 *     and check the user with given emailId exists.
+	 * </p>
+	 * 
 	 * @param emailId
 	 *     consist of email Id which represent the user.
 	 * @throws DataException
 	 *     throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public void checkIfUserAlreadyExist(String emailId) throws DataException {
-		if(userDao.retrieveUserByEmailId(emailId) != null) {
+		if(getUserByEmailId(emailId) != null) {
 			throw new DataException("Person With This Mail Id Already Exist..!!Try Again With Different Id..!!");
 		}
 	}

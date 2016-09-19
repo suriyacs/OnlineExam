@@ -9,8 +9,10 @@ import model.Question;
 import model.QuestionType;
 
 /**
- * Service which pass the incoming request to Data Access Object of QuestionType
- * to process the request and send desired response.
+ *     Service which accepts request from controller to perform operations like
+ *     insert question type and retrieve question type and
+ *     it resolve the request by forwarding the incoming request to their
+ *     corresponding methods in Question Data Access Object. 
  * @author TechAssess
  *
  */
@@ -19,7 +21,11 @@ public class QuestionTypeService {
 	QuestionTypeDao questionTypeDao = new QuestionTypeDao();
 
 	/**
-	 * Method which send request to QuestionType DataAccessObject for retrieving details of given type Id.
+	 * <p>
+	 *     Method which pass the typeId to retrieveTypeDetailById method present in QuestionType
+	 *     DataAccessObject for retrieving details of given type Id.
+	 * </p>
+	 * 
 	 * @param typeId
 	 *     consist of type id for retrieving the details.
 	 * @return object
@@ -32,7 +38,11 @@ public class QuestionTypeService {
 	}
 	
 	/**
-	 * Method which redirects to QuestionType repository for allocating question type to question which was created.
+	 * <p>
+	 *     Method which pass questionType object and question object to allocateQuestionToQuestionType
+	 *     method present in data access object for allocating question to questiontype.
+	 * </p>
+	 * 
 	 * @param questionType
 	 *     consist of questionType in which the question is created.
 	 * @param question

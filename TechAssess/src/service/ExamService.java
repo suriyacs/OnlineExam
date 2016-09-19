@@ -6,11 +6,13 @@ import dao.ExamDao;
 import exception.DataException;
 import model.Exam;
 
-
 /**
  * <p>
- *     Service which accepts request from controller and purify the request
- *     by requesting the Data Access Object of Exam to process the incoming request.
+ *     Service which accepts request from controller to perform operations like
+ *     insert exam details, retrieve exam details, allocate questions to exam,
+ *     check the given exam is present and finally allocate users to exam.
+ *     It resolve the request by forwarding the incoming request to their
+ *     corresponding methods in Exam Data Access Object. 
  * </p>
  * @author TechAssess
  *
@@ -19,8 +21,8 @@ public class ExamService {
     ExamDao examDao = new ExamDao();
     
     /**
-     *  Method which accept request from controller and redirects the instance of Exam to Data Access Object
-     *  to insert the exam.
+     *  Method which pass the given exam details to insert exam details 
+     *  method present in data access object to insert into database.
      * @param exam
      *     consist instance of exam to be forwarded to Data Access Object.
      * @return int
@@ -37,8 +39,8 @@ public class ExamService {
     }
     
     /**
-     * Method which send request to Data Access Object for allocating an
-     * exam id to question once the request from controller is received.
+     * Method which send request to Data Access Object for allocating
+     * Questions to an Exam.
      * 
      * @param examId
      *     contains id of exam for which the question needs to be allocated.
@@ -88,7 +90,7 @@ public class ExamService {
     }
     
     /**
-     * Method which send request to Exam DataAccessObject  for allocating user to exam they selected.
+     * Method which send request to Exam DataAccessObject  for allocating user to exam.
      * @param examId
      *     consist of examId to which the user has to be allocated.
      * @param userId
@@ -102,7 +104,7 @@ public class ExamService {
     
     /**
      * Method which accept the request and retrieve the exam details
-     * for the given by sending request to DataAccessObject.
+     * of given exam id by passing the examId to DataAccessObject.
      * 
      * @param examId
      *     consist of id for retrieving the exam details of given id.

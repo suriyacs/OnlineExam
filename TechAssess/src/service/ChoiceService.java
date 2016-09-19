@@ -1,7 +1,7 @@
 package service;
 
-import dao.ChoiceDao;
 import exception.DataException;
+import dao.ChoiceDao;
 import model.Choice;
 
 /**

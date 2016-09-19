@@ -4,7 +4,12 @@ import dao.RoleDao;
 import exception.DataException;
 
 /**
- * Service which accept the incoming request from controller by passing the same request ro Role Dao. 
+ * <p>
+ *     Service which accepts request from controller to perform operations like
+ *     insert role and retrieve role and
+ *     it resolve the request by forwarding the request to their
+ *     corresponding methods present in Role Data Access Object. 
+ * </p>
  * @author TechAssess
  *
  */
@@ -13,7 +18,11 @@ public class RoleService {
 	private RoleDao roleDao = new RoleDao();
 	
 	/**
-	 * Method which request Role DataAccess to retrieve role id for given role name.
+	 * <p>
+	 *     Method which pass roleName to retrieveRoleId method present in
+	 *     Role Data Access Object to retrieve role id for given role name.
+	 * </p>
+	 * 
 	 * @param roleName
 	 *     consist of name of the role to be tracked.
 	 * @return int
@@ -26,7 +35,11 @@ public class RoleService {
 	}
 	
 	/**
-	 * Method which accept the incoming request and returns role name of the given role id.
+	 * <p>
+	 *     Method which pass roleId to retrieveRoleName method present in Role Data Access Object
+	 *     to retrieve role name of the given role id.
+	 * </p>
+	 * 
 	 * @param roleId
 	 *     contains id of the role to be fetched.
 	 * @return string
