@@ -57,7 +57,7 @@ public class ChoiceDao {
         } finally {
             session.close();
         }
-	}
+    }
 	
 	/**
 	 * <p>
@@ -109,7 +109,7 @@ public class ChoiceDao {
 	    	FileUtil.logError("Exception occured in assignQuestion method in ChoiceDao" + e);
             throw new DataException("Error occured whilie allocating questionId"+ " " + questionId +" " +  "to choiceId" + " " + choiceId);
         } finally {
-        	session.close();
+            session.close();
         }
     }
 }

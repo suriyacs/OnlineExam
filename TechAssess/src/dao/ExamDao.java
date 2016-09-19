@@ -47,11 +47,11 @@ public class ExamDao {
      * @throws DataException
      *     If inputs are invalid or if any Hibernate Exception arrived
      */
-	@SuppressWarnings("finally")
-	public int insertExamDetails(Exam exam) throws DataException {
-    	Session session = factory.openSession();
-    	int id = 0;
-    	try {    		
+    @SuppressWarnings("finally")
+    public int insertExamDetails(Exam exam) throws DataException {
+        Session session = factory.openSession();
+        int id = 0;
+        try {    		
             Transaction transaction = session.beginTransaction();
             id = (int)session.save(exam);
             transaction.commit();
@@ -75,7 +75,7 @@ public class ExamDao {
      * @throws DataException
      *    If input is invalid or if any hibernate Exception is arrived
      */
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     public List<Exam> retrieveAllExamDetails() throws DataException {
         Session session = factory.openSession();
         try {
@@ -159,7 +159,7 @@ public class ExamDao {
      * @throws DataException
      *     If inputs are invalid or if any Hibernate Exception is arrived
      */
-	@SuppressWarnings("finally")
+    @SuppressWarnings("finally")
     public Exam assignUserToExam(int examId, int userId) throws DataException {
         Session session = factory.openSession();
         Exam exam = null;
