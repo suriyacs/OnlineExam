@@ -1,22 +1,10 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
-import model.Choice;
 
 /**
  * <p>
@@ -42,15 +30,6 @@ public class Answer {
 	@Column(name="id")
 	private int answerId;
 	
-	public int getAnswerId() {
-		return answerId;
-	}
-
-	public void setAnswerId(int answerId) {
-		this.answerId = answerId;
-	}
-	
-
 	@Column(name = "question_id")
 	private int questionId;
 	
@@ -60,6 +39,14 @@ public class Answer {
 	public Answer() {
 	}
     
+	public int getAnswerId() {
+		return answerId;
+	}
+
+	public void setAnswerId(int answerId) {
+		this.answerId = answerId;
+	}
+	
 	public int getQuestionId() {
 		return questionId;
 	}
@@ -73,7 +60,5 @@ public class Answer {
 	public void setUserAnswer(String userAnswer) {
 		this.userAnswer = userAnswer;
 	}
-    
-   
 }
 

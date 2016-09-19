@@ -95,16 +95,16 @@ public class UserDao {
 	 *     If inputs are invalid or if any Hibernate Exception arrived
 	 */
 	public User retrieveUserByEmailId(String emailId) throws DataException {
-		 try {
-			 for(User user : retrieveAllUser()) {
-				 if(user.getEmailId().equals(emailId)) {
-					 return user;
-				 }
-			 }
-		 } catch (HibernateException e) {
-			 FileUtil.logError("Exception occured in retrieveUserByEmailId method in UserDao" + " " + e );
-			 throw new DataException("Error occured while retrieving details for given emailId" + " " + emailId);
-		 }
-		 return null;
-	}
+        try {
+		    for(User user : retrieveAllUser()) {
+			    if(user.getEmailId().equals(emailId)) {
+				    return user;
+				}
+            }
+        } catch (HibernateException e) {
+            FileUtil.logError("Exception occured in retrieveUserByEmailId method in UserDao" + " " + e );
+            throw new DataException("Error occured while retrieving details for given emailId" + " " + emailId);
+        }
+        return null;
+    }
 }

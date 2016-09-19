@@ -18,6 +18,7 @@ import util.FileUtil;
  * insert Choice Details from Service class into database and also perform retrieve 
  * Choice information from database.
  * </p>
+ * 
  * @author TechAssess
  *
  */
@@ -34,6 +35,7 @@ public class ChoiceDao {
      * persist the Choice object and close the session.
      * returns id after insertion of chioce into database.
      * </p>
+     * 
      * @param choice
      *     Choice object which contains the details of choice like name,IsCorrect etc.
      * @return choiceId
@@ -42,15 +44,15 @@ public class ChoiceDao {
      *     If inputs are invalid or if any hibernate Exception occured
      */
     public int insertChoice(Choice choice) throws DataException {
-	    Session session = factory.openSession();
-	    int choiceId = 0;
-	    try {
+        Session session = factory.openSession();
+        int choiceId = 0;
+        try {
             Transaction transaction = session.beginTransaction();
             choiceId = (int)session.save(choice);
             transaction.commit();
             return choiceId;
         } catch (HibernateException e) {
-		    FileUtil.logError("Exception occured in insertChoice method in ChoiceDao" + e);
+            FileUtil.logError("Exception occured in insertChoice method in ChoiceDao" + e);
             throw new DataException(e.getMessage());
         } finally {
             session.close();
@@ -62,6 +64,7 @@ public class ChoiceDao {
 	 * Retrieves the Choice Details of particular id from database and return this details
      * to ChoiceService class
      * </p>
+     * 
 	 * @param choiceId
 	 *     Contains id Choice to retrieve
 	 * @return choice
@@ -70,16 +73,16 @@ public class ChoiceDao {
 	 *     If choice not present or if any hibernate Exception occured
 	 */    
     public Choice retrieveChoiceDetailById(int choiceId) throws DataException {
-	    Session session = factory.openSession();
+        Session session = factory.openSession();
         try {
-       	 return (Choice)session.get(Choice.class, choiceId);
+            return (Choice)session.get(Choice.class, choiceId);
         } catch (HibernateException e) {
             FileUtil.logError("Exception occured in retrieveChoiceDetailById method in ChoiceDao" + e);
             throw new DataException("Cannot able to retrieve details for choiceId" + " " + choiceId);
         } finally {
             session.close();
         }
-	}
+    }
 	
 	/**
 	 * <p>
@@ -108,6 +111,6 @@ public class ChoiceDao {
         } finally {
         	session.close();
         }
-	}
+    }
 }
 
