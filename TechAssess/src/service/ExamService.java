@@ -41,7 +41,7 @@ public class ExamService {
     	try {
     	    return(examDao.insertExamDetails(exam));  
     	} catch(DataException e) {
-    		throw new DataException(e.getMessage().toString());
+    	    throw new DataException(e.getMessage().toString());
     	}
     }
     
@@ -85,7 +85,7 @@ public class ExamService {
     public List<Exam> getAllExamDetails() throws DataException {
     	List<Exam> allExams = examDao.retrieveAllExamDetails();
     	if (null == allExams ) {
-    		throw new DataException("There is no Exams in Database.Please insert some Exams first..!!");
+    	    throw new DataException("There is no Exams in Database.Please insert some Exams first..!!");
     	}
     	return(allExams);
     }
@@ -102,7 +102,7 @@ public class ExamService {
      */
     public void checkIfExamExist(int examId)throws DataException {
     	if (null == getExamById(examId)) {
-        		throw new DataException("Exam with this Id Does not Exist..!!Try Again..!!");
+            throw new DataException("Exam with this Id Does not Exist..!!Try Again..!!");
     	}
     }
     
@@ -136,11 +136,11 @@ public class ExamService {
     
     public boolean checkIfUserAlreadyAttenedThisTest(String testId,User user) {
     	 if ( null != user.getExams()) {
-        	 for(Exam exam : user.getExams()) {
-        		 if (exam.getExamId() == Integer.parseInt(testId)) {
-        			 return true;
-        		 }
+             for(Exam exam : user.getExams()) {
+                 if (exam.getExamId() == Integer.parseInt(testId)) {
+       		     return true;
         	 }
+             }
          }
     	 return false;
     }
