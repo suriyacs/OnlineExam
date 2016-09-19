@@ -3,6 +3,8 @@
  */
 package service;
 
+import org.springframework.stereotype.Service;
+
 import dao.QuestionTypeDao;
 import exception.DataException;
 import model.Question;
@@ -16,6 +18,7 @@ import model.QuestionType;
  * @author TechAssess
  *
  */
+@Service
 public class QuestionTypeService {
 
 	QuestionTypeDao questionTypeDao = new QuestionTypeDao();

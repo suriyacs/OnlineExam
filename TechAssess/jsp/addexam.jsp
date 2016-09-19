@@ -5,6 +5,7 @@
 <html>
 <head>
 <title>CreatExam</title>
+<link rel="icon" href="img/c-finger-pointing.png">
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"
 	integrity="sha384-   
             BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -22,14 +23,14 @@
 <script type="text/javascript" src="js/jssor.slider-21.1.5.mini.js"></script>
 <script src="js/parallex.js"></script>
 </head>
-<c:if test="${sessionScope['role'] == null}">
+<c:if test="${null == sessionScope['role']}">
             <c:redirect url="loginpage"/>
  </c:if>
- <c:if test="${sessionScope['role'] != 'Admin'}">
-            <c:redirect url="loginpage"/>
+ <c:if test="${'User' ==  sessionScope['role']}">
+            <c:redirect url="gotouserpage"/>
  </c:if>
 <body>
-<c:if test="${SuccessMessage != null }">
+<c:if test="${ null != SuccessMessage }">
    <script>
 	 swal({ 
 		  title: "GoodJob!",
@@ -43,7 +44,7 @@
           });
   </script>
 </c:if>
-<c:if test="${InsertExamMessage != null }">
+<c:if test="${null !=  InsertExamMessage  }">
 	<script>
 	 swal({ 
 		  title: "Error",

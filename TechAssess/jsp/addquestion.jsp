@@ -12,12 +12,13 @@
             BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous" />
 <link rel="stylesheet" href="css/form-basic.css">
- <script src="js/sweetalert2.min.js"></script>
-  <link rel="stylesheet" href="css/sweetalert2.min.css">
-  <script src="js/sweetalert2.js"></script>
-  <link rel="stylesheet" href="css/sweetalert2.css">
+<link rel="stylesheet" href="css/sweetalert2.min.css">
+<link rel="stylesheet" href="css/sweetalert2.css">
 <link rel="stylesheet" href="css/login.css">
+<script src="js/sweetalert2.min.js"></script>
+<script src="js/sweetalert2.js"></script>
 <script src="js/jquery-1.11.3.min.js"></script>
+<script src="js/questionvalidation.js"></script>
 <script>
 	$(function() {
 		$('#colorselector').change(function() {
@@ -26,99 +27,29 @@
 		});
 	});
 </script>
-<script>
-function validatefillupform() {
-	var question = document.forms["fillup"]["questionname"].value;
-	var answer = document.forms["fillup"]["answer"].value;
-	var check = document.getElementById("checkbox").checked;
-	var checkedValue = $('.checkbox:checked').val();
-	if(question == null || question  == "" && answer == null || answer =="") {
-		swal({ 
-			  title: "Error",
-			   text: "Please fillout all the fields",
-			    type: "error" 
-			});
-		return false;
-	} else if (question == null || question == "") {
-		swal({ 
-			  title: "Error",
-			   text: "Please Provide Question",
-			    type: "error" 
-			});
-		return false;
-	} else if(!($("#checkbox").is(':checked'))){
-		swal({ 
-			  title: "Error",
-			   text: "Please confirm the correct answer by clicking checkbox",
-			    type: "error" 
-			});
-		return false;
-	} else if(answer == null || answer =="") {
-		swal({ 
-			  title: "Error",
-			   text: "Please provide answer",
-			    type: "error" 
-			});
-	}
-}
-
-function checkChooseCheckBoxes() {
-	var checkboxes = document.getElementsByName('checkboxofchoose');
-	var vals = new Array();
-	for (var i=0, n=checkboxes.length;i<n;i++) 
-	{
-	    if (checkboxes[i].checked) 
-	    {
-	        vals[i] = checkboxes[i].value;
-	    }
-	}
-	if(vals.length <= 0 || vals.length == 1) {
-		swal({ 
-			  title: "Error",
-			   text: "Please Choose One Correct Answer",
-			    type: "error" 
-	   });
-		return false;
-	}
- }
-function checkMultipleCheckBoxes() {
-	var checkboxes = document.getElementsByName('multipleCheckBox');
-	var vals = new Array();
-	for (var i=0, n=checkboxes.length;i<n;i++) 
-	{
-	    if (checkboxes[i].checked) 
-	    {
-	        vals[i] = checkboxes[i].value;
-	    }
-	}
-	if(vals.length <= 0) {
-		swal({ 
-			  title: "Error",
-			   text: "Please Choose Atleast One Correct Answer",
-			    type: "error" 
-	   });
-		return false;
-	}
-}
-</script>
 </head>
-<c:if test="${sessionScope['role'] == null}">
+<c:if test="${null == sessionScope['role']}">
             <c:redirect url="loginpage"/>
  </c:if>
- <c:if test="${sessionScope['role'] != 'Admin'}">
+ <c:if test="${'Admin' != sessionScope['role']}">
             <c:redirect url="loginpage"/>
  </c:if>
 <body>
-<c:if test="${SuccessMessage != null }">
+<c:if test="${null != SuccessMessage }">
 	 <script>
 	 swal({ 
 		  title: "Good job!",
 		   text: "<c:out value="${SuccessMessage}"/>",
 		    type: "success" 
+	     },function(isConfirm){
+         alert('ok');
+        });
+         $('.swal2-confirm').click(function(){
+ 	        window.location.href="insertquestion";
 		  });
   </script>
 </c:if>
-<c:if test="${insertQuestionMessage != null }">
+<c:if test="${null != insertQuestionMessage }">
 	 <script>
 	 swal({ 
 		  title: "Error",
@@ -133,7 +64,7 @@ function checkMultipleCheckBoxes() {
 				<h1 class="title">TechAssess</h1>
 			</div>
 			<div class="logout" style="float: left">
-				<a href="adminpage" class="btn btn-success" title="logout">MainPage</span></a>
+				<a href="adminpage" class="btn btn-success" title="logout">Main Page</span></a>
 			</div>
 			<div class="logout" style="float: right">
 				<a href="logout" class="btn btn-danger" title="logout"><span
@@ -162,15 +93,12 @@ function checkMultipleCheckBoxes() {
 							<th><span>Question</span></th>
 							<td><textarea name="questionname"></textarea></td>
 							<td>
-							<th><span>Click The Check Box If Corresponding Choice
-									is Correct Answer.</span></th>
 							</td>
 						</tr>
 						<tr>
 							<th><span>Answer</span></th>
 							<td><input type="text" name="answer"></td>
-							<th><span>IfCorrect</span></th>
-							<td><input id="checkbox" type="checkbox" name="checkbox" value="1"></td>
+							<td><input type="hidden" name="checkbox" value="1"></td>
 						</tr>
 						<tr>
 							<td><button type="submit" class="btn btn-primary">Add</button></td>

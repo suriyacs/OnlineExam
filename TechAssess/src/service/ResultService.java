@@ -1,5 +1,7 @@
 package service;
 
+import org.springframework.stereotype.Service;
+
 import dao.ResultDao;
 import exception.DataException;
 import model.Answer;
@@ -19,6 +21,7 @@ import service.ExamService;
  * @author user
  *
  */
+@Service
 public class ResultService {
 	ExamService examService = new ExamService();
 	ResultDao resultDao = new ResultDao();

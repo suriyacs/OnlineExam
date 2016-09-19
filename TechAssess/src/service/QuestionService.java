@@ -2,6 +2,8 @@ package service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import dao.QuestionDao;
 import exception.DataException;
 import model.Question;
@@ -16,6 +18,7 @@ import model.Question;
  * @author TechAssess
  *
  */
+@Service
 public class QuestionService {
 
 	QuestionDao questionDao = new QuestionDao();
@@ -82,7 +85,7 @@ public class QuestionService {
 	 *     throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public List<Question> getAllQuestions() throws DataException {
-		if (questionDao.retrieveAllQuestions() == null) {
+		if (null == questionDao.retrieveAllQuestions()) {
 			throw new DataException("There are no questions in database.Please insert some questions first.!!");
 		}
 		return (questionDao.retrieveAllQuestions());
@@ -99,7 +102,7 @@ public class QuestionService {
 	 *     throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public void checkIfQuestionExist(int questionId)throws DataException {
-		if(getQuestionDetailById(questionId) == null) {
+		if(null == getQuestionDetailById(questionId)) {
 			throw new DataException("Question with this id does not exist.!!Try Again..!!");
 		}
 	}

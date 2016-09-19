@@ -2,10 +2,12 @@ package service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import dao.ExamDao;
 import exception.DataException;
 import model.Exam;
-
+import model.User;
 /**
  * <p>
  *     Service which accepts request from controller to perform operations like
@@ -17,6 +19,7 @@ import model.Exam;
  * @author TechAssess
  *
  */
+@Service
 public class ExamService {
     ExamDao examDao = new ExamDao();
     
@@ -51,7 +54,7 @@ public class ExamService {
      */
     public void allocateQuestionsToExam(int examId,int fromQuestionId,int toQuestionId) throws DataException {
     	    Exam exam = getExamById(examId);
-    	    if (exam.getNoOfAllocatedQuestions() != null) {
+    	    if (null != exam.getNoOfAllocatedQuestions()) {
     	        if (Integer.parseInt(exam.getNoOfAllocatedQuestions()) == exam.getNoOfTotalQuestions()) {
     	    	    throw new DataException("This Exam already allocated with enough questions..!Try again with different Id..!!");
     	        }
@@ -70,7 +73,7 @@ public class ExamService {
      *     throws an exception to controller which gets generated at the time of database connection.
      */
     public List<Exam> getAllExamDetails() throws DataException {
-    	if (examDao.retrieveAllExamDetails() == null) {
+    	if (null == examDao.retrieveAllExamDetails()) {
     		throw new DataException("There is no Exams in Database.Please insert some Exams first..!!");
     	}
     	return(examDao.retrieveAllExamDetails());
@@ -84,7 +87,7 @@ public class ExamService {
      *     throws an exception to controller which gets generated at the time of database connection.
      */
     public void checkIfExamExist(int examId)throws DataException {
-    	if (getExamById(examId) == null) {
+    	if (null == getExamById(examId)) {
         		throw new DataException("Exam with this Id Does not Exist..!!Try Again..!!");
     	}
     }
@@ -115,5 +118,16 @@ public class ExamService {
      */
     public Exam getExamById(int examId) throws DataException {
     	return examDao.retrieveExamById(examId);
+    }
+    
+    public boolean checkIfUserAlreadyAttenedThisTest(String testId,User user) {
+    	 if ( null != user.getExams()) {
+        	 for(Exam exam : user.getExams()) {
+        		 if (exam.getExamId() == Integer.parseInt(testId)) {
+        			 return true;
+        		 }
+        	 }
+         }
+    	 return false;
     }
 }

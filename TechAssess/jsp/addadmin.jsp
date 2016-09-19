@@ -3,6 +3,7 @@
 <html>
 <head>
 <title>Create Admin</title>
+<link rel="icon" href="img/c-finger-pointing.png">
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"
 	integrity="sha384-   
             BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -11,83 +12,23 @@
 <link href='css/fonts.css' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="css/normalize.css">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/sweetalert2.min.css">
+<link rel="stylesheet" href="css/sweetalert2.css">
 <script src="js/sweetalert2.min.js"></script>
-  <link rel="stylesheet" href="css/sweetalert2.min.css">
-  <script src="js/sweetalert2.js"></script>
-  <link rel="stylesheet" href="css/sweetalert2.css">
+<script src="js/sweetalert2.js"></script>
+<script src="js/loginvalidation.js"></script>
 <script src="js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="js/jssor.slider-21.1.5.mini.js"></script>
 <script src="js/parallex.js"></script>
-<script type='text/javascript' language='javascript'>
-function validateUserRegisterationForm() {
-	var userName = document.forms["user"]["userName"].value;
-	var mobileNumber = document.forms["user"]["mobileNumber"].value;
-	var phoneno = /^\d{10}$/;  
-	var password = document.forms["user"]["password"].value;
-	var emailId = document.forms["user"]["emailId"].value;
-	var atpos = emailId.indexOf("@");
-    var dotpos = emailId.lastIndexOf(".");
-    if(emailId == null || emailId == "" && password == null || password == "" && mobileNumber == null || mobileNumber == "" && userName == null || userName == "") {
-    	swal({ 
-	  		  title: "Error",
-	  		   text:"Please fillout all the fields",
-	  		    type: "error" 
-	        });
-    	return false;
-    } else if (emailId == null || emailId == "") {
-    	swal({ 
-	  		 title: "Error",
-	  		 text: "EmailId must be filled out",
-	  		 type: "error"
-	        });
-        return false;
-    } else if (password == null || password == "") {
-    	swal({ 
-	  		 title: "Error",
-	  		 text: "Password must be filled out",
-	  		 type: "error"
-	        });
-    	return false;
-    } else if (mobileNumber == null || mobileNumber == "") {
-    	swal({ 
-	  		 title: "Error",
-	  		 text: "Mobile Number must be filled out",
-	  		 type: "error"
-	        });
-    	return false;
-    } else if (userName == null || userName == "") {
-    	swal({ 
-	  		 title: "Error",
-	  		 text: "user name must be filled out",
-	  		 type: "error"
-	         });
-    	return false;
-    } else if (atpos < 1 || dotpos < (atpos + 2) || (dotpos + 2) >= emailId.length) {
-    	swal({ 
-	  		 title: "Error",
-	  		 text: "Invalid Email Id..!!Try Again!!",
-	  		 type: "error"
-	         });
-        return false;
-    } else if (!(mobileNumber.match(phoneno))) {
-    	swal({ 
-	  		 title: "Error",
-	  		 text: "Invalid Mobile Number..!!Try Again!!",
-	  		 type: "error"
-	       });
-        return false;  
-    }
-}
-</script>
 </head>
-<c:if test="${sessionScope['role'] == null}">
+<c:if test="${null == sessionScope['role']}">
             <c:redirect url="loginpage"/>
  </c:if>
- <c:if test="${sessionScope['role'] != 'Admin'}">
-            <c:redirect url="loginpage"/>
+ <c:if test="${'User' == sessionScope['role'] }">
+            <c:redirect url="gotouserpage"/>
  </c:if>
 <body>
-	<c:if test="${LogInMessage != null}">
+	<c:if test="${null != LogInMessage }">
 		<script>
 		 swal({ 
 			  title: "Error",
@@ -101,7 +42,7 @@ function validateUserRegisterationForm() {
 	          });
 		</script>
 	</c:if>
-	<c:if test="${SuccessMessage != null}">
+	<c:if test="${null != SuccessMessage }">
 		<script>
 		 swal({ 
 			  title: "GoodJob!",
@@ -123,7 +64,7 @@ function validateUserRegisterationForm() {
 				class="glyphicon glyphicon-log-out"></span></a>
 		</div>
 		<div class="logout" style="float: left">
-			<a href="adminpage" class="btn btn-success" title="logout">MainPage</span></a>
+			<a href="adminpage" class="btn btn-success" title="logout">Main Page</span></a>
 		</div>
 		<center>
 			<div class="center">
@@ -140,7 +81,7 @@ function validateUserRegisterationForm() {
 												autocomplete="off" />
 										</div>
 										<div class="field-wrap">
-											<label> MobileNumber<span class="req">*</span>
+											<label> Mobile Number<span class="req">*</span>
 											</label> <input type="text" name="mobileNumber"
 												autocomplete="off" />
 										</div>
@@ -156,7 +97,7 @@ function validateUserRegisterationForm() {
 											autocomplete="off" />
 									</div>
 									<button type="submit" class="button button-block">
-									CreateAccount
+									Create Account
 									</button>
 								</form>
 							</div>

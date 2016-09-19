@@ -16,37 +16,14 @@
   <link rel="stylesheet" href="css/sweetalert2.min.css">
   <script src="js/sweetalert2.js"></script>
   <link rel="stylesheet" href="css/sweetalert2.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript">
- // slight update to account for browsers not supporting e.which
-    function disableF5(e) { if ((e.which || e.keyCode) == 116) e.preventDefault(); };
-    // To disable f5
-        /* jQuery < 1.7 */
-    $(document).bind("keydown", disableF5);
-    /* OR jQuery >= 1.7 */
-    $(document).on("keydown", disableF5);
-
-    // To re-enable f5
-        /* jQuery < 1.7 */
-    $(document).unbind("keydown", disableF5);
-    /* OR jQuery >= 1.7 */
-    $(document).off("keydown", disableF5);
-    </script>
-    <script type="text/javascript">
- $(function() {
-        $(this).bind("contextmenu", function(e) {
-            e.preventDefault();
-        });
-    }); 
- </script>
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="js/preventingrefresh.js"></script>
 </head>
-<c:if test="${sessionScope['role'] == null}">
+<c:if test="${ null == sessionScope['role']}">
             <c:redirect url="loginpage"/>
  </c:if>
- <c:if test="${sessionScope['role'] != 'User'}">
+ <c:if test="${'User' != sessionScope['role']}">
             <c:redirect url="loginpage"/>
  </c:if>
 <body onload="updateClock(); setInterval('updateClock()', 1000 )" oncontextmenu="return false" onkeydown="return (event.keyCode != 116)" >

@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>Exam Details</title>
+<link rel="icon" href="img/c-finger-pointing.png">
 <link href="css/userpagestyling.css" rel="stylesheet" type="text/css">
 <link href="css/login.css" rel="stylesheet" type="text/css">
 <link href="css/userpage.css" rel="stylesheet" type="text/css">
@@ -20,10 +21,10 @@
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<c:if test="${sessionScope['role'] == null}">
+<c:if test="${null == sessionScope['role']}">
             <c:redirect url="loginpage"/>
  </c:if>
- <c:if test="${sessionScope['role'] != 'User'}">
+ <c:if test="${'User' != sessionScope['role']}">
             <c:redirect url="loginpage"/>
  </c:if>
 <body>
@@ -59,16 +60,12 @@
 				class="glyphicon glyphicon-log-out"></span></a>
 		</div>
 		<div id="header">
-		    <h2 align="center">
-					Welcome
-					<c:out value="${userName}" />
-		    </h2><br><br>
+		   <h2 align="center">Exam to be Attended</h2>
 		</div>
-		<h3 align="center">Exam to be Attended</h3> <br><br>
 		<div class="content-container">
 				<div id="content"></div>
 				<c:set var="count" value="1"/>
-				<div class="well">
+				<div class="well" style="width:25%">
 				<table class="buttontable">
 				    <c:forEach items="${exams}" var="exam">
 						<tr><td><a id="load_home"

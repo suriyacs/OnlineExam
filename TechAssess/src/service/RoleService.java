@@ -1,5 +1,7 @@
 package service;
 
+import org.springframework.stereotype.Service;
+
 import dao.RoleDao;
 import exception.DataException;
 
@@ -13,6 +15,7 @@ import exception.DataException;
  * @author TechAssess
  *
  */
+@Service
 public class RoleService {
 
 	private RoleDao roleDao = new RoleDao();

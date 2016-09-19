@@ -2,10 +2,11 @@ package service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import dao.UserDao;
 import model.User;
 import exception.DataException;
-import model.User;
 import service.RoleService;
 
 /**
@@ -18,6 +19,7 @@ import service.RoleService;
  * @author TechAssess.
  *
  */
+@Service
 public class UserService {
 	UserDao userDao = new UserDao();
 	RoleService roleService = new RoleService();
@@ -110,7 +112,7 @@ public class UserService {
 	 *     throws an exception to controller which gets generated at the time of database connection.
 	 */
 	public void checkIfUserAlreadyExist(String emailId) throws DataException {
-		if(getUserByEmailId(emailId) != null) {
+		if(null != getUserByEmailId(emailId)) {
 			throw new DataException("Person With This Mail Id Already Exist..!!Try Again With Different Id..!!");
 		}
 	}

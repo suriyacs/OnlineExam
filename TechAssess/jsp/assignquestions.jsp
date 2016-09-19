@@ -5,139 +5,32 @@
 <html>
     <head>
         <title>Assign Question to Exam</title>
+        <link rel="icon" href="img/c-finger-pointing.png">
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" integrity="sha384-   
             BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
         <link rel="stylesheet" href="css/login.css">
         <link rel="stylesheet" href="css/bothtable.css">
         <link href='css/fonts.css' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="css/normalize.css">
-        <script type="text/javascript" src="js/jssor.slider-21.1.5.mini.js"></script>
-        <script src="js/sweetalert2.min.js"></script>
-        <link rel="stylesheet" href="css/sweetalert2.min.css">
-        <script src="js/sweetalert2.js"></script>
         <link rel="stylesheet" href="css/sweetalert2.css">
         <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/sweetalert2.min.css">
+        <script type="text/javascript" src="js/jssor.slider-21.1.5.mini.js"></script>
+        <script src="js/sweetalert2.min.js"></script>
+        <script src="js/sweetalert2.js"></script>
         <script src="js/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="js/jssor.slider-21.1.5.mini.js"></script>
         <script src="js/parallex.js"></script>
-        <script>
-
-        function validateAssignQuestionForm() {
-        	var examId = document.forms["addQuestion"]["examId"].value;
-        	var fromQuestionId = document.forms["addQuestion"]["fromQuestionId"].value;
-        	var toQuestionId = document.forms["addQuestion"]["toQuestionId"].value;
-        	var numbers = /^[0-9]+$/;
-        	if(examId == null || examId == "" && fromQuestionId == null || fromQuestionId == "" && toQuestionId == null || toQuestionId == "") {
-        		swal({ 
-  		  		  title: "Error",
-  		  		   text:"Please fillout all the fields",
-  		  		    type: "error" 
-  		        });
-        		return false;
-        	} else if(examId == null || examId == "") {
-        		swal({ 
-    		  		  title: "Error",
-    		  		   text:"ExamId Can't be blank..!!",
-    		  		    type: "error" 
-    		    });
-        		return false;
-        	} else if(fromQuestionId == null || fromQuestionId == "") {
-        		swal({ 
-  		  		  title: "Error",
-  		  		   text:"FromQuestionId Can't be blank..!!",
-  		  		    type: "error" 
-  		    });
-        		return false;
-        	} else if(toQuestionId == null || toQuestionId == "") {
-        		swal({ 
-  		  		  title: "Error",
-  		  		   text:"ToQuestionId Can't be blank..!!",
-  		  		    type: "error" 
-  		    });
-        		return false;
-        	} else if ((!(examId.match(numbers)))) {
-        		swal({ 
-  		  		  title: "Error",
-  		  		   text:"ExamId must be a number..!!",
-  		  		    type: "error" 
-  		    });
-        		return false
-        	} else if ((!(fromQuestionId.match(numbers)))) {
-        		swal({ 
-    		  		  title: "Error",
-    		  		   text:"FromQuestionId must be a number..!!",
-    		  		    type: "error" 
-    		    });
-        		return false
-        	} else if ((!(toQuestionId.match(numbers)))) {
-        		swal({ 
-    		  		  title: "Error",
-    		  		   text:"ToQuestionId must be a number..!!",
-    		  		    type: "error" 
-    		    });
-        		return false
-        	}
-        }
-        
-    function scrolify(tblAsJQueryObject, height){
-        var oTbl = tblAsJQueryObject;
-
-        // for very large tables you can remove the four lines below
-        // and wrap the table with <div> in the mark-up and assign
-        // height and overflow property  
-        var oTblDiv = $("<div/>");
-        oTblDiv.css('height', height);
-        oTblDiv.css('overflow','scroll');               
-        oTbl.wrap(oTblDiv);
-
-        // save original width
-        oTbl.attr("data-item-original-width", oTbl.width());
-        oTbl.find('thead tr td').each(function(){
-            $(this).attr("data-item-original-width",$(this).width());
-        }); 
-        oTbl.find('tbody tr:eq(0) td').each(function(){
-            $(this).attr("data-item-original-width",$(this).width());
-        });                 
-
-
-        // clone the original table
-        var newTbl = oTbl.clone();
-
-        // remove table header from original table
-        oTbl.find('thead tr').remove();                 
-        // remove table body from new table
-        newTbl.find('tbody tr').remove();   
-
-        oTbl.parent().parent().prepend(newTbl);
-        newTbl.wrap("<div/>");
-
-        // replace ORIGINAL COLUMN width                
-        newTbl.width(newTbl.attr('data-item-original-width'));
-        newTbl.find('thead tr td').each(function(){
-            $(this).width($(this).attr("data-item-original-width"));
-        });     
-        oTbl.width(oTbl.attr('data-item-original-width'));      
-        oTbl.find('tbody tr:eq(0) td').each(function(){
-            $(this).width($(this).attr("data-item-original-width"));
-        });                 
-    }
-
-    $(document).ready(function(){
-        scrolify($('#tblNeedsScrolling'), 260); 
-        scrolify($('#tbl1NeedsScrolling'), 260);// 160 is height
-    });
-
-
-    </script>
+        <script src="js/assignquestion.js"></script>
     </head>
-    <c:if test="${sessionScope['role'] == null}">
+    <c:if test="${null == sessionScope['role']}">
             <c:redirect url="loginpage"/>
     </c:if>
-    <c:if test="${sessionScope['role'] != 'Admin'}">
-            <c:redirect url="loginpage"/>
+    <c:if test="${'User' == sessionScope['role']}">
+            <c:redirect url="gotouserpage"/>
     </c:if>
     <body>
-    <c:if test="${ErrorMessage != null }">
+    <c:if test="${null != ErrorMessage }">
         <script>
         swal({ 
   		  title: "Error",
@@ -151,7 +44,7 @@
             });
          </script>
     </c:if>
-     <c:if test="${allocateMessage != null }">
+     <c:if test="${null != allocateMessage }">
         <script>
         swal({ 
     		  title: "GoodJob!",
@@ -171,7 +64,7 @@
                <h1 class="title" style="color:black">Tech Assess</h1>
            </div>
             <div class="logout" style="float:left">
-                <a href="adminpage"class="btn btn-success" title="logout">MainPage</span></a> 
+                <a href="adminpage"class="btn btn-success" title="logout">Main Page</span></a> 
             </div>
             <div class="logout" style="float:right">
                 <a href="logout"class="btn btn-danger" title="logout"><span class="glyphicon glyphicon-log-out"></span></a> 
@@ -179,11 +72,11 @@
 
 		<div class="center">
 			<div class="questiontable">
-				<table border="1" width="100%" id="tblNeedsScrolling" height="20%";>
+				<table border="1" width="100%" id="tblNeedsScrolling" height="25%";>
 					<tr style="text-align: center">
-						<th>QuestionId</th>
-						<th>QuestionName</th>
-						<th>QuestionTypeId</th>
+						<th>Question Id</th>
+						<th>Question Name</th>
+						<th>Question Type</th>
 					</tr>
 					<tbody>
 						<c:if test="${questionList != null}">
@@ -191,7 +84,7 @@
 								<tr>
 									<td><c:out value="${question.getQuestionId()}" /></td>
 									<td><c:out value="${question.getQuestionName()}" /></td>
-									<td><c:out value="${question.getTypeId()}" /></td>
+									<td><c:out value="${question.getTypeId().getTypeName()}" /></td>
 								</tr>
 							</c:forEach>
 						</c:if>
@@ -202,11 +95,11 @@
 				<table border="1" width="100%" id="tbl1NeedsScrolling" height="20%">
 
 					<tr style="text-align: center">
-						<th>ExamId</th>
-						<th>ExamName</th>
+						<th>Exam Id</th>
+						<th>Exam Name</th>
 						<th>Duration</th>
-						<th>TotalQuestions</th>
-						<th>AllocatedQuestions</th>
+						<th>Total Questions</th>
+						<th>Allocated Questions</th>
 					</tr>
 
 					<tbody>
@@ -236,19 +129,19 @@
 			<div class="form">
 				<div class="tab-content" style="margin: 25px">
 					<div id="signup">
-						<h1 style="color: black">AllocateQuestion</h1>
+						<h1 style="color: black">Allocate Question</h1>
 						<form name="addQuestion" action="allocating" method="post" onsubmit="return validateAssignQuestionForm()">
 							<div class="field-wrap">
-								<label> EnterExamId<span class="req">*</span>
+								<label> Enter Exam Id<span class="req">*</span>
 								</label> <input type="text" name="examId" autocomplete="off" />
 							</div>
 							<div class="field-wrap">
-								<label> FormQuestionIdToAllocate<span class="req">*</span>
+								<label> Form QuestionId ToAllocate<span class="req">*</span>
 								</label> <input type="text" name="fromQuestionId"
 									autocomplete="off" />
 							</div>
 							<div class="field-wrap">
-								<label> ToQuestionIdToAllocate<span class="req">*</span>
+								<label> To QuestionId ToAllocate<span class="req">*</span>
 								</label> <input type="text" name="toQuestionId"
 									autocomplete="off" />
 							</div>

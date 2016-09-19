@@ -1,6 +1,9 @@
 package service;
 
 import exception.DataException;
+
+import org.springframework.stereotype.Service;
+
 import dao.ChoiceDao;
 import model.Choice;
 
@@ -13,6 +16,7 @@ import model.Choice;
  * @author TechAssess
  *
  */
+@Service
 public class ChoiceService {
 
 	ChoiceDao choiceDao = new ChoiceDao();
