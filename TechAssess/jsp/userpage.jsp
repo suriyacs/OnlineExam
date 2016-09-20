@@ -100,7 +100,7 @@
                             commencement of the examination.<br> 6. You will not be
                             admitted for the examination after one hour of the commencement
                             of the examination.<br> 7.Do NOT continue to write after the
-                            examination has ended. You are to remain seated quietly while
+                            examination has ended. You are to remain seated quietly whileCreate
                             your answer scripts are being collected and counted. <br>
                             8.No reference materials, in whatever format, are allowed.<br>
                             9.You are to stay in the examination hall until the Chief
@@ -112,7 +112,6 @@
                         <input
                             type="checkbox" id="checkbox">Agreed and im ready to
                         start the test<br> 
-                        <c:set var="examId" value="${exam.getExamId()}" scope="session" />
                         <label>
                             <input type="hidden"
                             name="test" value="<c:out value="${exam.getExamId()}"/>" />

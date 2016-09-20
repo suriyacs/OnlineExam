@@ -255,13 +255,8 @@ public class ExamController {
      *     Contains name of the java server page which needs to be loaded.
      */
     @RequestMapping(value = "/taketest")
-    public String redirectToQuestionPage(HttpSession session, ModelMap model) {
-        if (null == session.getAttribute("examId")) {
-            return "questionpageforuser";
-        }
-        User user = null;
-        System.out.println(session.getAttribute("examId"));
-        String testId = session.getAttribute("examId").toString();
+    public String redirectToQuestionPage(HttpSession session,@RequestParam("test")String testId, ModelMap model) {
+        User user = null;        
         try {
             user = (User) session.getAttribute("user");
             if (examService.checkIfUserAlreadyAttendedThisTest(testId, user)) {
@@ -311,8 +306,7 @@ public class ExamController {
             @RequestParam("examId") int examId, HttpSession session) {
         ResultService resultService = new ResultService();
         try {
-            model.addAttribute("mark",
-                    resultService.calculateResult(exam, examId, (User) session.getAttribute("user")));
+            model.addAttribute("mark",resultService.calculateResult(exam, examId, (User) session.getAttribute("user")));
         } catch (DataException e) {
             model.addAttribute("mark", e.getMessage().toString());
         }

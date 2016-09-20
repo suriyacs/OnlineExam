@@ -3,12 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
     <head>
-        <c:if test="${'User' == sessionScope['role']}">
-            <c:redirect url="gotouserpage"/>
-        </c:if>
-        <c:if test="${'Admin' == sessionScope['role']}">
-            <c:redirect url="adminpage"/>
-        </c:if>
         <title>Login</title>
         <link rel="icon" href="img/userimage.png">
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"
@@ -61,12 +55,12 @@
                   title: "Your Mark",
                    text: "<c:out value="${mark}"/>",
                     type: "success" 
-                  },function(isConfirm){
-                              alert('ok');
-                        });
-                        $('.swal2-confirm').click(function(){
-                              window.location.href = 'logout';
-                        });
+                    }, function(isConfirm) {
+                    	alert('ok');
+                    });
+                    $('.swal2-confirm').click(function() {
+                    	window.location.href = 'logout';
+                    });
             </script>
         </c:if>
         <div id="grid"></div>
@@ -399,7 +393,7 @@
                 <br>
                 <div class="copyright">
                     <p>
-                        © 2016 TechAssess. All Rights Reserved | Design by <a href="#"
+                            2016 TechAssess. All Rights Reserved | Design by <a href="#"
                             target="_blank">Tech Assess</a>
                     </p>
                 </div>
