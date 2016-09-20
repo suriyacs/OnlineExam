@@ -5,6 +5,12 @@
 .center-container {
 	width:60%;
 }
+h2 {
+	text-align: center;
+    vertical-align: middle;
+    width:30%;
+    margin-left:35%;
+}
 .content-container {
     width: 80%;
     height: 200px;
@@ -22,9 +28,7 @@ div.well {
 	margin-left: 10%;
 	background-color: rgba(0, 0, 0, 0.1);
 }
-h2 {
-	font-family:Book Antiqua;
-}
+
 h1 {
 	text-align:center;
 }
@@ -36,14 +40,17 @@ table.buttontable {
     border-collapse:separate;
     border-spacing:0 20px;
 }
+.imagediv {
+	float:left;
+	width:10%;
+}
+.logout {
+	float:right;
+}
 .usertab {
 	float:left;
-	width=40%;
+	width:100%;
 	font-family:fantasy;
-	size:20px;
-	weight:bold;
-	style:italic;
-	variant:small caps;
 }
 input[type=submit] {
   display:none;

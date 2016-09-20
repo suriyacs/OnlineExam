@@ -47,61 +47,57 @@
 	<div class="content">
 		<div class="page-header">
 			<h1 class="title" align="center">TechAssess</h1>
-		</div>
-		<h5>Time Remaining:</h5>
-		<div id="countdown"></div>
-		<div id="notifier"></div>
-		<script type="text/javascript">
-			function display(notifier, str) {
-				document.getElementById(notifier).innerHTML = str;
-			}
-
-			function myFunction() {
-				 swal({ 
-				  title: "Sorry!!",
-				   text: "Its Time Up..!!",
-				    type: "warning" 
-				  },function(isConfirm){
+			<div class="logout" style="float: right">
+			    <a href="logout" class="btn btn-danger" title="logout"><span
+			 	    class="glyphicon glyphicon-log-out"></span></a>
+		    </div>
+		    <h5>Time Remaining:</h5>
+		    <div id="countdown"></div>
+		    <div id="notifier"></div>
+		    <script type="text/javascript">
+			    function display(notifier, str) {
+				    document.getElementById(notifier).innerHTML = str;
+			    }
+                function myFunction() {
+				    swal({ 
+				        title: "Sorry!!",
+				        text: "Its Time Up..!!",
+				        type: "warning" 
+				    },function(isConfirm){
 		                alert('ok');
-		          });
-		          $('.swal2-confirm').click(function(){
-		        	  document.myform.submit();
-		          });
-			}
-
-			function toMinuteAndSecond(x) {
-				return Math.floor(x / 60) + ":" + x % 60;
-			}
-
-			function setTimer(remain, actions) {
-				(function countdown() {
-					display("countdown", toMinuteAndSecond(remain));
-					actions[remain] && actions[remain]();
-					(remain -= 1) >= 0 && setTimeout(arguments.callee, 1000);
-				})();
-			}
-
-			setTimer(1500, {
-				10 : function() {
-					display("notifier", "Just 10 seconds to go");
-				},
-				5 : function() {
-					display("notifier", "5 seconds left");
-				},
-				0 : function() {
-					myFunction();
-				}
-			});
-		</script>
+		            });
+		            $('.swal2-confirm').click(function(){
+		        	     document.myform.submit();
+		            });
+			    }
+                function toMinuteAndSecond(x) {
+				    return Math.floor(x / 60) + ":" + x % 60;
+			    }
+			    function setTimer(remain, actions) {
+				    (function countdown() {
+					    display("countdown", toMinuteAndSecond(remain));
+					    actions[remain] && actions[remain]();
+					    (remain -= 1) >= 0 && setTimeout(arguments.callee, 1000);
+				    })();
+			    }
+			    setTimer(1500, {
+				    10 : function() {
+					    display("notifier", "Just 10 seconds to go");
+				    },
+				    5 : function() {
+					    display("notifier", "5 seconds left");
+				    },
+				    0 : function() {
+					    myFunction();
+				    }
+			    });
+		    </script>
+		</div>
 		<div class="usertab">
 			<img src="img/userimage.png" alt="userimage">
 			<h3>
 				<c:out value="${userName}" />
 			</h3>
-		</div>
-		<div class="logout" style="float: right">
-			<a href="logout" class="btn btn-danger" title="logout"><span
-				class="glyphicon glyphicon-log-out"></span></a>
 		</div>
 		<h4>
 			<c:out value="${examName}" />
@@ -151,8 +147,8 @@
 				</c:forEach>
 				<br>
 				<br>
-				<input id="button" type="submit" value="submit answers"
-					class="btn btn-primary" />
+				<div class="center-button"><input id="button" type="submit" value="submit answers"
+					class="btn btn-success"/></div>
 			</form:form>
 		</div>
 	</div>

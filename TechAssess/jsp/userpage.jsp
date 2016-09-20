@@ -1,11 +1,8 @@
-
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
     <head>
         <title>Exam Details</title>
         <link rel="icon" href="img/c-finger-pointing.png">
-        <link href="css/userpagestyling.css" rel="stylesheet" type="text/css">
         <link href="css/login.css" rel="stylesheet" type="text/css">
         <link href="css/userpage.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"
@@ -47,22 +44,20 @@
         <div id="grid"></div>
         <div class="content">
             <div class="page-header">
-                <center>
-                    <h1 class="title">TechAssess</h1>
-                </center>
+                <h1 class="title">TechAssess</h1>
+                <div class="logout">
+                    <a href="logout" class="btn btn-danger" title="logout"><span
+                        class="glyphicon glyphicon-log-out"></span></a>
+                </div>
             </div>
             <div class="usertab">
-                <img src="img/userimage.png" alt="userimage">
-                <h3 align="center">
-                    <c:out value="${userName}" />
-                </h3>
-            </div>
-            <div class="logout" style="float: right">
-                <a href="logout" class="btn btn-danger" title="logout"><span
-                    class="glyphicon glyphicon-log-out"></span></a>
-            </div>
-            <div id="header">
-                <h2 align="center">Exam to be Attended</h2>
+                <div class="imagediv">
+                    <img src="img/userimage.png" alt="userimage">
+                    <h3><c:out value="${userName}" /></h3>
+                </div>
+                <div id="header">
+                    <h2>Exam to be Attended</h2>
+                </div>
             </div>
             <div class="content-container">
                 <div id="content"></div>
