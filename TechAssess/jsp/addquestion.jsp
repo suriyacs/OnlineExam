@@ -61,14 +61,14 @@
             </script>
         </c:if>
         <div class="content">
-            <div class="heading">
+            <div class="header">
                 <div class="head">
                     <h1 class="title">TechAssess</h1>
                 </div>
-                <div class="logout" style="float: left">
-                    <a href="adminpage" class="btn btn-success" title="logout">Main Page</span></a>
+                <div class="mainpage">
+                    <a href="adminpage" class="btn btn-success" title="mainpage">Main Page</span></a>
                 </div>
-                <div class="logout" style="float: right">
+                <div class="logout">
                     <a href="logout" class="btn btn-danger" title="logout"><span
                         class="glyphicon glyphicon-log-out"></span></a>
                 </div>
@@ -78,8 +78,7 @@
             <br>
             <center>
                 <div class="bs-docs-example">
-                    <select id="colorselector" class="form-control"
-                        data-style="btn-primary" style="width: 20%;">
+                    <select id="colorselector" class="form-control"data-style="btn-primary" style="width: 20%;">
                         <option selected="selected">Select Question Type</option>
                         <option value="fill">Fill In The Blanks</option>
                         <option value="choose">Choose The Best Answer</option>

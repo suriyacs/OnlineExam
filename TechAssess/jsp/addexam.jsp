@@ -1,3 +1,5 @@
+
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -57,13 +59,13 @@
         <div class="content">
         <div class="header">
             <h1 class="title" style="color: black">Tech Assess</h1>
-        </div>
         <div class="logout" style="float: right">
             <a href="logout" class="btn btn-danger" title="logout"><span
                 class="glyphicon glyphicon-log-out"></span></a>
         </div>
         <div class="logout" style="float: left">
-            <a href="adminpage" class="btn btn-success" title="logout">MainPage</span></a>
+            <a href="adminpage" class="btn btn-success" title="logout">Main Page</a>
+        </div>
         </div>
         <center>
         <div class="center">
@@ -71,7 +73,7 @@
                 <div class="form">
                     <div class="tab-content" style="margin: 25px">
                         <div id="signup">
-                            <h1 style="color: black">CreateNewExam</h1>
+                            <h1 style="color: black">Create New Exam</h1>
                             <form:form action="addingexam" method="post" role="form"
                                 class="form" modelAttribute="exam">
                                 <div class="top-row">

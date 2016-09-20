@@ -1,3 +1,5 @@
+
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
     <head>
@@ -58,12 +60,12 @@
         <div id="grid"></div>
         <div class="content">
             <h1 class="title">Tech Assess</h1>
-            <div class="logout" style="float: right">
+            <div class="logout">
                 <a href="logout" class="btn btn-danger" title="logout"><span
                     class="glyphicon glyphicon-log-out"></span></a>
             </div>
-            <div class="logout" style="float: left">
-                <a href="adminpage" class="btn btn-success" title="logout">Main
+            <div class="mainpage">
+                <a href="adminpage" class="btn btn-success" title="mainpage">Main
                 Page</span>
                 </a>
             </div>

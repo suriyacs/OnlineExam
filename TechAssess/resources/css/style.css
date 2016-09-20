@@ -21,6 +21,16 @@ html {
     text-align:center;
  }
 
+.mainpage {
+	float: left;
+	margin:3%;
+}
+
+.logout {
+	float: right;
+	margin:3%;
+}
+
 body {
   background: #c1bdba;
   font-family: 'Titillium Web', sans-serif;
@@ -40,7 +50,6 @@ a:hover {
   padding: 40px;
   width: 500px;
   height:200px;
-  margin: 40px auto;
   border-radius: 4px;
 }
 

@@ -14,6 +14,16 @@ html{
     text-align: center;
 }
 
+.mainpage {
+	float: left;
+	margin:3%;
+}
+
+.logout {
+	float: right;
+	margin:3%;
+}
+
 .form-basic .form-row{
     text-align: left;
     margin-bottom: 22px;

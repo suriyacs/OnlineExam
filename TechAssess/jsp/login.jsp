@@ -131,7 +131,7 @@
                                         autocomplete="off" />
                                 </div>
                                 <button type="submit" class="button button-block">
-                                CreateAccount
+                                Create Account
                                 </button>
                             </form>
                         </div>
@@ -355,7 +355,7 @@
         <section class="footer">
             <div class="container">
                 <br>
-                <div class="address" style="float: left">
+                <div class="address" style="float: left;margin:auto;">
                     <i class="fa fa-map-marker" style="font-size: 48px; color: black"></i><br>
                     <p>
                         <span>21 RR Towers5,TVK Industrial Estate</span> Gundy,Chennai

@@ -25,7 +25,7 @@
     </head>
     <c:if test="${null == sessionScope['role']}">
         <c:redirect url="loginpage"/>
-    </c:if>
+    </c:if>logout
     <c:if test="${'User' == sessionScope['role']}">
         <c:redirect url="gotouserpage"/>
     </c:if>
@@ -62,19 +62,25 @@
         </c:if>
         <div id="grid"></div>
         <div class="content">
-            <div class="header">
-                <h1 class="title" style="color:black">Tech Assess</h1>
-            </div>
-            <div class="logout" style="float:left">
-                <a href="adminpage"class="btn btn-success" title="logout">Main Page</span></a> 
-            </div>
-            <div class="logout" style="float:right">
-                <a href="logout"class="btn btn-danger" title="logout"><span class="glyphicon glyphicon-log-out"></span></a> 
+            <div class="container">
+                <div class="head">
+                    <h1 class="title">TechAssess</h1>
+                </div>
+                <div class="wrapper">
+                <div class="mainpage">
+                    <a href="adminpage" class="btn btn-success" title="mainpage">Main Page</a>
+                </div>
+                <div class="logout">
+                    <a href="logout" class="btn btn-danger" title="logout"><span
+                        class="glyphicon glyphicon-log-out"></span></a>
+                </div>
+               </div>
             </div>
             <br><br>
             <div class="center">
+               <div class="table">
                 <div class="questiontable">
-                    <table border="1" width="100%" id="tblNeedsScrolling" height="25%";>
+                    <table border="1" width="100%" id="tblNeedsScrolling" height="20%";>
                         <tr style="text-align: center">
                             <th>Question Id</th>
                             <th>Question Name</th>
@@ -140,8 +146,10 @@
                         </tbody>
                     </table>
                 </div>
+                </div> 
                 <br> <br> <br> <br> <br> <br> <br>
                 <br> <br> <br> <br>
+                <center>
                 <div class="form">
                     <div class="tab-content" style="margin: 25px">
                         <div id="signup">
@@ -171,6 +179,7 @@
                     <!-- tab-content -->
                 </div>
                 <!-- /form -->
+                </center>
                 <script src='js/form.js'></script>
                 <script src="js/index.js"></script>
             </div>
