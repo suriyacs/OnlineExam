@@ -1,7 +1,5 @@
 package controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -40,7 +38,8 @@ public class ExamController {
      * Method which redirect to loginpage.
      * </p>
      * 
-     * @return string Consist of name of the java server page to be loaded.
+     * @return string 
+     *     Consist of name of the java server page to be loaded.
      */
     @RequestMapping("loginpage")
     public String goToLoginPage() {
@@ -55,11 +54,12 @@ public class ExamController {
      * </p>
      * 
      * @param exam
-     *     consist of instance of Exam type which needs to be inserted on
+     *     Consist of instance of Exam type which needs to be inserted on
      *     the database.
      * @param Message
-     *     contains message to be displayed on the java server page.
-     * @return string contains name of the java server page in which the message
+     *     Contains message to be displayed on the java server page.
+     * @return string 
+     *     Contains name of the java server page in which the message
      *     get's displayed and prompts the user to add another exam.
      */
     @SuppressWarnings("finally")
@@ -80,7 +80,8 @@ public class ExamController {
      * Method which redirect to jsp page named adminpage.jsp.
      * </p>
      * 
-     * @return string Contains name of the Java Server page to be redirected.
+     * @return string 
+     *    Contains name of the Java Server page to be redirected.
      */
     @RequestMapping(value = "/adminpage")
     public String goToAdminPage() {
@@ -104,8 +105,9 @@ public class ExamController {
      *     Contains starting id of the question to be allocated for the
      *     given exam.
      * @param toQuestionId
-     *     represents id of the question to be allocated.
-     * @return string Contains name of the java server page to be loaded.
+     *     Represents id of the question to be allocated.
+     * @return string 
+     *     Contains name of the java server page to be loaded.
      */
     @RequestMapping(value = "/allocating", method = RequestMethod.POST)
     public String allocateQuestionsToExam(ModelMap model, @RequestParam("examId") int examId,
@@ -133,8 +135,8 @@ public class ExamController {
      * @param model
      *     Contains list type of question and exam or contains message of
      *     database connection failure.
-     * @return string Contains name of the java server page which needs to be
-     *         loaded.
+     * @return string
+     *     Contains name of the java server page which needs to be loaded.
      */
     @RequestMapping(value = "/allocatequestionpage")
     public String redirectToAssignQuestionPage(ModelMap model) {
@@ -157,7 +159,8 @@ public class ExamController {
      * @param model
      *     Used to store details of all the exam or to store the error
      *     message raised at the time of database connection.
-     * @return string Contains name of the java server page to be loaded.
+     * @return string
+     *     Contains name of the java server page to be loaded.
      */
     @RequestMapping(value = "/gotouserpage")
     public String goToUserPage(ModelMap model) {
@@ -175,7 +178,8 @@ public class ExamController {
      * addadmin button on admin page.
      * </p>
      * 
-     * @return string Contains name of the java server page to be loaded.
+     * @return string
+     *     Contains name of the java server page to be loaded.
      */
     @RequestMapping(value = "/insertadmin")
     public String redirectToInsertAdminPage() {
@@ -190,8 +194,8 @@ public class ExamController {
      * 
      * @param model
      *     Contains an instance of exam type.
-     * @return string Contains name of the java server page which needs to be
-     *      loaded.
+     * @return string
+     *     Contains name of the java server page which needs to be loaded.
      */
     @RequestMapping(value = "/insertexamdetails")
     public String redirectToInsertTestPage(ModelMap model) {
@@ -203,13 +207,13 @@ public class ExamController {
      * <p>
      * Method which redirect the user or admin to the login page by invalidating
      * the session created for that particular user when the sign out button is
-     * clicked. 
+     * clicked.
      * </p>
      * 
      * @param session
      *     Comprises the object of that particular user who have logged in.
-     * @return string Contains name of the java server page which need to be
-     *         loaded.
+     * @return string
+     *     Contains name of the java server page which need to be loaded.
      */
     @RequestMapping(value = "/logout")
     public String logout(HttpSession session) {
@@ -223,7 +227,8 @@ public class ExamController {
      * question is successfully inserted.
      * </p>
      * 
-     * @return string Contains name of the mapping to be called.
+     * @return string
+     *     Contains name of the mapping to be called.
      */
     @RequestMapping(value = "/reloadinsertQuestion")
     public String reloadInsertQuestionPage() {
@@ -246,12 +251,17 @@ public class ExamController {
      *     Used to store message stating that the user already attended
      *     the selected exam or to store the name of the user and exam as
      *     well as instance of an exam.
-     * @return string Contains name of the java server page which needs to be
-     *         loaded.
+     * @return string
+     *     Contains name of the java server page which needs to be loaded.
      */
     @RequestMapping(value = "/taketest")
-    public String redirectToQuestionPage(HttpSession session, @RequestParam("test") String testId, ModelMap model) {
+    public String redirectToQuestionPage(HttpSession session, ModelMap model) {
+        if (null == session.getAttribute("examId")) {
+            return "questionpageforuser";
+        }
         User user = null;
+        System.out.println(session.getAttribute("examId"));
+        String testId = session.getAttribute("examId").toString();
         try {
             user = (User) session.getAttribute("user");
             if (examService.checkIfUserAlreadyAttendedThisTest(testId, user)) {
@@ -262,11 +272,10 @@ public class ExamController {
             Exam exam = examService.getExamById(Integer.parseInt(testId));
             for (int answerCount = 0; answerCount < Integer.parseInt(exam.getNoOfAllocatedQuestions()); answerCount++) {
                 exam.addAnswer(new Answer());
-                List<Answer> answers = exam.getAnswers();
-                System.out.println(answers.size());
             }
             model.addAttribute("userName", user.getUserName());
             model.addAttribute("examName", exam.getExamName());
+            model.addAttribute("testId", testId);
             model.addAttribute("exam", exam);
         } catch (DataException e) {
             model.addAttribute("insertQuestionMessage", (e.getMessage().toString()));
@@ -280,7 +289,7 @@ public class ExamController {
     /**
      * <p>
      * Method which calculates the result by calling the calculateResult method
-     * of resultService class.return the mark back to login page. 
+     * of resultService class.return the mark back to login page.
      * </p>
      * 
      * @param exam
@@ -288,19 +297,19 @@ public class ExamController {
      * @param result
      *     Contains binded object from the java server page.
      * @param model
-     *     Csed to store the mark obtain by the user.
+     *     Contains an instance to store the mark obtain by the user.
      * @param examId
      *     Contains id of the exam attended by the user.
      * @param session
      *     Object contains information about the user who logged in to
      *     write the exam.
-     * @return string Contains name of the java server page to be loaded.
+     * @return string
+     *     Contains name of the java server page to be loaded.
      */
     @RequestMapping(value = "/resultcalculation", method = RequestMethod.POST)
     public String calculateResult(@ModelAttribute("exam") Exam exam, BindingResult result, ModelMap model,
             @RequestParam("examId") int examId, HttpSession session) {
         ResultService resultService = new ResultService();
-
         try {
             model.addAttribute("mark",
                     resultService.calculateResult(exam, examId, (User) session.getAttribute("user")));

@@ -72,13 +72,9 @@
                         <c:forEach items="${exams}" var="exam">
                             <tr>
                                 <td>
-                                    <a id="load_home"
-                                    href="#demo
-                                    <c:out value="${Choice ? '' : count}"/>
-                                    "
+                                    <a id="load_home" href="#demo<c:out value="${Choice ? '' : count}"/>" 
                                     class="btn btn-info btn-lg" data-toggle="collapse">
-                                    <c:out
-                                        value="${exam.getExamName()}" />
+                                    <c:out value="${exam.getExamName()}" />
                                     </a>
                                 </td>
                             </tr>
@@ -89,9 +85,7 @@
                 <c:set var="count" value="1"/>
                 <div id="form">
                     <c:forEach items="${exams}" var="exam">
-                        <form id="demo
-                        <c:out value="${Choice ? '' : count}"/>
-                        "
+                        <form id="demo<c:out value="${Choice ? '' : count}"/>"
                         action="taketest" class="collapse" method="post">
                         <b>Instructions:</b><br> 
                         <p class="text-left">1.Examinations will be conducted during
@@ -118,15 +112,13 @@
                         <input
                             type="checkbox" id="checkbox">Agreed and im ready to
                         start the test<br> 
+                        <c:set var="examId" value="${exam.getExamId()}" scope="session" />
                         <label>
                             <input type="hidden"
-                            name="test" value="
-                            <c:out value="${exam.getExamId()}"/>
-                            " />
+                            name="test" value="<c:out value="${exam.getExamId()}"/>" />
                         </label>
                         <br>
-                        <input id="button" type="submit" value="START"
-                            class="btn btn-primary"/>
+                        <input id="button" type="submit" value="START" class="btn btn-primary"/>
                         </form>
                         <c:set var="count" value="${count + 1}"/>
                     </c:forEach>
