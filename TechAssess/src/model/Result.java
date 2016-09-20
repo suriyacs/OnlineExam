@@ -7,48 +7,57 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * <p>
+ * Pojo which creates instance for Result for insertion and also contains setter
+ * and getter method to store or retrieve particular element.
+ * </p>
+ *
+ * @author TechAssess
+ * @created 2016-08-27
+ */
 @Entity
-@Table(name="result")
+@Table(name = "result")
 public class Result {
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="result_id")
-	int resultId;
-	
-	@Column(name="exam_name")
-	String examName;
-	@Column(name="user_name")
-	String userName;
-	@Column(name="mark")
-	int mark;
-	
-	public Result(String examName,String userName,int mark) {
-		this.examName = examName;
-		this.userName = userName;
-		this.mark = mark;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "result_id")
+    int resultId;
 
-	public String getExamName() {
-		return examName;
-	}
+    @Column(name = "exam_name")
+    String examName;
+    @Column(name = "user_name")
+    String userName;
+    @Column(name = "mark")
+    int mark;
 
-	public void setExamName(String examName) {
-		this.examName = examName;
-	}
+    public Result(String examName, String userName, int mark) {
+        this.examName = examName;
+        this.userName = userName;
+        this.mark = mark;
+    }
 
-	public String getUserName() {
-		return userName;
-	}
+    public String getExamName() {
+        return examName;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public void setExamName(String examName) {
+        this.examName = examName;
+    }
 
-	public int getMark() {
-		return mark;
-	}
+    public String getUserName() {
+        return userName;
+    }
 
-	public void setMark(int mark) {
-		this.mark = mark;
-	}
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public int getMark() {
+        return mark;
+    }
+
+    public void setMark(int mark) {
+        this.mark = mark;
+    }
 }

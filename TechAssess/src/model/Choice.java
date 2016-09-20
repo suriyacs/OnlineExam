@@ -12,65 +12,64 @@ import javax.persistence.Table;
 
 /**
  * <p>
- *     Pojo which creates instance of Choice type either by using
- *     constructor or by setters and getters.
+ * Pojo which creates instance of Choice type either by using constructor or by
+ * setters and getters.
  * </p>
  */
 @Entity
-@Table(name="Choice")
+@Table(name = "Choice")
 public class Choice {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="choice_id")
-	int choiceId;
-	@Column(name="choice_name")
-	String choiceName;
-	@ManyToOne(cascade=CascadeType.PERSIST)
-	@JoinColumn(name="question_id")
-	Question questionId;
-	@Column(name="is_correct")
-	int isCorrect;
-	
-	public Choice() {
-		
-	}
-	
-	public Choice(String answer, int isCorrect) {
-		this.choiceName = answer;
-		this.isCorrect = isCorrect;
-	}
-	
-	public void setChoiceId(int choiceId) {
-		this.choiceId = choiceId;
-	}
-	
-	public int getChoiceId() {
-		return this.choiceId;
-	}
-	
-	public void setChoiceName(String choiceName) {
-		this.choiceName = choiceName;
-	}
-	
-	public String getChoiceName() {
-		return this.choiceName;
-	}
-	
-	public void setQuestionId(Question questionId) {
-		this.questionId =questionId;
-	}
-	
-	public Question getQuestionId() {
-		return this.questionId;
-	}
-	
-	public void setIsCorrect(int isCorrect) {
-		this.isCorrect = isCorrect;
-	}
-	
-	public int getIsCorrect() {
-		return isCorrect;
-	}
-}
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "choice_id")
+    int choiceId;
+    @Column(name = "choice_name")
+    String choiceName;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "question_id")
+    Question questionId;
+    @Column(name = "is_correct")
+    int isCorrect;
 
+    public Choice() {
+
+    }
+
+    public Choice(String answer, int isCorrect) {
+        this.choiceName = answer;
+        this.isCorrect = isCorrect;
+    }
+
+    public void setChoiceId(int choiceId) {
+        this.choiceId = choiceId;
+    }
+
+    public int getChoiceId() {
+        return this.choiceId;
+    }
+
+    public void setChoiceName(String choiceName) {
+        this.choiceName = choiceName;
+    }
+
+    public String getChoiceName() {
+        return this.choiceName;
+    }
+
+    public void setQuestionId(Question questionId) {
+        this.questionId = questionId;
+    }
+
+    public Question getQuestionId() {
+        return this.questionId;
+    }
+
+    public void setIsCorrect(int isCorrect) {
+        this.isCorrect = isCorrect;
+    }
+
+    public int getIsCorrect() {
+        return isCorrect;
+    }
+}

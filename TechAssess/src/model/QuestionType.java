@@ -15,65 +15,57 @@ import javax.persistence.Table;
 
 /**
  * <p>
- *     Pojo for creating instance of QuestionType which specifies the type of Question can be created.
- *     It also contains Set of Question which specifies the number of question which are created under the given QuestionType.
+ * Pojo for creating instance of QuestionType which specifies the type in which
+ * a Question can be created. It also contains Set of Question which specifies
+ * the number of question which are created under the given QuestionType.
  * </p>
  *
  * @author TechAssess
- * 
- * @param typeId
- *     consist of id when the new Question type is inserted.
- *     
- * @param typeName 
- *     consist name of the Question type.
- *     
- * @param questions
- *     contain set of question created under that particular quesiton type.
+ * @created 2016-08-27
  */
 @Entity
-@Table(name="QuestionType")
+@Table(name = "QuestionType")
 public class QuestionType {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="type_id")
-	int typeId;
-	@Column(name="type_name")
-	String typeName;
-	@OneToMany(cascade = CascadeType.PERSIST)
-	@JoinColumn(name="type_id")
-	Set<Question> questions = new HashSet<Question>();
-	
-	public QuestionType() {
-		
-	}
-	
-	public void setTypeId(int typeId) {
-		this.typeId = typeId;
-	}
-	
-	public int getTypeId() {
-		return this.typeId;
-	}
-	
-	public void setTypeName(String typeName) {
-		this.typeName = typeName;
-	}
-	
-	public String getTypeName() {
-		return this.typeName;
-	}
-	
-	public void setQuestion(Set<Question> questions) {
-		this.questions.addAll(questions);
-	}
-	
-	public Set<Question> getQuestion() {
-		return this.questions;
-	}
-	
-	public String toString() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "type_id")
+    int typeId;
+    @Column(name = "type_name")
+    String typeName;
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "type_id")
+    Set<Question> questions = new HashSet<Question>();
+
+    public QuestionType() {
+
+    }
+
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
+    }
+
+    public int getTypeId() {
+        return this.typeId;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public String getTypeName() {
+        return this.typeName;
+    }
+
+    public void setQuestion(Set<Question> questions) {
+        this.questions.addAll(questions);
+    }
+
+    public Set<Question> getQuestion() {
+        return this.questions;
+    }
+
+    public String toString() {
         return typeId + "";
     }
 }
-
