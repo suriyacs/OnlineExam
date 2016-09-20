@@ -3,6 +3,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
     <head>
+        <c:if test="${'User' == sessionScope['role']}">
+            <c:redirect url="gotouserpage"/>
+        </c:if>
+        <c:if test="${'Admin' == sessionScope['role']}">
+            <c:redirect url="adminpage"/>
+        </c:if>
         <title>Login</title>
         <link rel="icon" href="img/userimage.png">
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"

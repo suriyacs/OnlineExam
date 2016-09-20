@@ -3,7 +3,6 @@
 <html>
 <head>
 <title>Exam</title>
-<link href="css/userpagestyling.css" rel="stylesheet" type="text/css">
 <link href="css/login.css" rel="stylesheet" type="text/css">
 <link href="css/row.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"
@@ -104,7 +103,7 @@
 			<a href="logout" class="btn btn-danger" title="logout"><span
 				class="glyphicon glyphicon-log-out"></span></a>
 		</div>
-		<h4 align="center">
+		<h4>
 			<c:out value="${examName}" />
 		</h4>
 		<div class="questiondiv">
@@ -122,10 +121,10 @@
 					<br>
 					<br>
 					<div style="width:50%;">
-					<div style="width:80%;"><c:out value="${count}" />.<c:out value="${que.getQuestionName()}" /></div></div>
+					<div style="width:80%;" class="question"><c:out value="${count}" />.<c:out value="${que.getQuestionName()}" /></div></div>
 					<br>
 					<br>
-					<div>
+					<div class="answerdiv">
 					<c:set var="count" value="${count + 1}" scope="page" />
 					<c:set value="${que.getTypeId()}" var="type" />
 					<c:forEach items="${que.getChoices()}" var="choice">
@@ -148,6 +147,7 @@
 					</c:forEach>
 				    </div>
 					<br>
+					<hr>
 				</c:forEach>
 				<br>
 				<br>
